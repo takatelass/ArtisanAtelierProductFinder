@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Artisan Atelier Product Finder</title>
+
+    <meta name="description"
+        content="豊岡鞄 Artisan Atelier 店舗スタッフ向け商品検索システム">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="container">
+
+            <h1>
+                Artisan Atelier
+                <span>Product Finder</span>
+            </h1>
+
+            <p class="subtitle">
+                商品検索・接客支援システム
+            </p>
+
+        </div>
+    </header>
+
+
+    <main class="container">
+
+        <!-- ==========================
+             Search Area
+        =========================== -->
+
+        <section class="search-panel">
+
+            <div class="search-box">
+
+                <input
+                    id="keyword"
+                    type="text"
+                    placeholder="品番・商品名・ブランド・メーカーで検索">
+
+            </div>
+
+            <div class="filters">
+
+                <select id="brandFilter">
+                    <option value="">すべてのブランド</option>
+                </select>
+
+                <select id="categoryFilter">
+                    <option value="">すべてのカテゴリ</option>
+                </select>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==========================
+             Result
+        =========================== -->
+
+        <section class="result-info">
+
+            <span id="resultCount">
+                0件
+            </span>
+
+        </section>
+
+
+        <!-- ==========================
+             Product List
+        =========================== -->
+
+        <section>
+
+            <div
+                id="productList"
+                class="product-grid">
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ==========================
+         Product Detail Modal
+    =========================== -->
+
+    <div
+        id="detailModal"
+        class="modal hidden">
+
+        <div class="modal-content">
+
+            <button
+                id="closeModal"
+                class="close-button">
+
+                ×
+
+            </button>
+
+            <div id="modalBody">
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ==========================
+         Loading
+    =========================== -->
+
+    <div
+        id="loading"
+        class="loading hidden">
+
+        読み込み中...
+
+    </div>
+
+
+    <!-- ==========================
+         Footer
+    =========================== -->
+
+    <footer>
+
+        <div class="container">
+
+            Artisan Atelier Product Finder
+            <br>
+
+            Demo v0.1.0
+
+        </div>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

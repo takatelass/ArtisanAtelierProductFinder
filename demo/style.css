@@ -1,0 +1,326 @@
+/* ==========================================================
+   Artisan Atelier Product Finder
+   Demo v0.1.0
+========================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:
+        "Yu Gothic",
+        "Hiragino Kaku Gothic ProN",
+        sans-serif;
+
+    background:#f5f5f5;
+    color:#333;
+    line-height:1.6;
+}
+
+/* ======================
+   Layout
+====================== */
+
+.container{
+    width:min(1200px,95%);
+    margin:auto;
+}
+
+header{
+    background:#222;
+    color:white;
+    padding:24px 0;
+}
+
+header h1{
+    font-size:2rem;
+    font-weight:700;
+}
+
+header span{
+    display:block;
+    font-size:1rem;
+    color:#bbbbbb;
+}
+
+.subtitle{
+    margin-top:8px;
+    color:#cccccc;
+}
+
+main{
+    margin:30px auto;
+}
+
+/* ======================
+   Search
+====================== */
+
+.search-panel{
+
+    background:white;
+
+    border-radius:10px;
+
+    padding:20px;
+
+    box-shadow:
+        0 2px 8px rgba(0,0,0,.08);
+
+    margin-bottom:24px;
+}
+
+.search-box input{
+
+    width:100%;
+
+    padding:14px;
+
+    font-size:16px;
+
+    border:1px solid #cccccc;
+
+    border-radius:8px;
+
+    margin-bottom:15px;
+}
+
+.filters{
+
+    display:flex;
+
+    gap:15px;
+
+    flex-wrap:wrap;
+}
+
+.filters select{
+
+    flex:1;
+
+    min-width:220px;
+
+    padding:12px;
+
+    border-radius:8px;
+
+    border:1px solid #cccccc;
+}
+
+/* ======================
+   Result Count
+====================== */
+
+.result-info{
+
+    margin-bottom:20px;
+
+    font-weight:bold;
+}
+
+/* ======================
+   Product Grid
+====================== */
+
+.product-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(auto-fill,minmax(280px,1fr));
+
+    gap:20px;
+}
+
+/* ======================
+   Product Card
+====================== */
+
+.product-card{
+
+    background:white;
+
+    border-radius:12px;
+
+    padding:20px;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+    box-shadow:
+        0 2px 8px rgba(0,0,0,.08);
+}
+
+.product-card:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 6px 18px rgba(0,0,0,.15);
+}
+
+.product-code{
+
+    color:#888;
+
+    font-size:13px;
+}
+
+.product-name{
+
+    margin:10px 0;
+
+    font-size:18px;
+
+    font-weight:bold;
+}
+
+.product-brand{
+
+    color:#666;
+
+    margin-bottom:10px;
+}
+
+.product-price{
+
+    color:#b40000;
+
+    font-size:22px;
+
+    font-weight:bold;
+}
+
+/* ======================
+   Modal
+====================== */
+
+.modal{
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+        rgba(0,0,0,.45);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:999;
+}
+
+.hidden{
+
+    display:none;
+}
+
+.modal-content{
+
+    background:white;
+
+    width:min(700px,92%);
+
+    border-radius:12px;
+
+    padding:30px;
+
+    position:relative;
+
+    max-height:90vh;
+
+    overflow:auto;
+}
+
+.close-button{
+
+    position:absolute;
+
+    top:15px;
+
+    right:20px;
+
+    border:none;
+
+    background:none;
+
+    font-size:30px;
+
+    cursor:pointer;
+}
+
+/* ======================
+   Loading
+====================== */
+
+.loading{
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+        rgba(255,255,255,.85);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:24px;
+
+    z-index:2000;
+}
+
+/* ======================
+   Footer
+====================== */
+
+footer{
+
+    margin-top:60px;
+
+    padding:25px;
+
+    text-align:center;
+
+    color:#888;
+
+    font-size:14px;
+}
+
+/* ======================
+   Responsive
+====================== */
+
+@media(max-width:768px){
+
+    header{
+
+        text-align:center;
+    }
+
+    header h1{
+
+        font-size:1.6rem;
+    }
+
+    .filters{
+
+        flex-direction:column;
+    }
+
+    .product-grid{
+
+        grid-template-columns:1fr;
+    }
+
+}

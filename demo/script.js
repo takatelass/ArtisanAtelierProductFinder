@@ -133,6 +133,7 @@ function getSearchText(product) {
 function createProductCard(product) {
     const card = elements.cardTemplate.content.firstElementChild.cloneNode(true);
     const imageArea = card.querySelector('.product-image');
+    console.log(card.outerHTML);
 
     card.querySelector('.product-code').textContent = toDisplayText(product.code);
     card.querySelector('.product-name').textContent = toDisplayText(product.name);

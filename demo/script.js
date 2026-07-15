@@ -22,7 +22,7 @@ const elements = {
     modal: document.getElementById('detailModal'),
     modalBody: document.getElementById('modalBody'),
     closeModal: document.getElementById('closeModal'),
-    loading: document.getElementById('loading')
+    loadingOverlay: document.getElementById('loadingOverlay')
 };
 
 const SEARCH_FIELDS = [
@@ -131,9 +131,17 @@ function getSearchText(product) {
 
 /** Create an accessible card from the HTML template. */
 function createProductCard(product) {
+    // Clone the article inside <template>, not the template element itself.
     const card = elements.cardTemplate.content.firstElementChild.cloneNode(true);
     const imageArea = card.querySelector('.product-image');
+
+    // Debug output for checking the template actually loaded by the browser.
     console.log(card.outerHTML);
+    console.log(imageArea);
+
+    if (!imageArea) {
+        throw new Error('productCardTemplate に .product-image がありません。index.html を再読み込みしてください。');
+    }
 
     card.querySelector('.product-code').textContent = toDisplayText(product.code);
     card.querySelector('.product-name').textContent = toDisplayText(product.name);
@@ -253,7 +261,8 @@ function isHttpUrl(value) {
 }
 
 function setLoading(isLoading) {
-    elements.loading.classList.toggle('hidden', !isLoading);
+    elements.loadingOverlay.classList.toggle('hidden', !isLoading);
+    elements.loadingOverlay.setAttribute('aria-hidden', String(!isLoading));
 }
 
 function showEmptyMessage(message) {

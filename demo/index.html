@@ -37,14 +37,15 @@
              Search Area
         =========================== -->
 
-        <section class="search-panel">
+        <section class="search-panel" aria-label="商品検索">
 
             <div class="search-box">
 
                 <input
                     id="keyword"
                     type="text"
-                    placeholder="品番・商品名・ブランド・メーカーで検索">
+                    placeholder="品番・商品名・ブランド・メーカーで検索"
+                    aria-label="キーワード検索">
 
             </div>
 
@@ -90,10 +91,12 @@
 
         </section>
 
-<!-- Product Card Template -->
+<!-- Product Card Template: keep these elements in sync with script.js. -->
 <template id="productCardTemplate">
 
-    <article class="product-card">
+    <article class="product-card" tabindex="0" role="button">
+
+        <div class="product-image" aria-hidden="true"></div>
 
         <div class="product-code"></div>
 
@@ -116,13 +119,18 @@
 
     <div
         id="detailModal"
-        class="modal hidden">
+        class="modal hidden"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle">
 
         <div class="modal-content">
 
             <button
                 id="closeModal"
-                class="close-button">
+                class="close-button"
+                type="button"
+                aria-label="詳細を閉じる">
 
                 ×
 

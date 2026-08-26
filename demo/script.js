@@ -163,18 +163,32 @@ function createProductCard(product) {
 /** Display an image or a safe No Image placeholder. */
 function setProductImage(container, imageUrl, altText) {
     const url = toText(imageUrl);
+
+    container.replaceChildren();
+
     if (!url || url === '-') {
         container.textContent = 'No Image';
         return;
     }
 
     const image = document.createElement('img');
-    image.src = url;
+
     image.alt = toDisplayText(altText);
-    image.addEventListener('error', () => {
+    image.loading = 'lazy';
+    image.decoding = 'async';
+
+    image.onload = () => {
+        console.log('Image loaded:', url);
+    };
+
+    image.onerror = () => {
+        console.error('Image failed:', url);
         container.replaceChildren('No Image');
-    }, { once: true });
-    container.append(image);
+    };
+
+    image.src = url;
+
+    container.appendChild(image);
 }
 
 /** Fill and show the detail modal. */

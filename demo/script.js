@@ -177,6 +177,9 @@ function setProductImage(container, imageUrl, altText) {
     image.loading = 'lazy';
     image.decoding = 'async';
 
+    // 外部画像サーバーに参照元URLを送らない
+    image.referrerPolicy = 'no-referrer';
+
     image.onload = () => {
         console.log('Image loaded:', url);
     };

@@ -148,88 +148,241 @@
 
     </main>
 
-    <script>
+<script>
 
-        const csvFile =
-            document.getElementById(
-                'csvFile'
-            );
+    const csvFile =
+        document.getElementById(
+            'csvFile'
+        );
 
-        const loadCsvButton =
-            document.getElementById(
-                'loadCsvButton'
-            );
+    const loadCsvButton =
+        document.getElementById(
+            'loadCsvButton'
+        );
 
-        const status =
-            document.getElementById(
-                'status'
-            );
+    const status =
+        document.getElementById(
+            'status'
+        );
 
-        loadCsvButton.addEventListener(
-            'click',
-            () => {
+    loadCsvButton.addEventListener(
+        'click',
+        () => {
 
-                const file =
-                    csvFile.files[0];
+            const file =
+                csvFile.files[0];
 
-                if (!file) {
+            if (!file) {
 
-                    status.classList.remove(
-                        'hidden'
-                    );
+                status.classList.remove(
+                    'hidden'
+                );
 
-                    status.textContent =
-                        'CSVファイルを選択してください。';
+                status.textContent =
+                    'CSVファイルを選択してください。';
 
-                    return;
-                }
+                return;
+            }
 
-                const reader =
-                    new FileReader();
+            const reader =
+                new FileReader();
 
-                reader.onload =
-                    (event) => {
+            reader.onload =
+                (event) => {
 
-                        const text =
-                            event.target.result;
+                    const text =
+                        event.target.result;
 
-                        const lines =
-                            text
-                                .split(/\r?\n/)
-                                .filter(
-                                    line =>
-                                        line.trim()
-                                );
+                    const lines =
+                        text
+                            .split(/\r?\n/)
+                            .filter(
+                                line =>
+                                    line.trim()
+                            );
 
-                        status.classList.remove(
-                            'hidden'
-                        );
-
-                        status.innerHTML =
-                            `CSVを読み込みました。<br>
-                            ファイル名：${file.name}<br>
-                            行数：約${lines.length}行`;
-                    };
-
-                reader.onerror =
-                    () => {
+                    if (lines.length === 0) {
 
                         status.classList.remove(
                             'hidden'
                         );
 
                         status.textContent =
-                            'CSVファイルの読み込みに失敗しました。';
-                    };
+                            'CSVにデータがありません。';
 
-                reader.readAsText(
-                    file,
-                    'UTF-8'
+                        return;
+                    }
+
+                    /*
+                     * 1行目を項目名として取得
+                     */
+                    const headers =
+                        parseCsvLine(
+                            lines[0]
+                        );
+
+                    /*
+                     * 商品データ件数
+                     */
+                    const productCount =
+                        Math.max(
+                            lines.length - 1,
+                            0
+                        );
+
+                    /*
+                     * 必須項目
+                     */
+                    const requiredFields = [
+                        'maker',
+                        'code',
+                        'name',
+                        'price'
+                    ];
+
+                    const missingFields =
+                        requiredFields.filter(
+                            field =>
+                                !headers.includes(
+                                    field
+                                )
+                        );
+
+                    status.classList.remove(
+                        'hidden'
+                    );
+
+                    let message =
+                        `
+                        <strong>CSVを読み込みました。</strong><br><br>
+
+                        ファイル名：
+                        ${file.name}<br>
+
+                        商品件数：
+                        ${productCount}件<br>
+
+                        項目数：
+                        ${headers.length}項目<br><br>
+
+                        <strong>項目一覧</strong><br>
+                        ${headers.join(' / ')}
+                        `;
+
+                    if (
+                        missingFields.length > 0
+                    ) {
+
+                        message += `
+                            <br><br>
+                            <strong>
+                            ⚠ 必須項目が見つかりません
+                            </strong><br>
+                            ${missingFields.join(
+                                ' / '
+                            )}
+                        `;
+
+                    } else {
+
+                        message += `
+                            <br><br>
+                            <strong>
+                            ✓ 必須項目を確認しました
+                            </strong>
+                        `;
+                    }
+
+                    status.innerHTML =
+                        message;
+                };
+
+            reader.onerror =
+                () => {
+
+                    status.classList.remove(
+                        'hidden'
+                    );
+
+                    status.textContent =
+                        'CSVファイルの読み込みに失敗しました。';
+                };
+
+            reader.readAsText(
+                file,
+                'UTF-8'
+            );
+        }
+    );
+
+
+    /*
+     * CSV 1行を分解する
+     * 「,」を含む項目や
+     * ダブルクォーテーションにも対応
+     */
+    function parseCsvLine(line) {
+
+        const result = [];
+
+        let current = '';
+
+        let insideQuotes = false;
+
+        for (
+            let i = 0;
+            i < line.length;
+            i++
+        ) {
+
+            const char =
+                line[i];
+
+            const nextChar =
+                line[i + 1];
+
+            if (
+                char === '"' &&
+                insideQuotes &&
+                nextChar === '"'
+            ) {
+
+                current += '"';
+
+                i++;
+
+            } else if (
+                char === '"'
+            ) {
+
+                insideQuotes =
+                    !insideQuotes;
+
+            } else if (
+                char === ',' &&
+                !insideQuotes
+            ) {
+
+                result.push(
+                    current.trim()
                 );
+
+                current = '';
+
+            } else {
+
+                current += char;
             }
+        }
+
+        result.push(
+            current.trim()
         );
 
-    </script>
+        return result;
+    }
+
+</script>
 
 </body>
 

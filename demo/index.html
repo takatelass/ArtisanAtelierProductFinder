@@ -1,186 +1,214 @@
 <!DOCTYPE html>
+
 <html lang="ja">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Artisan Atelier Product Finder</title>
 
-    <meta name="description"
-        content="豊岡鞄 Artisan Atelier 店舗スタッフ向け商品検索システム">
+<title>Artisan Atelier Product Finder</title>
 
-    <link rel="stylesheet" href="style.css">
+<meta name="description"
+    content="豊岡鞄 Artisan Atelier 店舗スタッフ向け商品検索システム">
+
+<link rel="stylesheet" href="style.css">
+
+
 </head>
 
 <body>
 
-    <header class="header">
-        <div class="container">
+<header>
+    <div class="container">
+        <h1>Artisan Atelier Product Finder</h1>
+    </div>
+</header>
 
-            <h1>
-                Artisan Atelier
-                <span>Product Finder</span>
-            </h1>
+<main class="container">
 
-            <p class="subtitle">
-                商品検索・接客支援システム
-            </p>
 
+<section class="search-panel">
+
+    <div class="search-box">
+        <input
+            type="search"
+            id="keyword"
+            placeholder="フリーワード検索"
+            autocomplete="off">
+    </div>
+
+    <div class="filters">
+
+    <select id="makerFilter">
+        <option value="">すべてのメーカー</option>
+    </select>
+
+    <select id="categoryFilter">
+        <option value="">すべてのカテゴリ</option>
+    </select>
+
+    <select id="seriesFilter">
+        <option value="">すべてのシリーズ</option>
+    </select>
+
+</div>
+
+<div class="price-filter">
+
+    <span class="price-filter-label">
+        価格検索
+    </span>
+
+    <input
+        type="number"
+        id="minPrice"
+        placeholder="下限"
+        min="0"
+        step="1000">
+
+    <span class="price-separator">～</span>
+
+    <input
+        type="number"
+        id="maxPrice"
+        placeholder="上限"
+        min="0"
+        step="1000">
+
+    <span class="price-unit">円</span>
+
+</div>
+
+    <div class="condition-search">
+
+        <h2>用途で絞り込む</h2>
+
+        <div
+            id="conditionTags"
+            class="condition-tags">
         </div>
-    </header>
+
+        <h2>特徴で絞り込む</h2>
+
+        <div
+            id="featureTags"
+            class="condition-tags">
+        </div>
+
+        <h2>カラーで絞り込む</h2>
+
+        <div
+            id="colorTags"
+            class="condition-tags color-tags">
+        </div>
+
+    </div>
+
+    <div id="activeFilters"></div>
+
+</section>
+
+<section class="result-info">
+
+    <span id="resultCount">0件の商品</span>
+
+    <select id="sortOrder">
+        <option value="default">おすすめ順</option>
+        <option value="maleRecommended">男性おすすめ</option>
+        <option value="femaleRecommended">女性おすすめ</option>
+        <option value="new">新商品順</option>
+        <option value="popular">人気商品順</option>
+        <option value="priceAsc">価格の安い順</option>
+        <option value="priceDesc">価格の高い順</option>
+    </select>
+
+    <button
+        type="button"
+        id="resetFilters">
+        条件をリセット
+    </button>
+
+</section>
+
+<section
+    id="productList"
+    class="product-grid">
+</section>
 
 
-    <main class="container">
+</main>
 
-        <!-- ==========================
-             Search Area
-        =========================== -->
-
-        <section class="search-panel" aria-label="商品検索">
-
-            <div class="search-box">
-
-                <input
-                    id="keyword"
-                    type="text"
-                    placeholder="品番・商品名・ブランド・メーカーで検索"
-                    aria-label="キーワード検索">
-
-            </div>
-
-            <div class="filters">
-
-                <select id="brandFilter">
-                    <option value="">すべてのブランド</option>
-                </select>
-
-                <select id="categoryFilter">
-                    <option value="">すべてのカテゴリ</option>
-                </select>
-
-                <select id="usageFilter">
-    　　　　　　　　　<option value="">接客条件で探す</option>
-　　　　　　　　　</select>
-
-            </div>
-
-        </section>
+<div
+    id="detailModal"
+    class="modal hidden"
+    role="dialog"
+    aria-modal="true"
+    aria-label="商品詳細">
 
 
-        <!-- ==========================
-             Result
-        =========================== -->
+<div class="modal-content">
 
-        <section class="result-info">
+    <button
+        type="button"
+        id="closeModal"
+        class="close-button"
+        aria-label="閉じる">
+        ×
+    </button>
 
-            <span id="resultCount">
-                0件
-            </span>
+    <div id="modalBody"></div>
 
-        </section>
+</div>
 
 
-        <!-- ==========================
-             Product List
-        =========================== -->
+</div>
 
-        <section>
-
-            <div
-                id="productList"
-                class="product-grid">
-
-            </div>
-
-        </section>
-
-<!-- Product Card Template: keep these elements in sync with script.js. -->
 <template id="productCardTemplate">
 
-    <article class="product-card" tabindex="0" role="button">
 
-        <div class="product-image" aria-hidden="true"></div>
+<article class="product-card">
 
-        <div class="product-code"></div>
+    <div class="product-badge hidden"></div>
 
-        <div class="product-name"></div>
+    <div class="product-new-badge hidden"></div>
 
-        <div class="product-brand"></div>
+    <div class="product-popular-badge hidden"></div>
 
-        <div class="product-price"></div>
+    <div class="product-stock-badge hidden"></div>
 
-    </article>
+    <div class="product-image">
+        画像なし
+    </div>
+
+    <div class="product-code"></div>
+
+    <h2 class="product-name"></h2>
+
+    <div class="product-brand"></div>
+
+    <div class="product-price"></div>
+
+    <div class="product-usage-tags"></div>
+
+    <div class="product-feature-tags"></div>
+
+</article>
+
 
 </template>
-        
-    </main>
 
+<div
+    id="loadingOverlay"
+    class="loading hidden">
+    読み込み中…
+</div>
 
-    <!-- ==========================
-         Product Detail Modal
-    =========================== -->
+<footer>
+    Artisan Atelier Product Finder
+</footer>
 
-    <div
-        id="detailModal"
-        class="modal hidden"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="modalTitle">
-
-        <div class="modal-content">
-
-            <button
-                id="closeModal"
-                class="close-button"
-                type="button"
-                aria-label="詳細を閉じる">
-
-                ×
-
-            </button>
-
-            <div id="modalBody">
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <!-- ==========================
-         Loading
-    =========================== -->
-
-    <div
-        id="loadingOverlay"
-        class="loading hidden">
-
-        読み込み中...
-
-    </div>
-
-
-    <!-- ==========================
-         Footer
-    =========================== -->
-
-    <footer>
-
-        <div class="container">
-
-            Artisan Atelier Product Finder
-            <br>
-
-            Demo v0.1.0
-
-        </div>
-
-    </footer>
-
-
-    <script src="script.js"></script>
+<script src="script.js"></script>
 
 </body>
 

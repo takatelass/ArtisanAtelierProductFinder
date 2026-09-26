@@ -165,6 +165,10 @@
             'status'
         );
 
+
+    /*
+     * CSV読み込み
+     */
     loadCsvButton.addEventListener(
         'click',
         () => {
@@ -187,6 +191,7 @@
             const reader =
                 new FileReader();
 
+
             reader.onload =
                 (event) => {
 
@@ -201,51 +206,66 @@
                                     line.trim()
                             );
 
-                    if (lines.length === 0) {
+                    if (
+                        lines.length < 2
+                    ) {
 
                         status.classList.remove(
                             'hidden'
                         );
 
                         status.textContent =
-                            'CSVにデータがありません。';
+                            'CSVに商品データがありません。';
 
                         return;
                     }
 
-                    /*
-                     * 1行目を項目名として取得
-                     */
-                    const headers =
-                        parseCsvLine(
-                            lines[0]
-                        );
 
                     /*
-                     * 商品データ件数
+                     * CSVを配列化
                      */
-                    const productCount =
-                        Math.max(
-                            lines.length - 1,
-                            0
+                    const rows =
+                        parseCsv(
+                            text
                         );
+
+
+                    if (
+                        rows.length < 2
+                    ) {
+
+                        status.classList.remove(
+                            'hidden'
+                        );
+
+                        status.textContent =
+                            'CSVデータを正しく読み込めませんでした。';
+
+                        return;
+                    }
+
+
+                    const headers =
+                        rows[0];
+
 
                     /*
                      * 必須項目
                      */
                     const requiredFields = [
-                      'メーカー名',
-                      '品番',
-                      '商品名',
-                      '価格',
-                      '商品タイトル',
-                      'スペック①',
-                      'スペック②',
-                      'スペック③',
-                      'スペック④',
-                      'スペック⑤',
-                      'ケア方法'
+                        'メーカー名',
+                        '品番',
+                        '商品名',
+                        '価格',
+                        '商品タイトル',
+                        'スペック①',
+                        'スペック②',
+                        'スペック③',
+                        'スペック④',
+                        'スペック⑤',
+                        'ケア方法'
                     ];
+
 
                     const missingFields =
                         requiredFields.filter(
@@ -255,54 +275,95 @@
                                 )
                         );
 
+
                     status.classList.remove(
                         'hidden'
                     );
 
-                    let message =
-                        `
-                        <strong>CSVを読み込みました。</strong><br><br>
-
-                        ファイル名：
-                        ${file.name}<br>
-
-                        商品件数：
-                        ${productCount}件<br>
-
-                        項目数：
-                        ${headers.length}項目<br><br>
-
-                        <strong>項目一覧</strong><br>
-                        ${headers.join(' / ')}
-                        `;
 
                     if (
                         missingFields.length > 0
                     ) {
 
-                        message += `
-                            <br><br>
+                        status.innerHTML =
+                            `
                             <strong>
                             ⚠ 必須項目が見つかりません
-                            </strong><br>
+                            </strong>
+                            <br><br>
                             ${missingFields.join(
                                 ' / '
                             )}
-                        `;
+                            `;
 
-                    } else {
-
-                        message += `
-                            <br><br>
-                            <strong>
-                            ✓ 必須項目を確認しました
-                            </strong>
-                        `;
+                        return;
                     }
 
+
+                    /*
+                     * CSV → JSON変換
+                     */
+                    const products =
+                        rows
+                            .slice(1)
+                            .map(
+                                row =>
+                                    convertRowToProduct(
+                                        headers,
+                                        row
+                                    )
+                            )
+                            .filter(
+                                product =>
+                                    product.code
+                            );
+
+
+                    /*
+                     * 結果表示
+                     */
                     status.innerHTML =
-                        message;
+                        `
+                        <strong>
+                        ✓ 商品データを変換しました
+                        </strong>
+                        <br><br>
+
+                        商品件数：
+                        ${products.length}件
+                        <br>
+
+                        CSV項目数：
+                        ${headers.length}項目
+                        <br><br>
+
+                        <button
+                            type="button"
+                            id="downloadJsonButton"
+                            class="button">
+                            products.jsonをダウンロード
+                        </button>
+                        `;
+
+
+                    /*
+                     * JSONダウンロード
+                     */
+                    document
+                        .getElementById(
+                            'downloadJsonButton'
+                        )
+                        .addEventListener(
+                            'click',
+                            () => {
+
+                                downloadJson(
+                                    products
+                                );
+                            }
+                        );
                 };
+
 
             reader.onerror =
                 () => {
@@ -315,6 +376,7 @@
                         'CSVファイルの読み込みに失敗しました。';
                 };
 
+
             reader.readAsText(
                 file,
                 'UTF-8'
@@ -324,29 +386,32 @@
 
 
     /*
-     * CSV 1行を分解する
-     * 「,」を含む項目や
-     * ダブルクォーテーションにも対応
+     * CSV全体を読み込む
      */
-    function parseCsvLine(line) {
+    function parseCsv(text) {
 
-        const result = [];
+        const rows = [];
 
-        let current = '';
+        let row = [];
 
-        let insideQuotes = false;
+        let value = '';
+
+        let insideQuotes =
+            false;
+
 
         for (
             let i = 0;
-            i < line.length;
+            i < text.length;
             i++
         ) {
 
             const char =
-                line[i];
+                text[i];
 
             const nextChar =
-                line[i + 1];
+                text[i + 1];
+
 
             if (
                 char === '"' &&
@@ -354,39 +419,356 @@
                 nextChar === '"'
             ) {
 
-                current += '"';
+                value += '"';
 
                 i++;
 
-            } else if (
+                continue;
+            }
+
+
+            if (
                 char === '"'
             ) {
 
                 insideQuotes =
                     !insideQuotes;
 
-            } else if (
+                continue;
+            }
+
+
+            if (
                 char === ',' &&
                 !insideQuotes
             ) {
 
-                result.push(
-                    current.trim()
+                row.push(
+                    value.trim()
                 );
 
-                current = '';
+                value = '';
 
-            } else {
-
-                current += char;
+                continue;
             }
+
+
+            if (
+                (
+                    char === '\n' ||
+                    char === '\r'
+                ) &&
+                !insideQuotes
+            ) {
+
+                if (
+                    char === '\r' &&
+                    nextChar === '\n'
+                ) {
+
+                    i++;
+                }
+
+                row.push(
+                    value.trim()
+                );
+
+                value = '';
+
+
+                if (
+                    row.some(
+                        cell =>
+                            cell !== ''
+                    )
+                ) {
+
+                    rows.push(
+                        row
+                    );
+                }
+
+                row = [];
+
+                continue;
+            }
+
+
+            value += char;
         }
 
-        result.push(
-            current.trim()
+
+        /*
+         * 最後の行
+         */
+        if (
+            value !== '' ||
+            row.length > 0
+        ) {
+
+            row.push(
+                value.trim()
+            );
+
+            rows.push(
+                row
+            );
+        }
+
+
+        return rows;
+    }
+
+
+    /*
+     * CSV 1行 → Product JSON
+     */
+    function convertRowToProduct(
+        headers,
+        row
+    ) {
+
+        const data = {};
+
+
+        headers.forEach(
+            (header, index) => {
+
+                data[header] =
+                    row[index] || '';
+            }
         );
 
-        return result;
+
+        return {
+
+            maker:
+                data['メーカー名'],
+
+            code:
+                data['品番'],
+
+            name:
+                data['商品名'],
+
+            price:
+                Number(
+                    String(
+                        data['価格']
+                    )
+                        .replace(
+                            /,/g,
+                            ''
+                        )
+                        .replace(
+                            /円/g,
+                            ''
+                        )
+                        .trim()
+                ) || 0,
+
+            brand:
+                data['ブランド'],
+
+            category:
+                data['カテゴリ'],
+
+            subCategory:
+                data['サブカテゴリ'],
+
+            series:
+                splitValues(
+                    data['シリーズ']
+                ),
+
+            color:
+                splitValues(
+                    data['色']
+                ),
+
+            colorGroup:
+                splitValues(
+                    data['カラー系統']
+                ),
+
+            material:
+                splitValues(
+                    data['素材']
+                ),
+
+            size:
+                data['サイズ'],
+
+            weight:
+                data['重量'],
+
+            title:
+                data['商品タイトル'],
+
+            spec1:
+                data['スペック①'],
+
+            spec2:
+                data['スペック②'],
+
+            spec3:
+                data['スペック③'],
+
+            spec4:
+                data['スペック④'],
+
+            spec5:
+                data['スペック⑤'],
+
+            care:
+                data['ケア方法'],
+
+            image:
+                data['商品画像URL'],
+
+            url:
+                data['商品URL'],
+
+            tags:
+                splitValues(
+                    data['特徴タグ']
+                ),
+
+            usageTags:
+                splitValues(
+                    data['用途タグ']
+                ),
+
+            recommended:
+                toBoolean(
+                    data['おすすめ']
+                ),
+
+            isNew:
+                toBoolean(
+                    data['新商品']
+                ),
+
+            popular:
+                toBoolean(
+                    data['人気商品']
+                ),
+
+            maleRecommended:
+                toBoolean(
+                    data['男性おすすめ']
+                ),
+
+            femaleRecommended:
+                toBoolean(
+                    data['女性おすすめ']
+                ),
+
+            stock:
+                data['店舗在庫'],
+
+            published:
+                toBoolean(
+                    data['公開']
+                )
+        };
+    }
+
+
+    /*
+     * | 区切りの項目を配列化
+     */
+    function splitValues(value) {
+
+        if (!value) {
+            return [];
+        }
+
+        return String(value)
+            .split('|')
+            .map(
+                item =>
+                    item.trim()
+            )
+            .filter(Boolean);
+    }
+
+
+    /*
+     * TRUE / FALSE をboolean化
+     */
+    function toBoolean(value) {
+
+        const normalized =
+            String(
+                value || ''
+            )
+                .trim()
+                .toUpperCase();
+
+        return (
+            normalized === 'TRUE' ||
+            normalized === '○' ||
+            normalized === '〇' ||
+            normalized === '1'
+        );
+    }
+
+
+    /*
+     * JSONダウンロード
+     */
+    function downloadJson(
+        products
+    ) {
+
+        const json =
+            JSON.stringify(
+                products,
+                null,
+                2
+            );
+
+
+        const blob =
+            new Blob(
+                [json],
+                {
+                    type:
+                        'application/json'
+                }
+            );
+
+
+        const url =
+            URL.createObjectURL(
+                blob
+            );
+
+
+        const link =
+            document.createElement(
+                'a'
+            );
+
+        link.href = url;
+
+        link.download =
+            'products.json';
+
+        document.body.appendChild(
+            link
+        );
+
+        link.click();
+
+        document.body.removeChild(
+            link
+        );
+
+        URL.revokeObjectURL(
+            url
+        );
     }
 
 </script>

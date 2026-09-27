@@ -680,83 +680,55 @@ header h1 {
     object-fit: contain;
 }
 
-/* ==========================================================
-   商品カード バッジ
-========================================================== */
+/* =========================
+商品カード バッジ横並び
+========================= */
+
+.product-card {
+    position: relative;
+}
 
 .product-badge,
 .product-new-badge,
 .product-popular-badge {
     display: inline-flex;
     align-items: center;
-    width: fit-content;
-    min-height: 24px;
-    margin: 0 5px 6px 0;
-    padding: 3px 8px;
-    border-radius: 999px;
+    vertical-align: middle;
+    margin: 0 5px 8px 0;
+    padding: 4px 8px;
+    border-radius: 4px;
     font-size: 10px;
     font-weight: 600;
     line-height: 1.2;
-    letter-spacing: 0.03em;
+    white-space: nowrap;
 }
 
+/* おすすめ */
 .product-badge {
-    background: #f4efe3;
-    border: 1px solid #c9b889;
-    color: #705d2d;
+    background: #f2f2f2;
+    border: 1px solid #cfcfcf;
+    color: #555;
 }
 
+/* 新商品 */
 .product-new-badge {
-    background: #edf4ef;
-    border: 1px solid #9fbea7;
-    color: #477254;
-}
-
-.product-popular-badge {
-    background: #f5eeee;
-    border: 1px solid #c9a4a4;
-    color: #875050;
-}
-
-/* 在庫 */
-
-.product-stock-badge {
-    display: inline-flex;
-    align-items: center;
-    width: fit-content;
-    min-height: 24px;
-    margin: 0 0 10px;
-    padding: 3px 9px;
-    border: 1px solid;
-    border-radius: 999px;
-    font-size: 10px;
-    font-weight: 600;
-    line-height: 1.2;
-    letter-spacing: 0.04em;
-}
-
-.product-stock-badge.stock-available {
-    color: #3f7d55;
-    border-color: #3f7d55;
-    background: #edf7f0;
-}
-
-.product-stock-badge.stock-out {
-    color: #b84a4a;
-    border-color: #b84a4a;
-    background: #fdf0f0;
-}
-
-.product-stock-badge.stock-order {
-    color: #4778a8;
-    border-color: #4778a8;
     background: #eef5fb;
+    border: 1px solid #4778a8;
+    color: #4778a8;
 }
 
-.product-stock-badge.stock-discontinued {
-    color: #333;
-    border-color: #333;
-    background: #f1f1f1;
+/* 人気商品 */
+.product-popular-badge {
+    background: #fdf0f0;
+    border: 1px solid #b84a4a;
+    color: #b84a4a;
+}
+
+/* 在庫バッジ */
+.product-stock-badge {
+    display: block;
+    width: fit-content;
+    margin: 0 0 10px 0;
 }
 
 /* ==========================================================

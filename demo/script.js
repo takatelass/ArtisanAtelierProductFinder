@@ -1730,27 +1730,39 @@ function createDetailRow(
         label === '特徴タグ' ||
         label === '用途タグ';
 
-    const values =
-        Array.isArray(value)
-            ? value
-                .flatMap((item) =>
-                    String(item)
-                        .split('|')
-                )
-                .map((item) =>
-                    item.trim()
-                )
-                .filter(Boolean)
+    let values = [];
 
-            : [toText(value).trim()]
-                .filter(Boolean);
+    if (Array.isArray(value)) {
 
+        values = value
+            .flatMap((item) =>
+                String(item).split('|')
+            )
+            .map((item) =>
+                item.trim()
+            )
+            .filter(Boolean);
+
+    } else {
+
+        const text =
+            value === null ||
+            value === undefined
+                ? ''
+                : String(value).trim();
+
+        if (text) {
+            values = [text];
+        }
+    }
+
+    /*
+     * 空欄でも項目そのものは表示する。
+     */
     if (values.length === 0) {
 
         const empty =
-            document.createElement(
-                'span'
-            );
+            document.createElement('span');
 
         empty.className =
             'detail-empty';
@@ -1765,9 +1777,7 @@ function createDetailRow(
         values.forEach((item) => {
 
             const tag =
-                document.createElement(
-                    'span'
-                );
+                document.createElement('span');
 
             tag.className =
                 'detail-tag';

@@ -1845,7 +1845,6 @@ function openModal(product) {
     ['サイズ', product.size],
     ['重量', product.weight],
     ['商品タイトル', product.title],
-    ['商品説明', product.description],
     ['スペック1', product.spec1],
     ['スペック2', product.spec2],
     ['スペック3', product.spec3],

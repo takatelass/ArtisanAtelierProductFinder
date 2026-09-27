@@ -740,12 +740,13 @@ header h1 {
     flex-wrap: wrap;
     align-items: center;
     gap: 5px;
-    margin-bottom: 6px;
+    margin-bottom: 10px;
 }
 
 .product-badges .product-badge,
 .product-badges .product-new-badge,
-.product-badges .product-popular-badge {
+.product-badges .product-popular-badge,
+.product-badges .product-stock-badge {
     margin: 0;
 }
 

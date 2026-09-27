@@ -1821,24 +1821,30 @@ function openModal(product) {
     detailList.className =
         'detail-list';
 
-    const details = [
-        ['メーカー', product.maker],
-        ['品番', product.code],
-        ['ブランド', product.brand],
-        ['カテゴリ', product.category],
-        ['サブカテゴリ', product.subCategory],
-        ['シリーズ', product.series],
-        ['価格', formatPrice(product.price)],
-        ['色', product.color],
-        ['カラー系統', product.colorGroup],
-        ['素材', product.material],
-        ['サイズ', product.size],
-        ['重量', product.weight],
-        ['商品説明', product.description],
-        ['特徴タグ', product.tags],
-        ['用途タグ', product.usageTags]
-    ];
-
+ const details = [
+    ['メーカー', product.maker],
+    ['品番', product.code],
+    ['ブランド', product.brand],
+    ['カテゴリ', product.category],
+    ['サブカテゴリ', product.subCategory],
+    ['シリーズ', product.series],
+    ['価格', formatPrice(product.price)],
+    ['色', product.color],
+    ['カラー系統', product.colorGroup],
+    ['素材', product.material],
+    ['サイズ', product.size],
+    ['重量', product.weight],
+    ['商品タイトル', product.title],
+    ['商品説明', product.description],
+    ['スペック1', product.spec1],
+    ['スペック2', product.spec2],
+    ['スペック3', product.spec3],
+    ['スペック4', product.spec4],
+    ['スペック5', product.spec5],
+    ['ケア方法', product.care],
+    ['特徴タグ', product.tags],
+    ['用途タグ', product.usageTags]
+];
     details.forEach(
         ([label, value]) => {
 

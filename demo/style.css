@@ -732,6 +732,24 @@ header h1 {
 }
 
 /* ==========================================================
+   商品カード バッジ横並び
+========================================================== */
+
+.product-badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 6px;
+}
+
+.product-badges .product-badge,
+.product-badges .product-new-badge,
+.product-badges .product-popular-badge {
+    margin: 0;
+}
+
+/* ==========================================================
    商品情報
 ========================================================== */
 

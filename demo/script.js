@@ -1070,22 +1070,10 @@ function getFilteredProducts() {
         );
         break;
 
-    case 'default':
-    default:
-        filteredProducts.sort(
-            (a, b) =>
-                Number(
-                    Boolean(
-                        b.recommended
-                    )
-                ) -
-                Number(
-                    Boolean(
-                        a.recommended
-                    )
-                )
-        );
-        break;
+case 'default':
+default:
+    // CSV登録順を維持
+    break;
 }
 
     return filteredProducts;

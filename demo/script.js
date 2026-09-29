@@ -754,7 +754,68 @@ function createFilterOptions() {
     const currentSeries =
         elements.seriesFilter.value;
 
+    const makerOrder = [
+        '株式会社足立',
+        '株式会社木和田正昭商店',
+        '株式会社タイムバックス',
+        '株式会社三宅初治商店',
+        '株式会社ナオト',
+        '株式会社ハシモト',
+        '株式会社モリタ',
+        'ARTPHERE',
+        'Atelier nuu',
+        'コニー株式会社',
+        'マスミ鞄嚢株式会社',
+        '有限会社クラフト',
+        '株式会社タカアキ',
+        'フィードバッグ',
+        '藤原弘子',
+        '株式会社服部',
+        '株式会社羽倉',
+        '衣川産業株式会社',
+        'エンドー鞄株式会社',
+        '株式会社ウノフク',
+        'ラ・ヴェッタ株式会社',
+        '一般社団法人豊岡鞄協会',
+        '河﨑公三商店',
+        'Artisan Atelier'
+    ];
+
+    const categoryOrder = [
+        '鞄：ビジネス・フォーマル',
+        '鞄：トート',
+        '鞄：リュック・デイパック',
+        '鞄：ショルダー',
+        '鞄：ボディ・ウエスト',
+        '鞄：ミニショルダー・ポーチ',
+        '鞄：ダレス',
+        '鞄：ミニバッグ・ハンドバッグ',
+        '鞄：ボストン',
+        '鞄：クラッチ・セカンド',
+        '鞄：ランドセル',
+        '鞄：その他鞄',
+        '財布：コンパクト財布',
+        '財布：長財布',
+        '小物：豊岡小物',
+        '小物：名刺入れ、カード入れ',
+        '小物：コインケース',
+        '小物：キーケース・キーホルダー',
+        '小物：その他小物',
+        'その他：メンテナンス',
+        'その他：その他'
+    ];
+
+    const seriesOrder = [
+        '井原デニム',
+        'for the Blue',
+        'for the Blue DENIM',
+        'MASK＋',
+        'Lezza Botanica',
+        'Artisanオリジナル'
+    ];
+
     const makers = [
+        ...makerOrder,
         ...new Set(
             state.products
                 .map((product) =>
@@ -764,12 +825,13 @@ function createFilterOptions() {
                 )
                 .filter(Boolean)
         )
-    ].sort(
-        (a, b) =>
-            a.localeCompare(b, 'ja')
+    ].filter(
+        (value, index, array) =>
+            array.indexOf(value) === index
     );
 
     const categories = [
+        ...categoryOrder,
         ...new Set(
             state.products
                 .map((product) =>
@@ -779,12 +841,13 @@ function createFilterOptions() {
                 )
                 .filter(Boolean)
         )
-    ].sort(
-        (a, b) =>
-            a.localeCompare(b, 'ja')
+    ].filter(
+        (value, index, array) =>
+            array.indexOf(value) === index
     );
 
     const series = [
+        ...seriesOrder,
         ...new Set(
             state.products
                 .flatMap((product) =>
@@ -798,9 +861,9 @@ function createFilterOptions() {
                 )
                 .filter(Boolean)
         )
-    ].sort(
-        (a, b) =>
-            a.localeCompare(b, 'ja')
+    ].filter(
+        (value, index, array) =>
+            array.indexOf(value) === index
     );
 
     elements.makerFilter.innerHTML =

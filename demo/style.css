@@ -680,34 +680,36 @@ header h1 {
     object-fit: contain;
 }
 
-/* =========================
-商品カード バッジ横並び
-========================= */
+/* ==========================================================
+   商品カード バッジ
+========================================================== */
 
-.product-card {
-    position: relative;
+/* 1行目：新商品・人気商品・おすすめ */
+.product-badges {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px;
+    min-height: 24px;
+    margin-bottom: 5px;
 }
 
+/* 1行目のバッジ */
 .product-badge,
 .product-new-badge,
 .product-popular-badge {
     display: inline-flex;
     align-items: center;
-    vertical-align: middle;
-    margin: 0 5px 8px 0;
+    width: fit-content;
+    min-height: 24px;
+    margin: 0;
     padding: 4px 8px;
-    border-radius: 4px;
+    border-radius: 999px;
     font-size: 10px;
     font-weight: 600;
     line-height: 1.2;
+    letter-spacing: 0.03em;
     white-space: nowrap;
-}
-
-/* おすすめ */
-.product-badge {
-    background: #f2f2f2;
-    border: 1px solid #cfcfcf;
-    color: #555;
 }
 
 /* 新商品 */
@@ -724,30 +726,65 @@ header h1 {
     color: #b84a4a;
 }
 
-/* 在庫バッジ */
-.product-stock-badge {
-    display: block;
-    width: fit-content;
-    margin: 0 0 10px 0;
+/* おすすめ */
+.product-badge {
+    background: #f2f2f2;
+    border: 1px solid #cfcfcf;
+    color: #555;
 }
 
-/* ==========================================================
-   商品カード バッジ横並び
-========================================================== */
-
-.product-badges {
+/* 2行目：在庫ステータス */
+.product-stock-row {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 5px;
+    min-height: 24px;
     margin-bottom: 10px;
 }
 
-.product-badges .product-badge,
-.product-badges .product-new-badge,
-.product-badges .product-popular-badge,
-.product-badges .product-stock-badge {
+/* 在庫バッジ共通 */
+.product-stock-badge {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    min-height: 24px;
     margin: 0;
+    padding: 4px 9px;
+    border: 1px solid;
+    border-radius: 999px;
+    background: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+}
+
+/* 在庫あり：緑 */
+.product-stock-badge.stock-available {
+    color: #3f7d55;
+    border-color: #3f7d55;
+    background: #f4faf6;
+}
+
+/* 取寄せ：オレンジ */
+.product-stock-badge.stock-order {
+    color: #c47a2c;
+    border-color: #c47a2c;
+    background: #fff8ef;
+}
+
+/* 在庫なし：紫 */
+.product-stock-badge.stock-out {
+    color: #7a5a9a;
+    border-color: #7a5a9a;
+    background: #f8f3fb;
+}
+
+/* 廃番：グレー */
+.product-stock-badge.stock-discontinued {
+    color: #777;
+    border-color: #999;
+    background: #f5f5f5;
 }
 
 /* ==========================================================

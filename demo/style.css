@@ -1099,85 +1099,125 @@ footer {
 @media (max-width: 480px) {
 
     /* ------------------------------------------
-       バッジ
+       商品カード上部ステータス
        左：在庫
        中央：新商品 / 人気商品
        右：おすすめ
     ------------------------------------------ */
 
-    .product-badges {
-        position: relative;
-        display: block;
-        height: 22px;
-        min-height: 22px;
-        margin-bottom: 5px;
+    .product-card-status {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        align-items: center;
+        width: 100%;
+        min-height: 24px;
+        margin-bottom: 6px;
+        gap: 4px;
     }
 
-.product-badges .product-new-badge,
-.product-badges .product-popular-badge,
-.product-badges .product-badge {
-    position: absolute;
-    top: 0;
-    width: 30%;
-    min-width: 0;
-    min-height: 21px;
-    margin: 0;
-    padding: 3px 4px;
-    box-sizing: border-box;
-    border-radius: 999px;
-    font-size: 9px;
-    line-height: 1.1;
-    justify-content: center;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-    /* 中央：新商品 */
-    .product-badges .product-new-badge {
-        left: 50%;
-        transform: translateX(-50%);
-        max-width: 30%;
+    .product-card-status-left,
+    .product-card-status-center,
+    .product-card-status-right {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 0;
+        height: 24px;
     }
 
-/* 中央：新商品 */
-.product-badges .product-new-badge {
-    left: 35%;
-    transform: translateX(-50%);
-}
+    /* 在庫 */
+    .product-card-status-left {
+        justify-content: flex-start;
+    }
 
-/* 中央：人気商品 */
-.product-badges .product-popular-badge {
-    left: 35%;
-    transform: translateX(-50%);
-}
+    /* 新商品・人気商品 */
+    .product-card-status-center {
+        justify-content: center;
+    }
 
-/* 右：おすすめ */
-.product-badges .product-badge {
-    left: 70%;
-    right: auto;
-    transform: translateX(-50%);
-}
+    /* おすすめ */
+    .product-card-status-right {
+        justify-content: flex-end;
+    }
 
     /* ------------------------------------------
-       左：在庫ステータス
+       バッジ共通
     ------------------------------------------ */
 
-    .product-stock-row {
-        position: absolute;
-        top: 14px;
-        left: 14px;
-        z-index: 2;
-        min-height: 0;
+    .product-card-status
+    .product-new-badge,
+
+    .product-card-status
+    .product-popular-badge,
+
+    .product-card-status
+    .product-badge,
+
+    .product-card-status
+    .product-stock-badge {
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        width: auto;
+        max-width: 100%;
+        min-width: 0;
+        min-height: 21px;
+
         margin: 0;
+        padding: 3px 5px;
+
+        box-sizing: border-box;
+
+        border-radius: 999px;
+
+        font-size: 9px;
+        font-weight: 600;
+        line-height: 1.1;
+        letter-spacing: 0.02em;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
-    .product-stock-badge {
-        min-height: 21px;
-        padding: 3px 5px;
-        font-size: 9px;
-        line-height: 1.1;
-        white-space: nowrap;
+    /* ------------------------------------------
+       新商品・人気商品
+    ------------------------------------------ */
+
+    .product-card-status-center
+    .product-new-badge.hidden,
+    
+    .product-card-status-center
+    .product-popular-badge.hidden {
+        display: none !important;
+    }
+
+    /* 新商品と人気商品が両方ある場合は
+       新商品を優先して表示 */
+    .product-card-status-center
+    .product-new-badge:not(.hidden)
+    ~ .product-popular-badge {
+        display: none !important;
+    }
+
+    /* ------------------------------------------
+       おすすめ
+    ------------------------------------------ */
+
+    .product-card-status-right
+    .product-badge.hidden {
+        display: none !important;
+    }
+
+    /* ------------------------------------------
+       在庫
+    ------------------------------------------ */
+
+    .product-card-status-left
+    .product-stock-badge.hidden {
+        display: none !important;
     }
 
     /* ------------------------------------------
@@ -1191,6 +1231,7 @@ footer {
     }
 
 }
+
 /* ==========================================================
    Utility
 ========================================================== */

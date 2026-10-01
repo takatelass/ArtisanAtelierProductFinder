@@ -1093,6 +1093,88 @@ footer {
 }
 
 /* ==========================================================
+   スマホ専用 商品カード表示
+========================================================== */
+
+@media (max-width: 480px) {
+
+    /* ------------------------------------------
+       バッジを1行・最大3個で表示
+       左：在庫
+       中央：新商品 / 人気商品
+       右：おすすめ
+    ------------------------------------------ */
+
+    .product-badges {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        align-items: center;
+        gap: 4px;
+        min-height: 22px;
+        margin-bottom: 5px;
+    }
+
+    .product-badges .product-new-badge,
+    .product-badges .product-popular-badge,
+    .product-badges .product-badge {
+        min-width: 0;
+        min-height: 21px;
+        margin: 0;
+        padding: 3px 4px;
+        font-size: 9px;
+        line-height: 1.1;
+        justify-content: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* 在庫を左側へ */
+    .product-stock-row {
+        position: absolute;
+        top: 14px;
+        left: 14px;
+        z-index: 2;
+        min-height: 0;
+        margin: 0;
+    }
+
+    .product-stock-badge {
+        min-height: 21px;
+        padding: 3px 5px;
+        font-size: 9px;
+        line-height: 1.1;
+    }
+
+    /* 新商品・人気商品は中央 */
+    .product-new-badge,
+    .product-popular-badge {
+        grid-column: 2;
+    }
+
+    /* おすすめは右側 */
+    .product-badge {
+        grid-column: 3;
+    }
+
+    /* 新商品がない場合でも人気商品を中央へ */
+    .product-popular-badge:not(.hidden) {
+        grid-column: 2;
+    }
+
+    /* ------------------------------------------
+       ブランド・用途・特徴はスマホでは非表示
+    ------------------------------------------ */
+
+    .product-brand,
+    .product-usage-tags,
+    .product-feature-tags {
+        display: none !important;
+    }
+
+}
+
+/* ==========================================================
    Utility
 ========================================================== */
 

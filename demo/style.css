@@ -1099,17 +1099,16 @@ footer {
 @media (max-width: 480px) {
 
     /* ------------------------------------------
-       バッジを1行・最大3個で表示
+       バッジ
        左：在庫
        中央：新商品 / 人気商品
        右：おすすめ
     ------------------------------------------ */
 
     .product-badges {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        align-items: center;
-        gap: 4px;
+        position: relative;
+        display: block;
+        height: 22px;
         min-height: 22px;
         margin-bottom: 5px;
     }
@@ -1117,10 +1116,13 @@ footer {
     .product-badges .product-new-badge,
     .product-badges .product-popular-badge,
     .product-badges .product-badge {
+        position: absolute;
+        top: 0;
         min-width: 0;
         min-height: 21px;
         margin: 0;
         padding: 3px 4px;
+        border-radius: 999px;
         font-size: 9px;
         line-height: 1.1;
         justify-content: center;
@@ -1129,7 +1131,37 @@ footer {
         white-space: nowrap;
     }
 
-    /* 在庫を左側へ */
+    /* 中央：新商品 */
+    .product-badges .product-new-badge {
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 30%;
+    }
+
+    /* 中央：人気商品 */
+    .product-badges .product-popular-badge {
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 30%;
+    }
+
+    /* 新商品と人気商品が両方ある場合は新商品を優先 */
+    .product-badges:has(
+        .product-new-badge:not(.hidden)
+    ) .product-popular-badge {
+        display: none !important;
+    }
+
+    /* 右：おすすめ */
+    .product-badges .product-badge {
+        right: 0;
+        max-width: 30%;
+    }
+
+    /* ------------------------------------------
+       左：在庫ステータス
+    ------------------------------------------ */
+
     .product-stock-row {
         position: absolute;
         top: 14px;
@@ -1144,22 +1176,7 @@ footer {
         padding: 3px 5px;
         font-size: 9px;
         line-height: 1.1;
-    }
-
-    /* 新商品・人気商品は中央 */
-    .product-new-badge,
-    .product-popular-badge {
-        grid-column: 2;
-    }
-
-    /* おすすめは右側 */
-    .product-badge {
-        grid-column: 3;
-    }
-
-    /* 新商品がない場合でも人気商品を中央へ */
-    .product-popular-badge:not(.hidden) {
-        grid-column: 2;
+        white-space: nowrap;
     }
 
     /* ------------------------------------------
@@ -1173,7 +1190,6 @@ footer {
     }
 
 }
-
 /* ==========================================================
    Utility
 ========================================================== */

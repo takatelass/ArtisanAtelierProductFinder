@@ -1113,23 +1113,25 @@ footer {
         margin-bottom: 5px;
     }
 
-    .product-badges .product-new-badge,
-    .product-badges .product-popular-badge,
-    .product-badges .product-badge {
-        position: absolute;
-        top: 0;
-        min-width: 0;
-        min-height: 21px;
-        margin: 0;
-        padding: 3px 4px;
-        border-radius: 999px;
-        font-size: 9px;
-        line-height: 1.1;
-        justify-content: center;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-    }
+.product-badges .product-new-badge,
+.product-badges .product-popular-badge,
+.product-badges .product-badge {
+    position: absolute;
+    top: 0;
+    width: 30%;
+    min-width: 0;
+    min-height: 21px;
+    margin: 0;
+    padding: 3px 4px;
+    box-sizing: border-box;
+    border-radius: 999px;
+    font-size: 9px;
+    line-height: 1.1;
+    justify-content: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
     /* 中央：新商品 */
     .product-badges .product-new-badge {
@@ -1138,25 +1140,24 @@ footer {
         max-width: 30%;
     }
 
-    /* 中央：人気商品 */
-    .product-badges .product-popular-badge {
-        left: 50%;
-        transform: translateX(-50%);
-        max-width: 30%;
-    }
+/* 中央：新商品 */
+.product-badges .product-new-badge {
+    left: 35%;
+    transform: translateX(-50%);
+}
 
-    /* 新商品と人気商品が両方ある場合は新商品を優先 */
-    .product-badges:has(
-        .product-new-badge:not(.hidden)
-    ) .product-popular-badge {
-        display: none !important;
-    }
+/* 中央：人気商品 */
+.product-badges .product-popular-badge {
+    left: 35%;
+    transform: translateX(-50%);
+}
 
-    /* 右：おすすめ */
-    .product-badges .product-badge {
-        right: 0;
-        max-width: 30%;
-    }
+/* 右：おすすめ */
+.product-badges .product-badge {
+    left: 70%;
+    right: auto;
+    transform: translateX(-50%);
+}
 
     /* ------------------------------------------
        左：在庫ステータス

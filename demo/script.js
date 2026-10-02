@@ -1882,7 +1882,7 @@ function openModal(product) {
     detailList.className =
         'detail-list';
 
- const details = [
+const details = [
     ['メーカー', product.maker],
     ['品番', product.code],
     ['ブランド', product.brand],
@@ -1902,9 +1902,12 @@ function openModal(product) {
     ['スペック4', product.spec4],
     ['スペック5', product.spec5],
     ['ケア方法', product.care],
+    ['備考①', product.note1],
+    ['備考②', product.note2],
     ['特徴タグ', product.tags],
     ['用途タグ', product.usageTags]
 ];
+    
     details.forEach(
         ([label, value]) => {
 

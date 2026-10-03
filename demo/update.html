@@ -95,6 +95,9 @@ const selectCsvButton =
 const uploadResult =
     document.getElementById('uploadResult');
 
+let currentProductsForUpdate = [];
+let csvProductsForUpdate = [];
+
 
 /* ==========================================================
    CSV解析
@@ -246,6 +249,70 @@ function createComparisonKey(product) {
 
 }
 
+/* ==========================================================
+   更新用データ補助関数
+========================================================== */
+
+function normalizePrice(value) {
+
+    if (
+        value === null ||
+        value === undefined ||
+        value === ''
+    ) {
+        return 0;
+    }
+
+    const normalized =
+        String(value)
+            .replace(/,/g, '')
+            .replace(/円/g, '')
+            .trim();
+
+    const number =
+        Number(normalized);
+
+    return Number.isNaN(number)
+        ? 0
+        : number;
+
+}
+
+
+function splitCSVTags(value) {
+
+    if (
+        value === null ||
+        value === undefined ||
+        value === ''
+    ) {
+        return [];
+    }
+
+    return String(value)
+        .split('|')
+        .map(tag => tag.trim())
+        .filter(Boolean);
+
+}
+
+
+function normalizeBoolean(value) {
+
+    if (
+        value === true ||
+        value === 'true' ||
+        value === 'TRUE' ||
+        value === '1' ||
+        value === 'はい' ||
+        value === '○'
+    ) {
+        return true;
+    }
+
+    return false;
+
+}
 
 /* ==========================================================
    商品データの変更判定
@@ -655,6 +722,408 @@ function hasProductChanged(
 }
 
 /* ==========================================================
+   更新用JSON生成
+========================================================== */
+
+function createUpdatedProducts() {
+
+    if (
+        currentProductsForUpdate.length === 0 ||
+        csvProductsForUpdate.length === 0
+    ) {
+
+        throw new Error(
+            '更新用の商品データが準備されていません。'
+        );
+
+    }
+
+
+    /*
+     * 現在の商品データを品番で管理
+     */
+    const currentMap =
+        new Map(
+            currentProductsForUpdate.map(
+                product => [
+                    String(product.code).trim(),
+                    product
+                ]
+            )
+        );
+
+
+    /*
+     * CSVの商品データを順番に処理
+     */
+    const updatedProducts =
+        csvProductsForUpdate.map(
+            csvProduct => {
+
+                const code =
+                    String(
+                        csvProduct['品番'] || ''
+                    ).trim();
+
+
+                const currentProduct =
+                    currentMap.get(code);
+
+
+                /*
+                 * 既存商品がない場合
+                 * → CSVから新商品として作成
+                 */
+                if (!currentProduct) {
+
+                    return convertCSVProductToJSON(
+                        csvProduct
+                    );
+
+                }
+
+
+                /*
+                 * 既存商品がある場合
+                 * → CSVの内容で更新
+                 */
+                return mergeCSVProduct(
+                    currentProduct,
+                    csvProduct
+                );
+
+            }
+        );
+
+
+    return updatedProducts;
+
+}
+
+/* ==========================================================
+   CSV商品 → JSON商品変換
+========================================================== */
+
+function convertCSVProductToJSON(csv) {
+
+    return {
+        maker: getCSVValue(csv, ['メーカー名']),
+        code: getCSVValue(csv, ['品番']),
+        name: getCSVValue(csv, ['商品名']),
+        price: normalizePrice(
+            getCSVValue(csv, ['価格'])
+        ),
+        brand: getCSVValue(csv, ['ブランド']),
+        category: getCSVValue(csv, ['カテゴリ']),
+        subCategory: getCSVValue(
+            csv,
+            ['サブカテゴリ']
+        ),
+        series: getCSVValue(
+            csv,
+            ['シリーズ']
+        ),
+        color: getCSVValue(csv, ['色']),
+        colorGroup: getCSVValue(
+            csv,
+            ['カラー系統']
+        ),
+        material: getCSVValue(
+            csv,
+            ['素材']
+        ),
+        size: getCSVValue(csv, ['サイズ']),
+        weight: getCSVValue(csv, ['重量']),
+        title: getCSVValue(
+            csv,
+            ['商品タイトル']
+        ),
+        image: getCSVValue(
+            csv,
+            ['商品画像URL', '画像URL']
+        ),
+        url: getCSVValue(
+            csv,
+            ['商品URL', '商品ページURL']
+        ),
+        tags: splitCSVTags(
+            getCSVValue(csv, ['特徴タグ'])
+        ),
+        usageTags: splitCSVTags(
+            getCSVValue(csv, ['用途タグ'])
+        ),
+        spec1: getCSVValue(
+            csv,
+            ['スペック1', 'スペック①']
+        ),
+        spec2: getCSVValue(
+            csv,
+            ['スペック2', 'スペック②']
+        ),
+        spec3: getCSVValue(
+            csv,
+            ['スペック3', 'スペック③']
+        ),
+        spec4: getCSVValue(
+            csv,
+            ['スペック4', 'スペック④']
+        ),
+        spec5: getCSVValue(
+            csv,
+            ['スペック5', 'スペック⑤']
+        ),
+        care: getCSVValue(
+            csv,
+            ['ケア方法']
+        ),
+        note1: getCSVValue(
+            csv,
+            ['備考①']
+        ),
+        note2: getCSVValue(
+            csv,
+            ['備考②']
+        ),
+        recommended: normalizeBoolean(
+            getCSVValue(csv, ['おすすめ'])
+        ),
+        isNew: normalizeBoolean(
+            getCSVValue(csv, ['新商品'])
+        ),
+        popular: normalizeBoolean(
+            getCSVValue(csv, ['人気商品'])
+        ),
+        published: normalizeBoolean(
+            getCSVValue(csv, ['公開'])
+        ),
+        stock: getCSVValue(
+            csv,
+            ['店舗在庫']
+        )
+    };
+
+}
+
+/* ==========================================================
+   既存商品をCSV内容で更新
+========================================================== */
+
+function mergeCSVProduct(
+    current,
+    csv
+) {
+
+    const updated = {
+        ...current
+    };
+
+
+    updated.maker =
+        getCSVValue(
+            csv,
+            ['メーカー名']
+        );
+
+    updated.code =
+        getCSVValue(
+            csv,
+            ['品番']
+        );
+
+    updated.name =
+        getCSVValue(
+            csv,
+            ['商品名']
+        );
+
+    updated.price =
+        normalizePrice(
+            getCSVValue(
+                csv,
+                ['価格']
+            )
+        );
+
+    updated.brand =
+        getCSVValue(
+            csv,
+            ['ブランド']
+        );
+
+    updated.category =
+        getCSVValue(
+            csv,
+            ['カテゴリ']
+        );
+
+    updated.subCategory =
+        getCSVValue(
+            csv,
+            ['サブカテゴリ']
+        );
+
+    updated.series =
+        getCSVValue(
+            csv,
+            ['シリーズ']
+        );
+
+    updated.color =
+        getCSVValue(
+            csv,
+            ['色']
+        );
+
+    updated.colorGroup =
+        getCSVValue(
+            csv,
+            ['カラー系統']
+        );
+
+    updated.material =
+        getCSVValue(
+            csv,
+            ['素材']
+        );
+
+    updated.size =
+        getCSVValue(
+            csv,
+            ['サイズ']
+        );
+
+    updated.weight =
+        getCSVValue(
+            csv,
+            ['重量']
+        );
+
+    updated.title =
+        getCSVValue(
+            csv,
+            ['商品タイトル']
+        );
+
+    updated.image =
+        getCSVValue(
+            csv,
+            ['商品画像URL', '画像URL']
+        );
+
+    updated.url =
+        getCSVValue(
+            csv,
+            ['商品URL', '商品ページURL']
+        );
+
+    updated.tags =
+        splitCSVTags(
+            getCSVValue(
+                csv,
+                ['特徴タグ']
+            )
+        );
+
+    updated.usageTags =
+        splitCSVTags(
+            getCSVValue(
+                csv,
+                ['用途タグ']
+            )
+        );
+
+    updated.spec1 =
+        getCSVValue(
+            csv,
+            ['スペック1', 'スペック①']
+        );
+
+    updated.spec2 =
+        getCSVValue(
+            csv,
+            ['スペック2', 'スペック②']
+        );
+
+    updated.spec3 =
+        getCSVValue(
+            csv,
+            ['スペック3', 'スペック③']
+        );
+
+    updated.spec4 =
+        getCSVValue(
+            csv,
+            ['スペック4', 'スペック④']
+        );
+
+    updated.spec5 =
+        getCSVValue(
+            csv,
+            ['スペック5', 'スペック⑤']
+        );
+
+    updated.care =
+        getCSVValue(
+            csv,
+            ['ケア方法']
+        );
+
+    updated.note1 =
+        getCSVValue(
+            csv,
+            ['備考①']
+        );
+
+    updated.note2 =
+        getCSVValue(
+            csv,
+            ['備考②']
+        );
+
+    updated.recommended =
+        normalizeBoolean(
+            getCSVValue(
+                csv,
+                ['おすすめ']
+            )
+        );
+
+    updated.isNew =
+        normalizeBoolean(
+            getCSVValue(
+                csv,
+                ['新商品']
+            )
+        );
+
+    updated.popular =
+        normalizeBoolean(
+            getCSVValue(
+                csv,
+                ['人気商品']
+            )
+        );
+
+    updated.published =
+        normalizeBoolean(
+            getCSVValue(
+                csv,
+                ['公開']
+            )
+        );
+
+    updated.stock =
+        getCSVValue(
+            csv,
+            ['店舗在庫']
+        );
+
+
+    return updated;
+
+}
+    
+/* ==========================================================
    比較結果表示
 ========================================================== */
 
@@ -957,6 +1426,11 @@ csvFileInput.addEventListener(
 
                         }
 
+                      currentProductsForUpdate =
+                      currentProducts;
+
+                      csvProductsForUpdate =
+                      csvProducts;  
 
                         showComparisonResult(
                             currentProducts,
@@ -1013,8 +1487,103 @@ generateJsonButton.addEventListener(
     'click',
     () => {
 
-        uploadResult.textContent =
-            '更新用JSONを作成しています……';
+        try {
+
+            uploadResult.textContent =
+                '更新用JSONを作成しています……';
+
+
+            const updatedProducts =
+                createUpdatedProducts();
+
+
+            const json =
+                JSON.stringify(
+                    updatedProducts,
+                    null,
+                    2
+                );
+
+
+            const blob =
+                new Blob(
+                    [json],
+                    {
+                        type:
+                            'application/json;charset=utf-8'
+                    }
+                );
+
+
+            const url =
+                URL.createObjectURL(blob);
+
+
+            const link =
+                document.createElement('a');
+
+
+            link.href = url;
+
+            link.download =
+                'products_updated.json';
+
+
+            document.body.appendChild(link);
+
+            link.click();
+
+            document.body.removeChild(link);
+
+
+            URL.revokeObjectURL(url);
+
+
+            uploadResult.innerHTML = `
+
+                <div class="comparison-result">
+
+                    <p>
+                        更新用JSONを作成しました。
+                    </p>
+
+                    <p>
+                        商品数：
+                        <strong>
+                            ${updatedProducts.length}件
+                        </strong>
+                    </p>
+
+                    <p class="comparison-note">
+                        ※現在の商品データはまだ変更されていません。
+                    </p>
+
+                </div>
+
+            `;
+
+
+        } catch (error) {
+
+            uploadResult.innerHTML = `
+
+                <div class="comparison-result">
+
+                    <p>
+                        更新用JSONの作成に失敗しました。
+                    </p>
+
+                    <p class="comparison-note">
+                        ${error.message}
+                    </p>
+
+                </div>
+
+            `;
+
+            console.error(error);
+
+        }
 
     }
 );

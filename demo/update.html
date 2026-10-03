@@ -338,6 +338,16 @@ function normalizeComparisonValue(value) {
 
     }
 
+    /*
+ * 空欄を意味する記号を統一
+ */
+if (
+    normalized === '-' ||
+    normalized === '—' ||
+    normalized === 'ー'
+) {
+    return '';
+}
 
     return normalized;
 

@@ -97,9 +97,7 @@ const uploadResult =
 selectCsvButton.addEventListener(
     'click',
     () => {
-
         csvFileInput.click();
-
     }
 );
 
@@ -117,7 +115,58 @@ csvFileInput.addEventListener(
         }
 
         uploadResult.textContent =
-            `CSVファイル「${file.name}」を選択しました。`;
+            'CSVファイルを読み込んでいます……';
+
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload =
+            (loadEvent) => {
+
+                const text =
+                    loadEvent.target.result;
+
+
+                const lines =
+                    text
+                        .replace(/\r\n/g, '\n')
+                        .replace(/\r/g, '\n')
+                        .split('\n')
+                        .filter(
+                            line =>
+                                line.trim() !== ''
+                        );
+
+
+                const dataCount =
+                    Math.max(
+                        lines.length - 1,
+                        0
+                    );
+
+
+                uploadResult.textContent =
+                    `CSVファイル「${file.name}」を読み込みました。商品データは ${dataCount} 件です。`;
+
+            };
+
+
+        reader.onerror =
+            () => {
+
+                uploadResult.textContent =
+                    'CSVファイルの読み込みに失敗しました。';
+
+            };
+
+
+        reader.readAsText(
+            file,
+            'UTF-8'
+        );
+
 
         csvFileInput.value = '';
 

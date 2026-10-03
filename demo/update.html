@@ -79,32 +79,409 @@
 <script>
 
 const csvFileInput =
-    document.getElementById(
-        'csvFileInput'
-    );
+    document.getElementById('csvFileInput');
 
 const selectCsvButton =
-    document.getElementById(
-        'selectCsvButton'
-    );
+    document.getElementById('selectCsvButton');
 
 const uploadResult =
-    document.getElementById(
-        'uploadResult'
+    document.getElementById('uploadResult');
+
+
+/* ==========================================================
+   CSV解析
+========================================================== */
+
+function parseCSV(text) {
+
+    const rows = [];
+    let row = [];
+    let value = '';
+    let inQuotes = false;
+
+    for (let i = 0; i < text.length; i++) {
+
+        const char = text[i];
+        const next = text[i + 1];
+
+        if (char === '"') {
+
+            if (inQuotes && next === '"') {
+                value += '"';
+                i++;
+            } else {
+                inQuotes = !inQuotes;
+            }
+
+        } else if (char === ',' && !inQuotes) {
+
+            row.push(value);
+            value = '';
+
+        } else if (
+            (char === '\n' || char === '\r') &&
+            !inQuotes
+        ) {
+
+            if (char === '\r' && next === '\n') {
+                i++;
+            }
+
+            row.push(value);
+            rows.push(row);
+
+            row = [];
+            value = '';
+
+        } else {
+
+            value += char;
+
+        }
+    }
+
+    if (value !== '' || row.length > 0) {
+        row.push(value);
+        rows.push(row);
+    }
+
+    if (rows.length === 0) {
+        return [];
+    }
+
+
+    const headers =
+        rows[0].map(header =>
+            header
+                .replace(/^\uFEFF/, '')
+                .trim()
+        );
+
+
+    return rows
+        .slice(1)
+        .filter(row =>
+            row.some(value =>
+                value.trim() !== ''
+            )
+        )
+        .map(row => {
+
+            const product = {};
+
+            headers.forEach(
+                (header, index) => {
+                    product[header] =
+                        row[index] ?? '';
+                }
+            );
+
+            return product;
+
+        });
+
+}
+
+
+/* ==========================================================
+   配列・文字列の比較用
+========================================================== */
+
+function normalizeValue(value) {
+
+    if (Array.isArray(value)) {
+        return value.join('|');
+    }
+
+    if (value === null || value === undefined) {
+        return '';
+    }
+
+    return String(value)
+        .trim();
+
+}
+
+
+/* ==========================================================
+   CSV → Product Finderデータ比較用
+========================================================== */
+
+function getCSVValue(product, names) {
+
+    for (const name of names) {
+
+        if (
+            Object.prototype.hasOwnProperty.call(
+                product,
+                name
+            )
+        ) {
+            return product[name];
+        }
+
+    }
+
+    return '';
+
+}
+
+
+function createComparisonKey(product) {
+
+    return normalizeValue(
+        getCSVValue(
+            product,
+            ['品番', 'code', '商品コード']
+        )
     );
 
+}
+
+
+/* ==========================================================
+   商品データの変更判定
+========================================================== */
+
+function hasProductChanged(
+    current,
+    csv
+) {
+
+    const fields = [
+
+        ['メーカー', 'maker'],
+        ['商品名', 'name'],
+        ['価格', 'price'],
+        ['ブランド', 'brand'],
+        ['カテゴリ', 'category'],
+        ['サブカテゴリ', 'subCategory'],
+        ['シリーズ', 'series'],
+        ['色', 'color'],
+        ['カラー系統', 'colorGroup'],
+        ['素材', 'material'],
+        ['サイズ', 'size'],
+        ['重量', 'weight'],
+        ['商品タイトル', 'title'],
+        ['画像URL', 'image'],
+        ['商品URL', 'url'],
+        ['特徴タグ', 'tags'],
+        ['用途タグ', 'usageTags'],
+        ['スペック1', 'spec1'],
+        ['スペック2', 'spec2'],
+        ['スペック3', 'spec3'],
+        ['スペック4', 'spec4'],
+        ['スペック5', 'spec5'],
+        ['ケア方法', 'care'],
+        ['備考①', 'note1'],
+        ['備考②', 'note2']
+
+    ];
+
+
+    return fields.some(
+        ([csvName, jsonName]) => {
+
+            const csvValue =
+                getCSVValue(
+                    csv,
+                    [csvName, jsonName]
+                );
+
+            const currentValue =
+                current[jsonName];
+
+            return normalizeValue(
+                csvValue
+            ) !== normalizeValue(
+                currentValue
+            );
+
+        }
+    );
+
+}
+
+
+/* ==========================================================
+   比較結果表示
+========================================================== */
+
+function showComparisonResult(
+    currentProducts,
+    csvProducts
+) {
+
+    const currentMap =
+        new Map();
+
+    currentProducts.forEach(
+        product => {
+
+            const key =
+                normalizeValue(
+                    product.code
+                );
+
+            if (key) {
+                currentMap.set(
+                    key,
+                    product
+                );
+            }
+
+        }
+    );
+
+
+    const csvMap =
+        new Map();
+
+    csvProducts.forEach(
+        product => {
+
+            const key =
+                createComparisonKey(
+                    product
+                );
+
+            if (key) {
+                csvMap.set(
+                    key,
+                    product
+                );
+            }
+
+        }
+    );
+
+
+    let added = 0;
+    let changed = 0;
+    let deleted = 0;
+
+
+    csvMap.forEach(
+        (csvProduct, key) => {
+
+            if (!currentMap.has(key)) {
+
+                added++;
+
+            } else {
+
+                const currentProduct =
+                    currentMap.get(key);
+
+                if (
+                    hasProductChanged(
+                        currentProduct,
+                        csvProduct
+                    )
+                ) {
+                    changed++;
+                }
+
+            }
+
+        }
+    );
+
+
+    currentMap.forEach(
+        (product, key) => {
+
+            if (!csvMap.has(key)) {
+                deleted++;
+            }
+
+        }
+    );
+
+
+    uploadResult.innerHTML = `
+
+        <div class="comparison-result">
+
+            <p>
+                CSVファイルを確認しました。
+            </p>
+
+            <div class="comparison-summary">
+
+                <div>
+                    <span>現在の商品数</span>
+                    <strong>
+                        ${currentProducts.length}件
+                    </strong>
+                </div>
+
+                <div>
+                    <span>CSVの商品数</span>
+                    <strong>
+                        ${csvProducts.length}件
+                    </strong>
+                </div>
+
+            </div>
+
+            <div class="comparison-diff">
+
+                <div>
+                    <span>追加</span>
+                    <strong>
+                        ${added}件
+                    </strong>
+                </div>
+
+                <div>
+                    <span>変更</span>
+                    <strong>
+                        ${changed}件
+                    </strong>
+                </div>
+
+                <div>
+                    <span>削除候補</span>
+                    <strong>
+                        ${deleted}件
+                    </strong>
+                </div>
+
+            </div>
+
+            <p class="comparison-note">
+                ※この段階では商品データは変更されていません。
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
+/* ==========================================================
+   CSV選択
+========================================================== */
 
 selectCsvButton.addEventListener(
     'click',
     () => {
+
         csvFileInput.click();
+
     }
 );
 
 
+/* ==========================================================
+   CSV読み込み
+========================================================== */
+
 csvFileInput.addEventListener(
     'change',
-    (event) => {
+    async (event) => {
 
         const file =
             event.target.files &&
@@ -114,58 +491,101 @@ csvFileInput.addEventListener(
             return;
         }
 
+
         uploadResult.textContent =
-            'CSVファイルを読み込んでいます……';
+            '現在の商品データを確認しています……';
 
 
-        const reader =
-            new FileReader();
+        try {
+
+            const response =
+                await fetch('products.json');
 
 
-        reader.onload =
-            (loadEvent) => {
+            if (!response.ok) {
+                throw new Error(
+                    'products.jsonの読み込みに失敗しました。'
+                );
+            }
 
-                const text =
-                    loadEvent.target.result;
+
+            const currentProducts =
+                await response.json();
 
 
-                const lines =
-                    text
-                        .replace(/\r\n/g, '\n')
-                        .replace(/\r/g, '\n')
-                        .split('\n')
-                        .filter(
-                            line =>
-                                line.trim() !== ''
+            uploadResult.textContent =
+                'CSVファイルを読み込んでいます……';
+
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                (loadEvent) => {
+
+                    try {
+
+                        const text =
+                            loadEvent.target.result;
+
+
+                        const csvProducts =
+                            parseCSV(text);
+
+
+                        if (
+                            csvProducts.length === 0
+                        ) {
+
+                            uploadResult.textContent =
+                                'CSVに商品データがありません。';
+
+                            return;
+
+                        }
+
+
+                        showComparisonResult(
+                            currentProducts,
+                            csvProducts
                         );
 
+                    } catch (error) {
 
-                const dataCount =
-                    Math.max(
-                        lines.length - 1,
-                        0
-                    );
+                        uploadResult.textContent =
+                            'CSVの解析中にエラーが発生しました。';
 
+                        console.error(error);
 
-                uploadResult.textContent =
-                    `CSVファイル「${file.name}」を読み込みました。商品データは ${dataCount} 件です。`;
+                    }
 
-            };
+                };
 
 
-        reader.onerror =
-            () => {
+            reader.onerror =
+                () => {
 
-                uploadResult.textContent =
-                    'CSVファイルの読み込みに失敗しました。';
+                    uploadResult.textContent =
+                        'CSVファイルの読み込みに失敗しました。';
 
-            };
+                };
 
 
-        reader.readAsText(
-            file,
-            'UTF-8'
-        );
+            reader.readAsText(
+                file,
+                'UTF-8'
+            );
+
+
+        } catch (error) {
+
+            uploadResult.textContent =
+                '現在の商品データを読み込めませんでした。';
+
+            console.error(error);
+
+        }
 
 
         csvFileInput.value = '';

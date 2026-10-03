@@ -689,9 +689,11 @@ function showComparisonResult(
     );
 
 
-    let added = 0;
-    let changed = 0;
-    let deleted = 0;
+let added = 0;
+let changed = 0;
+let deleted = 0;
+
+let diagnosticResults = [];
 
 
     csvMap.forEach(
@@ -706,14 +708,28 @@ function showComparisonResult(
                 const currentProduct =
                     currentMap.get(key);
 
-                if (
-                    hasProductChanged(
-                        currentProduct,
-                        csvProduct
-                    )
-                ) {
-                    changed++;
-                }
+const comparison =
+    hasProductChanged(
+        currentProduct,
+        csvProduct
+    );
+
+if (comparison.changed) {
+
+    changed++;
+
+    if (diagnosticResults.length < 5) {
+
+        diagnosticResults.push({
+            code: key,
+            field: comparison.field,
+            current: comparison.current,
+            csv: comparison.csv
+        });
+
+    }
+
+}
 
             }
 
@@ -732,65 +748,85 @@ function showComparisonResult(
     );
 
 
-    uploadResult.innerHTML = `
+uploadResult.innerHTML = `
 
-        <div class="comparison-result">
+    <div class="comparison-result">
 
-            <p>
-                CSVファイルを確認しました。
-            </p>
+        <p>
+            CSVファイルを確認しました。
+        </p>
 
-            <div class="comparison-summary">
+        <div class="comparison-summary">
 
-                <div>
-                    <span>現在の商品数</span>
-                    <strong>
-                        ${currentProducts.length}件
-                    </strong>
-                </div>
-
-                <div>
-                    <span>CSVの商品数</span>
-                    <strong>
-                        ${csvProducts.length}件
-                    </strong>
-                </div>
-
+            <div>
+                <span>現在の商品数</span>
+                <strong>
+                    ${currentProducts.length}件
+                </strong>
             </div>
 
-            <div class="comparison-diff">
-
-                <div>
-                    <span>追加</span>
-                    <strong>
-                        ${added}件
-                    </strong>
-                </div>
-
-                <div>
-                    <span>変更</span>
-                    <strong>
-                        ${changed}件
-                    </strong>
-                </div>
-
-                <div>
-                    <span>削除候補</span>
-                    <strong>
-                        ${deleted}件
-                    </strong>
-                </div>
-
+            <div>
+                <span>CSVの商品数</span>
+                <strong>
+                    ${csvProducts.length}件
+                </strong>
             </div>
-
-            <p class="comparison-note">
-                ※この段階では商品データは変更されていません。
-            </p>
 
         </div>
 
-    `;
+        <div class="comparison-diff">
 
+            <div>
+                <span>追加</span>
+                <strong>
+                    ${added}件
+                </strong>
+            </div>
+
+            <div>
+                <span>変更</span>
+                <strong>
+                    ${changed}件
+                </strong>
+            </div>
+
+            <div>
+                <span>削除候補</span>
+                <strong>
+                    ${deleted}件
+                </strong>
+            </div>
+
+        </div>
+
+        <div class="comparison-diagnostic">
+
+            <p>
+                <strong>変更判定の確認</strong>
+            </p>
+
+            ${diagnosticResults.map(item => `
+                <div>
+                    品番 ${item.code}：
+                    ${item.field}
+                    <br>
+                    現在：
+                    ${item.current || '（空欄）'}
+                    <br>
+                    CSV：
+                    ${item.csv || '（空欄）'}
+                </div>
+            `).join('')}
+
+        </div>
+
+        <p class="comparison-note">
+            ※この段階では商品データは変更されていません。
+        </p>
+
+    </div>
+
+`;
 }
 
 

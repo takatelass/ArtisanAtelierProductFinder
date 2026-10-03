@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>
+        商品データ更新 | Artisan Atelier Product Finder
+    </title>
+
+    <meta
+        name="description"
+        content="Artisan Atelier Product Finder 商品データ更新ページ">
+
+    <link
+        rel="stylesheet"
+        href="style.css">
+</head>
+
+<body>
+
+<header>
+    <div class="container">
+        <h1>
+            Artisan Atelier Product Finder
+        </h1>
+    </div>
+</header>
+
+<main class="container update-page">
+
+    <section class="update-panel">
+
+        <h2>
+            商品データ更新
+        </h2>
+
+        <div class="update-file-area">
+
+            <p class="update-file-label">
+                アップロードするファイルを選択
+            </p>
+
+            <input
+                type="file"
+                id="csvFileInput"
+                accept=".csv,text/csv"
+                hidden>
+
+            <button
+                type="button"
+                id="selectCsvButton"
+                class="update-file-button">
+                ファイルを選択
+            </button>
+
+        </div>
+
+        <div
+            id="uploadResult"
+            class="upload-result"
+            aria-live="polite">
+        </div>
+
+    </section>
+
+    <a
+        href="index.html"
+        class="back-to-search">
+        商品検索へ戻る
+    </a>
+
+</main>
+
+<script>
+
+const csvFileInput =
+    document.getElementById(
+        'csvFileInput'
+    );
+
+const selectCsvButton =
+    document.getElementById(
+        'selectCsvButton'
+    );
+
+const uploadResult =
+    document.getElementById(
+        'uploadResult'
+    );
+
+
+selectCsvButton.addEventListener(
+    'click',
+    () => {
+
+        csvFileInput.click();
+
+    }
+);
+
+
+csvFileInput.addEventListener(
+    'change',
+    (event) => {
+
+        const file =
+            event.target.files &&
+            event.target.files[0];
+
+        if (!file) {
+            return;
+        }
+
+        uploadResult.textContent =
+            `CSVファイル「${file.name}」を選択しました。`;
+
+        csvFileInput.value = '';
+
+    }
+);
+
+</script>
+
+</body>
+
+</html>

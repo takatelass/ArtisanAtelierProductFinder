@@ -1263,3 +1263,42 @@ footer {
 #resultCount::first-letter {
     font-size: 20px;
 }
+
+/* ==========================================================
+   商品データ更新ボタン
+========================================================== */
+
+.data-update-panel {
+    margin: 18px 0;
+    text-align: center;
+}
+
+.data-update-button {
+    display: inline-block;
+    padding: 9px 16px;
+    border: 1px solid #3F617D;
+    border-radius: 999px;
+    background: #3F617D;
+    color: #fff;
+    font-size: 13px;
+    line-height: 1.4;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease;
+}
+
+.data-update-button:hover {
+    background: #2F4D66;
+    border-color: #2F4D66;
+}
+
+/* タブレット・スマホでは非表示 */
+@media (max-width: 767px) {
+
+    .data-update-panel {
+        display: none;
+    }
+
+}

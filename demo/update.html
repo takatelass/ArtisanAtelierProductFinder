@@ -399,160 +399,190 @@ function hasProductChanged(
 
     const fields = [
 
-       {
-    csv: ['メーカー名'],
-    json: 'maker'
-},
+        {
+            label: 'メーカー',
+            csv: ['メーカー名'],
+            json: 'maker'
+        },
 
         {
-            csv: ['品番', '商品コード'],
+            label: '品番',
+            csv: ['品番'],
             json: 'code'
         },
 
         {
-            csv: ['商品名', '名称'],
+            label: '商品名',
+            csv: ['商品名'],
             json: 'name'
         },
 
         {
+            label: '価格',
             csv: ['価格'],
             json: 'price'
         },
 
         {
+            label: 'ブランド',
             csv: ['ブランド'],
             json: 'brand'
         },
 
         {
+            label: 'カテゴリ',
             csv: ['カテゴリ'],
             json: 'category'
         },
 
         {
+            label: 'サブカテゴリ',
             csv: ['サブカテゴリ'],
             json: 'subCategory'
         },
 
         {
+            label: 'シリーズ',
             csv: ['シリーズ'],
             json: 'series'
         },
 
         {
+            label: '色',
             csv: ['色'],
             json: 'color'
         },
 
         {
+            label: 'カラー系統',
             csv: ['カラー系統'],
             json: 'colorGroup'
         },
 
         {
+            label: '素材',
             csv: ['素材'],
             json: 'material'
         },
 
         {
+            label: 'サイズ',
             csv: ['サイズ'],
             json: 'size'
         },
 
         {
+            label: '重量',
             csv: ['重量'],
             json: 'weight'
         },
 
         {
+            label: '商品タイトル',
             csv: ['商品タイトル'],
             json: 'title'
         },
 
         {
-            csv: ['画像URL', '画像URL '],
+            label: '商品画像URL',
+            csv: ['商品画像URL'],
             json: 'image'
         },
 
         {
-            csv: ['商品URL', '商品ページURL'],
+            label: '商品URL',
+            csv: ['商品URL'],
             json: 'url'
         },
 
         {
+            label: '特徴タグ',
             csv: ['特徴タグ'],
             json: 'tags'
         },
 
         {
+            label: '用途タグ',
             csv: ['用途タグ'],
             json: 'usageTags'
         },
 
         {
-            csv: ['スペック1'],
+            label: 'スペック①',
+            csv: ['スペック①'],
             json: 'spec1'
         },
 
         {
-            csv: ['スペック2'],
+            label: 'スペック②',
+            csv: ['スペック②'],
             json: 'spec2'
         },
 
         {
-            csv: ['スペック3'],
+            label: 'スペック③',
+            csv: ['スペック③'],
             json: 'spec3'
         },
 
         {
-            csv: ['スペック4'],
+            label: 'スペック④',
+            csv: ['スペック④'],
             json: 'spec4'
         },
 
         {
-            csv: ['スペック5'],
+            label: 'スペック⑤',
+            csv: ['スペック⑤'],
             json: 'spec5'
         },
 
         {
+            label: 'ケア方法',
             csv: ['ケア方法'],
             json: 'care'
         },
 
         {
+            label: '備考①',
             csv: ['備考①'],
             json: 'note1'
         },
 
         {
+            label: '備考②',
             csv: ['備考②'],
             json: 'note2'
         },
 
         {
+            label: 'おすすめ',
             csv: ['おすすめ'],
             json: 'recommended'
         },
 
         {
+            label: '新商品',
             csv: ['新商品'],
             json: 'isNew'
         },
 
         {
+            label: '人気商品',
             csv: ['人気商品'],
             json: 'popular'
         },
 
         {
+            label: '公開',
             csv: ['公開'],
             json: 'published'
         },
 
         {
+            label: '店舗在庫',
             csv: ['店舗在庫'],
             json: 'stock'
-
         }
 
     ];
@@ -567,33 +597,44 @@ function hasProductChanged(
             );
 
 
-        /*
-         * CSV側にその列が存在しない場合は
-         * 比較しない
-         */
         if (!csvField.exists) {
             continue;
         }
 
 
-        if (
-            !valuesAreEqual(
-                current[field.json],
+        const currentValue =
+            normalizeComparisonValue(
+                current[field.json]
+            );
+
+
+        const csvValue =
+            normalizeComparisonValue(
                 csvField.value
-            )
+            );
+
+
+        if (
+            currentValue !== csvValue
         ) {
 
-            return true;
+            return {
+                changed: true,
+                field: field.label,
+                current: currentValue,
+                csv: csvValue
+            };
 
         }
 
     }
 
 
-    return false;
+    return {
+        changed: false
+    };
 
 }
-
 
 /* ==========================================================
    比較結果表示

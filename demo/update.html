@@ -252,6 +252,12 @@ function normalizeComparisonValue(value) {
         return '';
     }
 
+
+    /*
+     * 配列の場合
+     * JSONのタグ配列とCSVの「|」区切りを
+     * 同じ形式にそろえる
+     */
     if (Array.isArray(value)) {
 
         return value
@@ -263,12 +269,69 @@ function normalizeComparisonValue(value) {
 
     }
 
-    return String(value)
-        .trim()
-        .replace(/,/g, '');
+
+    /*
+     * 真偽値を統一
+     *
+     * CSV:
+     * True / False
+     *
+     * JSON:
+     * true / false
+     */
+    if (
+        value === true ||
+        String(value).trim().toLowerCase() === 'true'
+    ) {
+        return 'true';
+    }
+
+
+    if (
+        value === false ||
+        String(value).trim().toLowerCase() === 'false'
+    ) {
+        return 'false';
+    }
+
+
+    /*
+     * 数値・文字列の違いを吸収
+     *
+     * 33,000
+     * 33000
+     * 33000.0
+     *
+     * などを同じ値として扱う
+     */
+    let normalized =
+        String(value)
+            .trim();
+
+
+    normalized =
+        normalized.replace(/,/g, '');
+
+
+    /*
+     * 数値として解釈できる場合は
+     * 数値に統一する
+     */
+    if (
+        normalized !== '' &&
+        !isNaN(normalized)
+    ) {
+
+        return String(
+            Number(normalized)
+        );
+
+    }
+
+
+    return normalized;
 
 }
-
 
 function getExistingCSVField(
     csv,

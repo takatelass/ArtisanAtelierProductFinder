@@ -255,8 +255,8 @@ function normalizeComparisonValue(value) {
 
     /*
      * 配列の場合
-     * JSONのタグ配列とCSVの「|」区切りを
-     * 同じ形式にそろえる
+     * JSONのタグ配列を
+     * 「|」区切りの文字列へ統一
      */
     if (Array.isArray(value)) {
 
@@ -270,52 +270,37 @@ function normalizeComparisonValue(value) {
     }
 
 
+    let normalized =
+        String(value)
+            .trim();
+
+
     /*
-     * 真偽値を統一
-     *
-     * CSV:
-     * True / False
-     *
-     * JSON:
-     * true / false
+     * True / False を統一
      */
     if (
-        value === true ||
-        String(value).trim().toLowerCase() === 'true'
+        normalized.toLowerCase() === 'true'
     ) {
         return 'true';
     }
 
 
     if (
-        value === false ||
-        String(value).trim().toLowerCase() === 'false'
+        normalized.toLowerCase() === 'false'
     ) {
         return 'false';
     }
 
 
     /*
-     * 数値・文字列の違いを吸収
-     *
-     * 33,000
-     * 33000
-     * 33000.0
-     *
-     * などを同じ値として扱う
+     * 数値のカンマを除去
      */
-    let normalized =
-        String(value)
-            .trim();
-
-
     normalized =
         normalized.replace(/,/g, '');
 
 
     /*
-     * 数値として解釈できる場合は
-     * 数値に統一する
+     * 数値として扱えるものは統一
      */
     if (
         normalized !== '' &&
@@ -325,6 +310,31 @@ function normalizeComparisonValue(value) {
         return String(
             Number(normalized)
         );
+
+    }
+
+
+    /*
+     * 「|」区切りデータを正規化
+     *
+     * 例：
+     * 牛革|軽量|ボトル収納|
+     *
+     * ↓
+     *
+     * 牛革|軽量|ボトル収納
+     */
+    if (
+        normalized.includes('|')
+    ) {
+
+        return normalized
+            .split('|')
+            .map(item =>
+                item.trim()
+            )
+            .filter(Boolean)
+            .join('|');
 
     }
 

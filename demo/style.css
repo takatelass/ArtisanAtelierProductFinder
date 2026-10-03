@@ -606,8 +606,10 @@ header h1 {
 
 #resultCount {
     margin-right: auto;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: #333;
 }
 
 #sortOrder {

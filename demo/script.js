@@ -2185,3 +2185,49 @@ document.addEventListener(
 
 loadProducts();
 
+/* ==========================================================
+CSV商品データ更新
+========================================================== */
+
+const openDataUpdateButton =
+    document.getElementById(
+        'openDataUpdate'
+    );
+
+const csvFileInput =
+    document.getElementById(
+        'csvFileInput'
+    );
+
+if (
+    openDataUpdateButton &&
+    csvFileInput
+) {
+
+    openDataUpdateButton.addEventListener(
+        'click',
+        () => {
+            csvFileInput.click();
+        }
+    );
+
+    csvFileInput.addEventListener(
+        'change',
+        (event) => {
+
+            const file =
+                event.target.files &&
+                event.target.files[0];
+
+            if (!file) {
+                return;
+            }
+
+            alert(
+                `CSVファイル「${file.name}」を選択しました。`
+            );
+
+            csvFileInput.value = '';
+        }
+    );
+}

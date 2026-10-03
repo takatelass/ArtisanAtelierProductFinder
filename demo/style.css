@@ -273,20 +273,20 @@ header h1 {
 /* BLACK */
 
 .color-black {
-    background: #222;
-    border-color: #222;
-    color: #fff;
+    background: #e5e5e5;
+    border-color: #c5c5c5;
+    color: #333;
 }
 
 .color-black:hover {
-    background: #444;
-    border-color: #444;
+    background: #d9d9d9;
+    border-color: #aaa;
 }
 
 .color-black.active {
-    background: #000;
-    border-color: #000;
-    box-shadow: 0 0 0 2px #ddd inset;
+    background: #d0d0d0;
+    border-color: #777;
+    color: #222;
 }
 
 /* WHITE */
@@ -328,18 +328,20 @@ header h1 {
 /* NAVY */
 
 .color-navy {
-    background: #27364a;
-    border-color: #27364a;
-    color: #fff;
+    background: #dce4ec;
+    border-color: #b8c7d5;
+    color: #40566b;
 }
 
 .color-navy:hover {
-    background: #354960;
+    background: #cedae5;
+    border-color: #9fb2c4;
 }
 
 .color-navy.active {
-    background: #182536;
-    border-color: #182536;
+    background: #bfcedb;
+    border-color: #728ba0;
+    color: #30475b;
 }
 
 /* BLUE */

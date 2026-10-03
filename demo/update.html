@@ -809,27 +809,45 @@ uploadResult.innerHTML = `
 
         </div>
 
-        <div class="comparison-diagnostic">
+<div class="comparison-diagnostic">
 
+    <p>
+        <strong>変更内容</strong>
+    </p>
+
+    ${diagnosticResults.length === 0
+        ? `
             <p>
-                <strong>変更判定の確認</strong>
+                現在の商品データとCSVの内容に
+                変更はありません。
             </p>
+        `
+        : diagnosticResults.map(item => `
+            <div class="change-detail">
 
-            ${diagnosticResults.map(item => `
-                <div>
-                    品番 ${item.code}：
-                    ${item.field}
-                    <br>
+                <strong>
+                    品番：${item.code}
+                </strong>
+
+                <p>
+                    変更項目：${item.field}
+                </p>
+
+                <p>
                     現在：
                     ${item.current || '（空欄）'}
-                    <br>
-                    CSV：
+                </p>
+
+                <p>
+                    更新後：
                     ${item.csv || '（空欄）'}
-                </div>
-            `).join('')}
+                </p>
 
-        </div>
+            </div>
+        `).join('')
+    }
 
+</div>
         <p class="comparison-note">
             ※この段階では商品データは変更されていません。
         </p>

@@ -623,9 +623,9 @@ header h1 {
 
 #resetFilters {
     padding: 10px 14px;
-    border: 1px solid #6f8fa8;
+    border: 1px solid #3F617D;
     border-radius: 5px;
-    background: #6f8fa8;
+    background: #3F617D;
     color: #fff;
     cursor: pointer;
     transition:
@@ -634,8 +634,8 @@ header h1 {
 }
 
 #resetFilters:hover {
-    background: #587b96;
-    border-color: #587b96;
+    background: #2F4D66;
+    border-color: #2F4D66;
 }
 
 /* ==========================================================

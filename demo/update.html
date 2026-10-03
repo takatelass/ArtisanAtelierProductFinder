@@ -243,6 +243,82 @@ function createComparisonKey(product) {
    商品データの変更判定
 ========================================================== */
 
+function normalizeComparisonValue(value) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+        return '';
+    }
+
+    if (Array.isArray(value)) {
+
+        return value
+            .map(item =>
+                String(item).trim()
+            )
+            .filter(Boolean)
+            .join('|');
+
+    }
+
+    return String(value)
+        .trim()
+        .replace(/,/g, '');
+
+}
+
+
+function getExistingCSVField(
+    csv,
+    names
+) {
+
+    for (const name of names) {
+
+        if (
+            Object.prototype.hasOwnProperty.call(
+                csv,
+                name
+            )
+        ) {
+            return {
+                exists: true,
+                value: csv[name]
+            };
+        }
+
+    }
+
+    return {
+        exists: false,
+        value: ''
+    };
+
+}
+
+
+function valuesAreEqual(
+    currentValue,
+    csvValue
+) {
+
+    const current =
+        normalizeComparisonValue(
+            currentValue
+        );
+
+    const csv =
+        normalizeComparisonValue(
+            csvValue
+        );
+
+    return current === csv;
+
+}
+
+
 function hasProductChanged(
     current,
     csv
@@ -250,55 +326,198 @@ function hasProductChanged(
 
     const fields = [
 
-        ['メーカー', 'maker'],
-        ['商品名', 'name'],
-        ['価格', 'price'],
-        ['ブランド', 'brand'],
-        ['カテゴリ', 'category'],
-        ['サブカテゴリ', 'subCategory'],
-        ['シリーズ', 'series'],
-        ['色', 'color'],
-        ['カラー系統', 'colorGroup'],
-        ['素材', 'material'],
-        ['サイズ', 'size'],
-        ['重量', 'weight'],
-        ['商品タイトル', 'title'],
-        ['画像URL', 'image'],
-        ['商品URL', 'url'],
-        ['特徴タグ', 'tags'],
-        ['用途タグ', 'usageTags'],
-        ['スペック1', 'spec1'],
-        ['スペック2', 'spec2'],
-        ['スペック3', 'spec3'],
-        ['スペック4', 'spec4'],
-        ['スペック5', 'spec5'],
-        ['ケア方法', 'care'],
-        ['備考①', 'note1'],
-        ['備考②', 'note2']
+        {
+            csv: ['メーカー'],
+            json: 'maker'
+        },
+
+        {
+            csv: ['品番', '商品コード'],
+            json: 'code'
+        },
+
+        {
+            csv: ['商品名', '名称'],
+            json: 'name'
+        },
+
+        {
+            csv: ['価格'],
+            json: 'price'
+        },
+
+        {
+            csv: ['ブランド'],
+            json: 'brand'
+        },
+
+        {
+            csv: ['カテゴリ'],
+            json: 'category'
+        },
+
+        {
+            csv: ['サブカテゴリ'],
+            json: 'subCategory'
+        },
+
+        {
+            csv: ['シリーズ'],
+            json: 'series'
+        },
+
+        {
+            csv: ['色'],
+            json: 'color'
+        },
+
+        {
+            csv: ['カラー系統'],
+            json: 'colorGroup'
+        },
+
+        {
+            csv: ['素材'],
+            json: 'material'
+        },
+
+        {
+            csv: ['サイズ'],
+            json: 'size'
+        },
+
+        {
+            csv: ['重量'],
+            json: 'weight'
+        },
+
+        {
+            csv: ['商品タイトル'],
+            json: 'title'
+        },
+
+        {
+            csv: ['画像URL', '画像URL '],
+            json: 'image'
+        },
+
+        {
+            csv: ['商品URL', '商品ページURL'],
+            json: 'url'
+        },
+
+        {
+            csv: ['特徴タグ'],
+            json: 'tags'
+        },
+
+        {
+            csv: ['用途タグ'],
+            json: 'usageTags'
+        },
+
+        {
+            csv: ['スペック1'],
+            json: 'spec1'
+        },
+
+        {
+            csv: ['スペック2'],
+            json: 'spec2'
+        },
+
+        {
+            csv: ['スペック3'],
+            json: 'spec3'
+        },
+
+        {
+            csv: ['スペック4'],
+            json: 'spec4'
+        },
+
+        {
+            csv: ['スペック5'],
+            json: 'spec5'
+        },
+
+        {
+            csv: ['ケア方法'],
+            json: 'care'
+        },
+
+        {
+            csv: ['備考①'],
+            json: 'note1'
+        },
+
+        {
+            csv: ['備考②'],
+            json: 'note2'
+        },
+
+        {
+            csv: ['おすすめ'],
+            json: 'recommended'
+        },
+
+        {
+            csv: ['新商品'],
+            json: 'isNew'
+        },
+
+        {
+            csv: ['人気商品'],
+            json: 'popular'
+        },
+
+        {
+            csv: ['公開'],
+            json: 'published'
+        },
+
+        {
+            csv: ['店舗在庫'],
+            json: 'stock'
+
+        }
 
     ];
 
 
-    return fields.some(
-        ([csvName, jsonName]) => {
+    for (const field of fields) {
 
-            const csvValue =
-                getCSVValue(
-                    csv,
-                    [csvName, jsonName]
-                );
-
-            const currentValue =
-                current[jsonName];
-
-            return normalizeValue(
-                csvValue
-            ) !== normalizeValue(
-                currentValue
+        const csvField =
+            getExistingCSVField(
+                csv,
+                field.csv
             );
 
+
+        /*
+         * CSV側にその列が存在しない場合は
+         * 比較しない
+         */
+        if (!csvField.exists) {
+            continue;
         }
-    );
+
+
+        if (
+            !valuesAreEqual(
+                current[field.json],
+                csvField.value
+            )
+        ) {
+
+            return true;
+
+        }
+
+    }
+
+
+    return false;
 
 }
 

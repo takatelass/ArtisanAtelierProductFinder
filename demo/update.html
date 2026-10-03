@@ -60,6 +60,14 @@
 
         </div>
 
+                <button
+            type="button"
+            id="generateJsonButton"
+            class="update-file-button"
+            style="display:none;">
+            更新用JSONを作成
+                </button>
+
         <div
             id="uploadResult"
             class="upload-result"
@@ -757,6 +765,13 @@ if (comparison.changed) {
         }
     );
 
+    const generateJsonButton =
+    document.getElementById('generateJsonButton');
+
+if (generateJsonButton) {
+    generateJsonButton.style.display =
+        changed > 0 ? 'block' : 'none';
+}
 
 uploadResult.innerHTML = `
 

@@ -1351,3 +1351,68 @@ footer {
     }
 
 }
+
+/* ==========================================================
+   PC：商品ステータスの最終レイアウト調整
+   1段目：在庫
+   2段目：新商品・人気商品・おすすめ
+========================================================== */
+
+@media (min-width: 768px) {
+
+    .product-card-status {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        gap: 5px;
+        margin-bottom: 10px;
+    }
+
+    .product-card-status-left {
+        grid-column: 1;
+        grid-row: 1;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        min-height: 24px;
+    }
+
+    .product-card-status-center {
+        grid-column: 1;
+        grid-row: 2;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 5px;
+        min-height: 24px;
+        width: 100%;
+    }
+
+    .product-card-status-right {
+        grid-column: 1;
+        grid-row: 2;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        min-height: 24px;
+        position: static;
+    }
+
+    /* 2段目の3つを横一列にまとめる */
+    .product-card-status-center {
+        display: contents;
+    }
+
+    .product-card-status-center .product-new-badge,
+    .product-card-status-center .product-popular-badge {
+        grid-row: 2;
+    }
+
+    .product-card-status-right {
+        grid-row: 2;
+    }
+
+    .product-card-status-right .product-badge {
+        margin-left: 0;
+    }
+}

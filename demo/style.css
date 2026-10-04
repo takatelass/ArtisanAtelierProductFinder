@@ -1403,16 +1403,24 @@ footer {
         display: contents;
     }
 
-    .product-card-status-center .product-new-badge,
-    .product-card-status-center .product-popular-badge {
-        grid-row: 2;
-    }
+.product-card-status-center {
+    display: contents;
+}
 
-    .product-card-status-right {
-        grid-row: 2;
-    }
+.product-card-status-center .product-new-badge,
+.product-card-status-center .product-popular-badge,
+.product-card-status-right .product-badge {
+    grid-row: 2;
+    margin: 0;
+}
 
-    .product-card-status-right .product-badge {
-        margin-left: 0;
-    }
+.product-card-status-center .product-new-badge,
+.product-card-status-center .product-popular-badge {
+    margin-right: 5px;
+}
+
+.product-card-status-right {
+    justify-content: flex-start;
+}
+    
 }

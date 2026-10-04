@@ -1,0 +1,435 @@
+name: 商品データ自動更新
+
+on:
+  push:
+    paths:
+      - 'update-data/latest.csv'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-products:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: リポジトリを取得
+        uses: actions/checkout@v4
+
+      - name: Pythonをセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: 商品データを確認・更新
+        run: |
+          python <<'PY'
+          import csv
+          import json
+          import re
+          from pathlib import Path
+
+          csv_path = Path("update-data/latest.csv")
+          json_path = Path("demo/products.json")
+
+          if not csv_path.exists():
+              raise SystemExit("エラー：update-data/latest.csv が見つかりません。")
+
+          if not json_path.exists():
+              raise SystemExit("エラー：demo/products.json が見つかりません。")
+
+          def normalize(value):
+              if value is None:
+                  return ""
+
+              if isinstance(value, list):
+                  value = "|".join(str(x).strip() for x in value if str(x).strip())
+
+              value = str(value).strip()
+
+              if value in ["-", "—", "ー"]:
+                  return ""
+
+              value = value.replace(",", "")
+
+              if value.lower() == "true":
+                  return "true"
+
+              if value.lower() == "false":
+                  return "false"
+
+              if value != "":
+                  try:
+                      return str(float(value)).rstrip("0").rstrip(".")
+                  except ValueError:
+                      pass
+
+              if "|" in value:
+                  return "|".join(
+                      item.strip()
+                      for item in value.split("|")
+                      if item.strip()
+                  )
+
+              return value
+
+          def price(value):
+              if value is None:
+                  return 0
+
+              value = str(value).replace(",", "").replace("円", "").strip()
+
+              if value == "":
+                  return 0
+
+              try:
+                  return int(float(value))
+              except ValueError:
+                  return 0
+
+          def boolean(value):
+              if value is True:
+                  return True
+
+              value = str(value).strip().lower()
+
+              return value in [
+                  "true",
+                  "1",
+                  "はい",
+                  "○"
+              ]
+
+          def tags(value):
+              if value is None or str(value).strip() == "":
+                  return []
+
+              return [
+                  item.strip()
+                  for item in str(value).split("|")
+                  if item.strip()
+              ]
+
+          with json_path.open("r", encoding="utf-8") as f:
+              current_products = json.load(f)
+
+          with csv_path.open(
+              "r",
+              encoding="utf-8-sig",
+              newline=""
+          ) as f:
+              reader = csv.DictReader(f)
+              csv_products = list(reader)
+
+          if not csv_products:
+              raise SystemExit("エラー：CSVに商品データがありません。")
+
+          current_map = {
+              str(product.get("code", "")).strip(): product
+              for product in current_products
+              if str(product.get("code", "")).strip()
+          }
+
+          csv_map = {
+              str(product.get("品番", "")).strip(): product
+              for product in csv_products
+              if str(product.get("品番", "")).strip()
+          }
+
+          if len(csv_map) != len(csv_products):
+              raise SystemExit(
+                  "エラー：CSV内に品番の重複、または空欄があります。"
+              )
+
+          added = [
+              code for code in csv_map
+              if code not in current_map
+          ]
+
+          deleted = [
+              code for code in current_map
+              if code not in csv_map
+          ]
+
+          fields = [
+              ("メーカー名", "maker"),
+              ("品番", "code"),
+              ("商品名", "name"),
+              ("価格", "price"),
+              ("ブランド", "brand"),
+              ("カテゴリ", "category"),
+              ("サブカテゴリ", "subCategory"),
+              ("シリーズ", "series"),
+              ("色", "color"),
+              ("カラー系統", "colorGroup"),
+              ("素材", "material"),
+              ("サイズ", "size"),
+              ("重量", "weight"),
+              ("商品タイトル", "title"),
+              ("商品画像URL", "image"),
+              ("画像URL", "image"),
+              ("商品URL", "url"),
+              ("商品ページURL", "url"),
+              ("特徴タグ", "tags"),
+              ("用途タグ", "usageTags"),
+              ("スペック1", "spec1"),
+              ("スペック①", "spec1"),
+              ("スペック2", "spec2"),
+              ("スペック②", "spec2"),
+              ("スペック3", "spec3"),
+              ("スペック③", "spec3"),
+              ("スペック4", "spec4"),
+              ("スペック④", "spec4"),
+              ("スペック5", "spec5"),
+              ("スペック⑤", "spec5"),
+              ("ケア方法", "care"),
+              ("備考①", "note1"),
+              ("備考②", "note2"),
+              ("おすすめ", "recommended"),
+              ("新商品", "isNew"),
+              ("人気商品", "popular"),
+              ("公開", "published"),
+              ("店舗在庫", "stock")
+          ]
+
+          def csv_value(row, name):
+              return row.get(name, "")
+
+          def converted_value(row, json_key, csv_name):
+              value = csv_value(row, csv_name)
+
+              if json_key == "price":
+                  return price(value)
+
+              if json_key in [
+                  "tags",
+                  "usageTags"
+              ]:
+                  return tags(value)
+
+              if json_key in [
+                  "recommended",
+                  "isNew",
+                  "popular",
+                  "published"
+              ]:
+                  return boolean(value)
+
+              return value
+
+          changed = []
+
+          for code, csv_product in csv_map.items():
+
+              current = current_map.get(code)
+
+              if current is None:
+                  changed.append(code)
+                  continue
+
+              already_checked = set()
+
+              for csv_name, json_key in fields:
+
+                  if csv_name in already_checked:
+                      continue
+
+                  if csv_name not in csv_product:
+                      continue
+
+                  already_checked.add(csv_name)
+
+                  current_value = normalize(
+                      current.get(json_key, "")
+                  )
+
+                  new_value = normalize(
+                      converted_value(
+                          csv_product,
+                          json_key,
+                          csv_name
+                      )
+                  )
+
+                  if current_value != new_value:
+                      changed.append(code)
+                      break
+
+          print("")
+          print("===== 商品データ確認 =====")
+          print(f"現在の商品数：{len(current_products)}件")
+          print(f"CSVの商品数：{len(csv_products)}件")
+          print(f"追加：{len(added)}件")
+          print(f"変更：{len(set(changed))}件")
+          print(f"削除候補：{len(deleted)}件")
+          print("==========================")
+          print("")
+
+          if deleted:
+              print("安全チェックで停止しました。")
+              print("削除候補の商品があります。")
+              print("products.json は変更していません。")
+              raise SystemExit(1)
+
+          updated_products = []
+
+          for csv_product in csv_products:
+
+              code = str(
+                  csv_product.get("品番", "")
+              ).strip()
+
+              current = current_map.get(code)
+
+              if current is None:
+                  product = {
+                      "maker": csv_product.get("メーカー名", ""),
+                      "code": code,
+                      "name": csv_product.get("商品名", ""),
+                      "price": price(csv_product.get("価格", "")),
+                      "brand": csv_product.get("ブランド", ""),
+                      "category": csv_product.get("カテゴリ", ""),
+                      "subCategory": csv_product.get("サブカテゴリ", ""),
+                      "series": csv_product.get("シリーズ", ""),
+                      "color": csv_product.get("色", ""),
+                      "colorGroup": csv_product.get("カラー系統", ""),
+                      "material": csv_product.get("素材", ""),
+                      "size": csv_product.get("サイズ", ""),
+                      "weight": csv_product.get("重量", ""),
+                      "title": csv_product.get("商品タイトル", ""),
+                      "image": csv_product.get(
+                          "商品画像URL",
+                          csv_product.get("画像URL", "")
+                      ),
+                      "url": csv_product.get(
+                          "商品URL",
+                          csv_product.get("商品ページURL", "")
+                      ),
+                      "tags": tags(csv_product.get("特徴タグ", "")),
+                      "usageTags": tags(csv_product.get("用途タグ", "")),
+                      "recommended": boolean(csv_product.get("おすすめ", "")),
+                      "isNew": boolean(csv_product.get("新商品", "")),
+                      "popular": boolean(csv_product.get("人気商品", "")),
+                      "published": boolean(csv_product.get("公開", "")),
+                      "stock": csv_product.get("店舗在庫", ""),
+                      "spec1": csv_product.get(
+                          "スペック1",
+                          csv_product.get("スペック①", "")
+                      ),
+                      "spec2": csv_product.get(
+                          "スペック2",
+                          csv_product.get("スペック②", "")
+                      ),
+                      "spec3": csv_product.get(
+                          "スペック3",
+                          csv_product.get("スペック③", "")
+                      ),
+                      "spec4": csv_product.get(
+                          "スペック4",
+                          csv_product.get("スペック④", "")
+                      ),
+                      "spec5": csv_product.get(
+                          "スペック5",
+                          csv_product.get("スペック⑤", "")
+                      ),
+                      "care": csv_product.get("ケア方法", ""),
+                      "note1": csv_product.get("備考①", ""),
+                      "note2": csv_product.get("備考②", "")
+                  }
+
+              else:
+                  product = dict(current)
+
+                  product["maker"] = csv_product.get("メーカー名", "")
+                  product["code"] = code
+                  product["name"] = csv_product.get("商品名", "")
+                  product["price"] = price(csv_product.get("価格", ""))
+                  product["brand"] = csv_product.get("ブランド", "")
+                  product["category"] = csv_product.get("カテゴリ", "")
+                  product["subCategory"] = csv_product.get("サブカテゴリ", "")
+                  product["series"] = csv_product.get("シリーズ", "")
+                  product["color"] = csv_product.get("色", "")
+                  product["colorGroup"] = csv_product.get("カラー系統", "")
+                  product["material"] = csv_product.get("素材", "")
+                  product["size"] = csv_product.get("サイズ", "")
+                  product["weight"] = csv_product.get("重量", "")
+                  product["title"] = csv_product.get("商品タイトル", "")
+                  product["image"] = csv_product.get(
+                      "商品画像URL",
+                      csv_product.get("画像URL", "")
+                  )
+                  product["url"] = csv_product.get(
+                      "商品URL",
+                      csv_product.get("商品ページURL", "")
+                  )
+                  product["tags"] = tags(csv_product.get("特徴タグ", ""))
+                  product["usageTags"] = tags(csv_product.get("用途タグ", ""))
+                  product["spec1"] = csv_product.get(
+                      "スペック1",
+                      csv_product.get("スペック①", "")
+                  )
+                  product["spec2"] = csv_product.get(
+                      "スペック2",
+                      csv_product.get("スペック②", "")
+                  )
+                  product["spec3"] = csv_product.get(
+                      "スペック3",
+                      csv_product.get("スペック③", "")
+                  )
+                  product["spec4"] = csv_product.get(
+                      "スペック4",
+                      csv_product.get("スペック④", "")
+                  )
+                  product["spec5"] = csv_product.get(
+                      "スペック5",
+                      csv_product.get("スペック⑤", "")
+                  )
+                  product["care"] = csv_product.get("ケア方法", "")
+                  product["note1"] = csv_product.get("備考①", "")
+                  product["note2"] = csv_product.get("備考②", "")
+                  product["recommended"] = boolean(
+                      csv_product.get("おすすめ", "")
+                  )
+                  product["isNew"] = boolean(
+                      csv_product.get("新商品", "")
+                  )
+                  product["popular"] = boolean(
+                      csv_product.get("人気商品", "")
+                  )
+                  product["published"] = boolean(
+                      csv_product.get("公開", "")
+                  )
+                  product["stock"] = csv_product.get("店舗在庫", "")
+
+              updated_products.append(product)
+
+          with json_path.open(
+              "w",
+              encoding="utf-8"
+          ) as f:
+              json.dump(
+                  updated_products,
+                  f,
+                  ensure_ascii=False,
+                  indent=2
+              )
+              f.write("\n")
+
+          print("安全チェックOK。")
+          print("demo/products.json を更新しました。")
+          PY
+
+      - name: 更新結果をコミット
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add demo/products.json
+
+          if git diff --cached --quiet; then
+            echo "変更はありません。"
+          else
+            git commit -m "商品データを自動更新"
+            git push
+          fi

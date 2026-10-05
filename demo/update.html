@@ -19,17 +19,236 @@
     <link
         rel="stylesheet"
         href="style.css">
+
+    <style>
+        /* ==========================================================
+           更新ページ専用スタイル
+        ========================================================== */
+
+        .update-page {
+            max-width: 900px;
+            margin: 0 auto;
+            padding-bottom: 60px;
+        }
+
+        .update-panel {
+            margin-top: 30px;
+        }
+
+        .update-intro {
+            margin: 10px 0 30px;
+            line-height: 1.8;
+        }
+
+        .update-step {
+            margin-top: 30px;
+            padding: 24px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: #fff;
+        }
+
+        .update-step h3 {
+            margin: 0 0 18px;
+            font-size: 18px;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            margin-right: 8px;
+            border-radius: 50%;
+            background: #222;
+            color: #fff;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .update-file-area {
+            padding: 22px;
+            border: 1px dashed #aaa;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .update-file-label {
+            margin: 0 0 15px;
+            font-weight: bold;
+        }
+
+        .update-file-button {
+            display: inline-block;
+            padding: 12px 24px;
+            border: 1px solid #222;
+            border-radius: 6px;
+            background: #222;
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .update-file-button:hover {
+            opacity: 0.8;
+        }
+
+        .update-file-button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .selected-file-name {
+            margin-top: 14px;
+            font-size: 14px;
+            word-break: break-all;
+        }
+
+        .comparison-summary,
+        .comparison-diff {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .summary-card {
+            padding: 18px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .summary-card span {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .summary-card strong {
+            font-size: 22px;
+        }
+
+        .summary-card.warning {
+            border-color: #c88a00;
+        }
+
+        .summary-card.danger {
+            border-color: #b33a3a;
+        }
+
+        .change-detail {
+            margin-top: 14px;
+            padding: 16px;
+            border-left: 4px solid #222;
+            background: #f7f7f7;
+        }
+
+        .change-detail p {
+            margin: 6px 0;
+        }
+
+        .change-code {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .comparison-note {
+            margin-top: 20px;
+            color: #666;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .update-warning {
+            margin-top: 20px;
+            padding: 18px;
+            border: 1px solid #b33a3a;
+            border-radius: 8px;
+            background: #fff8f8;
+            color: #8a2222;
+            line-height: 1.7;
+        }
+
+        .update-success {
+            margin-top: 20px;
+            padding: 18px;
+            border: 1px solid #4d805c;
+            border-radius: 8px;
+            background: #f7fbf8;
+            color: #315c3d;
+            line-height: 1.7;
+        }
+
+        .update-info {
+            margin-top: 20px;
+            padding: 18px;
+            border: 1px solid #aaa;
+            border-radius: 8px;
+            background: #fafafa;
+            line-height: 1.7;
+        }
+
+        .update-action {
+            margin-top: 25px;
+            text-align: center;
+        }
+
+        .back-to-search {
+            display: block;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .validation-list {
+            margin: 10px 0 0;
+            padding-left: 20px;
+        }
+
+        .update-flow {
+            margin-top: 20px;
+            padding: 18px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fafafa;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        .update-flow strong {
+            font-weight: bold;
+        }
+
+        @media (max-width: 700px) {
+
+            .comparison-summary,
+            .comparison-diff {
+                grid-template-columns: 1fr;
+            }
+
+            .update-step {
+                padding: 18px;
+            }
+
+        }
+    </style>
 </head>
+
 
 <body>
 
 <header>
     <div class="container">
+
         <h1>
             Artisan Atelier Product Finder
         </h1>
+
     </div>
 </header>
+
 
 <main class="container update-page">
 
@@ -39,52 +258,153 @@
             商品データ更新
         </h2>
 
-        <div class="update-file-area">
+        <p class="update-intro">
+            最新の商品CSVを選択すると、現在のProduct Finderの商品データとの差分を確認できます。
+            <br>
+            内容に問題がなければ、そのまま商品データを更新できます。
+        </p>
 
-            <p class="update-file-label">
-                アップロードするファイルを選択
-            </p>
 
-            <input
-                type="file"
-                id="csvFileInput"
-                accept=".csv,text/csv"
-                hidden>
+        <!-- ======================================================
+             STEP 1
+        ======================================================= -->
 
-            <button
-                type="button"
-                id="selectCsvButton"
-                class="update-file-button">
-                ファイルを選択
-            </button>
+        <section class="update-step">
 
-        </div>
+            <h3>
+                <span class="step-number">1</span>
+                最新のCSVファイルを選択
+            </h3>
+
+
+            <div class="update-file-area">
+
+                <p class="update-file-label">
+                    更新する商品CSVを選択してください
+                </p>
+
+
+                <input
+                    type="file"
+                    id="csvFileInput"
+                    accept=".csv,text/csv"
+                    hidden>
+
 
                 <button
-            type="button"
-            id="generateJsonButton"
-            class="update-file-button"
-            style="display:none;">
-            更新用JSONを作成
+                    type="button"
+                    id="selectCsvButton"
+                    class="update-file-button">
+
+                    CSVファイルを選択
+
                 </button>
 
-        <div
-            id="uploadResult"
-            class="upload-result"
-            aria-live="polite">
-        </div>
+
+                <div
+                    id="selectedFileName"
+                    class="selected-file-name">
+
+                    ファイルが選択されていません
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ======================================================
+             STEP 2
+        ======================================================= -->
+
+        <section
+            id="comparisonStep"
+            class="update-step"
+            style="display:none;">
+
+            <h3>
+                <span class="step-number">2</span>
+                商品データを確認
+            </h3>
+
+
+            <div id="uploadResult"></div>
+
+        </section>
+
+
+        <!-- ======================================================
+             STEP 3
+        ======================================================= -->
+
+        <section
+            id="updateActionStep"
+            class="update-step"
+            style="display:none;">
+
+            <h3>
+                <span class="step-number">3</span>
+                商品データを更新
+            </h3>
+
+
+            <p>
+                内容に問題がなければ、下のボタンから商品データを更新できます。
+            </p>
+
+
+            <div class="update-flow">
+
+                CSVを送信
+                ↓
+                GitHubで自動更新
+                ↓
+                公開中のProduct Finderへ反映
+
+            </div>
+
+
+            <div class="update-action">
+
+                <button
+                    type="button"
+                    id="generateJsonButton"
+                    class="update-file-button"
+                    disabled>
+
+                    商品データを更新
+
+                </button>
+
+            </div>
+
+        </section>
+
 
     </section>
+
 
     <a
         href="index.html"
         class="back-to-search">
+
         商品検索へ戻る
+
     </a>
 
 </main>
 
+
 <script>
+
+    const GOOGLE_APPS_SCRIPT_URL =
+    'https://script.google.com/macros/s/AKfycbwg8gZqT-WHUfYu7JFp0p1-k_ibQsDtYb2qmSYP_kF2Uv5wnoN37769lF-sF9zLNroP-Q/exec';
+
+
+/* ==========================================================
+   DOM
+========================================================== */
 
 const csvFileInput =
     document.getElementById('csvFileInput');
@@ -95,8 +415,31 @@ const selectCsvButton =
 const uploadResult =
     document.getElementById('uploadResult');
 
+const selectedFileName =
+    document.getElementById('selectedFileName');
+
+const comparisonStep =
+    document.getElementById('comparisonStep');
+
+const updateActionStep =
+    document.getElementById('updateActionStep');
+
+const generateJsonButton =
+    document.getElementById('generateJsonButton');
+
+
+/* ==========================================================
+   更新用データ
+========================================================== */
+
 let currentProductsForUpdate = [];
+
 let csvProductsForUpdate = [];
+
+let csvTextForUpdate = '';
+
+let currentComparison =
+    null;
 
 
 /* ==========================================================
@@ -106,42 +449,75 @@ let csvProductsForUpdate = [];
 function parseCSV(text) {
 
     const rows = [];
+
     let row = [];
+
     let value = '';
+
     let inQuotes = false;
 
-    for (let i = 0; i < text.length; i++) {
+
+    for (
+        let i = 0;
+        i < text.length;
+        i++
+    ) {
 
         const char = text[i];
+
         const next = text[i + 1];
+
 
         if (char === '"') {
 
-            if (inQuotes && next === '"') {
+            if (
+                inQuotes &&
+                next === '"'
+            ) {
+
                 value += '"';
+
                 i++;
+
             } else {
-                inQuotes = !inQuotes;
+
+                inQuotes =
+                    !inQuotes;
+
             }
 
-        } else if (char === ',' && !inQuotes) {
-
-            row.push(value);
-            value = '';
-
         } else if (
-            (char === '\n' || char === '\r') &&
+            char === ',' &&
             !inQuotes
         ) {
 
-            if (char === '\r' && next === '\n') {
+            row.push(value);
+
+            value = '';
+
+        } else if (
+            (
+                char === '\n' ||
+                char === '\r'
+            ) &&
+            !inQuotes
+        ) {
+
+            if (
+                char === '\r' &&
+                next === '\n'
+            ) {
+
                 i++;
+
             }
 
             row.push(value);
+
             rows.push(row);
 
             row = [];
+
             value = '';
 
         } else {
@@ -149,78 +525,110 @@ function parseCSV(text) {
             value += char;
 
         }
+
     }
 
-    if (value !== '' || row.length > 0) {
+
+    if (
+        value !== '' ||
+        row.length > 0
+    ) {
+
         row.push(value);
+
         rows.push(row);
+
     }
+
 
     if (rows.length === 0) {
+
         return [];
+
     }
 
 
     const headers =
-        rows[0].map(header =>
-            header
-                .replace(/^\uFEFF/, '')
-                .trim()
+        rows[0].map(
+            header =>
+                header
+                    .replace(/^\uFEFF/, '')
+                    .trim()
         );
 
 
     return rows
         .slice(1)
-        .filter(row =>
-            row.some(value =>
-                value.trim() !== ''
-            )
+        .filter(
+            row =>
+                row.some(
+                    value =>
+                        value.trim() !== ''
+                )
         )
-        .map(row => {
+        .map(
+            row => {
 
-            const product = {};
+                const product = {};
 
-            headers.forEach(
-                (header, index) => {
-                    product[header] =
-                        row[index] ?? '';
-                }
-            );
 
-            return product;
+                headers.forEach(
+                    (
+                        header,
+                        index
+                    ) => {
 
-        });
+                        product[header] =
+                            row[index] ?? '';
+
+                    }
+                );
+
+
+                return product;
+
+            }
+        );
 
 }
 
 
 /* ==========================================================
-   配列・文字列の比較用
+   共通処理
 ========================================================== */
 
 function normalizeValue(value) {
 
     if (Array.isArray(value)) {
+
         return value.join('|');
+
     }
 
-    if (value === null || value === undefined) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
         return '';
+
     }
 
-    return String(value)
-        .trim();
+
+    return String(value).trim();
 
 }
 
 
-/* ==========================================================
-   CSV → Product Finderデータ比較用
-========================================================== */
+function getCSVValue(
+    product,
+    names
+) {
 
-function getCSVValue(product, names) {
-
-    for (const name of names) {
+    for (
+        const name of names
+    ) {
 
         if (
             Object.prototype.hasOwnProperty.call(
@@ -228,10 +636,13 @@ function getCSVValue(product, names) {
                 name
             )
         ) {
+
             return product[name];
+
         }
 
     }
+
 
     return '';
 
@@ -243,14 +654,19 @@ function createComparisonKey(product) {
     return normalizeValue(
         getCSVValue(
             product,
-            ['品番', 'code', '商品コード']
+            [
+                '品番',
+                'code',
+                '商品コード'
+            ]
         )
     );
 
 }
 
+
 /* ==========================================================
-   更新用データ補助関数
+   更新用データ補助
 ========================================================== */
 
 function normalizePrice(value) {
@@ -260,8 +676,11 @@ function normalizePrice(value) {
         value === undefined ||
         value === ''
     ) {
+
         return 0;
+
     }
+
 
     const normalized =
         String(value)
@@ -269,8 +688,10 @@ function normalizePrice(value) {
             .replace(/円/g, '')
             .trim();
 
+
     const number =
         Number(normalized);
+
 
     return Number.isNaN(number)
         ? 0
@@ -286,12 +707,17 @@ function splitCSVTags(value) {
         value === undefined ||
         value === ''
     ) {
+
         return [];
+
     }
+
 
     return String(value)
         .split('|')
-        .map(tag => tag.trim())
+        .map(
+            tag => tag.trim()
+        )
         .filter(Boolean);
 
 }
@@ -307,15 +733,19 @@ function normalizeBoolean(value) {
         value === 'はい' ||
         value === '○'
     ) {
+
         return true;
+
     }
+
 
     return false;
 
 }
 
+
 /* ==========================================================
-   商品データの変更判定
+   比較用正規化
 ========================================================== */
 
 function normalizeComparisonValue(value) {
@@ -324,20 +754,18 @@ function normalizeComparisonValue(value) {
         value === null ||
         value === undefined
     ) {
+
         return '';
+
     }
 
 
-    /*
-     * 配列の場合
-     * JSONのタグ配列を
-     * 「|」区切りの文字列へ統一
-     */
     if (Array.isArray(value)) {
 
         return value
-            .map(item =>
-                String(item).trim()
+            .map(
+                item =>
+                    String(item).trim()
             )
             .filter(Boolean)
             .join('|');
@@ -346,37 +774,36 @@ function normalizeComparisonValue(value) {
 
 
     let normalized =
-        String(value)
-            .trim();
+        String(value).trim();
 
 
-    /*
-     * True / False を統一
-     */
     if (
-        normalized.toLowerCase() === 'true'
+        normalized.toLowerCase() ===
+        'true'
     ) {
+
         return 'true';
+
     }
 
 
     if (
-        normalized.toLowerCase() === 'false'
+        normalized.toLowerCase() ===
+        'false'
     ) {
+
         return 'false';
+
     }
 
 
-    /*
-     * 数値のカンマを除去
-     */
     normalized =
-        normalized.replace(/,/g, '');
+        normalized.replace(
+            /,/g,
+            ''
+        );
 
 
-    /*
-     * 数値として扱えるものは統一
-     */
     if (
         normalized !== '' &&
         !isNaN(normalized)
@@ -389,51 +816,50 @@ function normalizeComparisonValue(value) {
     }
 
 
-    /*
-     * 「|」区切りデータを正規化
-     *
-     * 例：
-     * 牛革|軽量|ボトル収納|
-     *
-     * ↓
-     *
-     * 牛革|軽量|ボトル収納
-     */
     if (
         normalized.includes('|')
     ) {
 
         return normalized
             .split('|')
-            .map(item =>
-                item.trim()
+            .map(
+                item =>
+                    item.trim()
             )
             .filter(Boolean)
             .join('|');
 
     }
 
-    /*
- * 空欄を意味する記号を統一
- */
-if (
-    normalized === '-' ||
-    normalized === '—' ||
-    normalized === 'ー'
-) {
-    return '';
-}
+
+    if (
+        normalized === '-' ||
+        normalized === '—' ||
+        normalized === 'ー'
+    ) {
+
+        return '';
+
+    }
+
 
     return normalized;
 
 }
+
+
+/* ==========================================================
+   CSVフィールド取得
+========================================================== */
 
 function getExistingCSVField(
     csv,
     names
 ) {
 
-    for (const name of names) {
+    for (
+        const name of names
+    ) {
 
         if (
             Object.prototype.hasOwnProperty.call(
@@ -441,13 +867,16 @@ function getExistingCSVField(
                 name
             )
         ) {
+
             return {
                 exists: true,
                 value: csv[name]
             };
+
         }
 
     }
+
 
     return {
         exists: false,
@@ -457,25 +886,9 @@ function getExistingCSVField(
 }
 
 
-function valuesAreEqual(
-    currentValue,
-    csvValue
-) {
-
-    const current =
-        normalizeComparisonValue(
-            currentValue
-        );
-
-    const csv =
-        normalizeComparisonValue(
-            csvValue
-        );
-
-    return current === csv;
-
-}
-
+/* ==========================================================
+   商品変更判定
+========================================================== */
 
 function hasProductChanged(
     current,
@@ -594,31 +1007,31 @@ function hasProductChanged(
 
         {
             label: 'スペック①',
-            csv: ['スペック①'],
+            csv: ['スペック①', 'スペック1'],
             json: 'spec1'
         },
 
         {
             label: 'スペック②',
-            csv: ['スペック②'],
+            csv: ['スペック②', 'スペック2'],
             json: 'spec2'
         },
 
         {
             label: 'スペック③',
-            csv: ['スペック③'],
+            csv: ['スペック③', 'スペック3'],
             json: 'spec3'
         },
 
         {
             label: 'スペック④',
-            csv: ['スペック④'],
+            csv: ['スペック④', 'スペック4'],
             json: 'spec4'
         },
 
         {
             label: 'スペック⑤',
-            csv: ['スペック⑤'],
+            csv: ['スペック⑤', 'スペック5'],
             json: 'spec5'
         },
 
@@ -673,7 +1086,9 @@ function hasProductChanged(
     ];
 
 
-    for (const field of fields) {
+    for (
+        const field of fields
+    ) {
 
         const csvField =
             getExistingCSVField(
@@ -683,7 +1098,9 @@ function hasProductChanged(
 
 
         if (!csvField.exists) {
+
             continue;
+
         }
 
 
@@ -700,14 +1117,23 @@ function hasProductChanged(
 
 
         if (
-            currentValue !== csvValue
+            currentValue !==
+            csvValue
         ) {
 
             return {
+
                 changed: true,
-                field: field.label,
-                current: currentValue,
-                csv: csvValue
+
+                field:
+                    field.label,
+
+                current:
+                    currentValue,
+
+                csv:
+                    csvValue
+
             };
 
         }
@@ -721,191 +1147,305 @@ function hasProductChanged(
 
 }
 
+
 /* ==========================================================
-   更新用JSON生成
+   CSV安全チェック
 ========================================================== */
 
-function createUpdatedProducts() {
+function validateCSVProducts(
+    csvProducts
+) {
 
-    if (
-        currentProductsForUpdate.length === 0 ||
-        csvProductsForUpdate.length === 0
-    ) {
+    const errors = [];
 
-        throw new Error(
-            '更新用の商品データが準備されていません。'
-        );
-
-    }
+    const codeMap = new Map();
 
 
-    /*
-     * 現在の商品データを品番で管理
-     */
-    const currentMap =
-        new Map(
-            currentProductsForUpdate.map(
-                product => [
-                    String(product.code).trim(),
-                    product
-                ]
-            )
-        );
+    csvProducts.forEach(
+        (product, index) => {
+
+            const code =
+                String(
+                    product['品番'] ||
+                    ''
+                ).trim();
 
 
-    /*
-     * CSVの商品データを順番に処理
-     */
-    const updatedProducts =
-        csvProductsForUpdate.map(
-            csvProduct => {
+            if (!code) {
 
-                const code =
-                    String(
-                        csvProduct['品番'] || ''
-                    ).trim();
+                errors.push(
+                    `${index + 2}行目：品番が空欄です。`
+                );
+
+                return;
+
+            }
 
 
-                const currentProduct =
-                    currentMap.get(code);
+            if (
+                codeMap.has(code)
+            ) {
 
+                errors.push(
+                    `品番「${code}」がCSV内で重複しています。`
+                );
 
-                /*
-                 * 既存商品がない場合
-                 * → CSVから新商品として作成
-                 */
-                if (!currentProduct) {
+            } else {
 
-                    return convertCSVProductToJSON(
-                        csvProduct
-                    );
-
-                }
-
-
-                /*
-                 * 既存商品がある場合
-                 * → CSVの内容で更新
-                 */
-                return mergeCSVProduct(
-                    currentProduct,
-                    csvProduct
+                codeMap.set(
+                    code,
+                    true
                 );
 
             }
-        );
+
+        }
+    );
 
 
-    return updatedProducts;
+    return errors;
 
 }
 
+
 /* ==========================================================
-   CSV商品 → JSON商品変換
+   CSV → JSON
 ========================================================== */
 
-function convertCSVProductToJSON(csv) {
+function convertCSVProductToJSON(
+    csv
+) {
 
     return {
-        maker: getCSVValue(csv, ['メーカー名']),
-        code: getCSVValue(csv, ['品番']),
-        name: getCSVValue(csv, ['商品名']),
-        price: normalizePrice(
-            getCSVValue(csv, ['価格'])
-        ),
-        brand: getCSVValue(csv, ['ブランド']),
-        category: getCSVValue(csv, ['カテゴリ']),
-        subCategory: getCSVValue(
-            csv,
-            ['サブカテゴリ']
-        ),
-        series: getCSVValue(
-            csv,
-            ['シリーズ']
-        ),
-        color: getCSVValue(csv, ['色']),
-        colorGroup: getCSVValue(
-            csv,
-            ['カラー系統']
-        ),
-        material: getCSVValue(
-            csv,
-            ['素材']
-        ),
-        size: getCSVValue(csv, ['サイズ']),
-        weight: getCSVValue(csv, ['重量']),
-        title: getCSVValue(
-            csv,
-            ['商品タイトル']
-        ),
-        image: getCSVValue(
-            csv,
-            ['商品画像URL', '画像URL']
-        ),
-        url: getCSVValue(
-            csv,
-            ['商品URL', '商品ページURL']
-        ),
-        tags: splitCSVTags(
-            getCSVValue(csv, ['特徴タグ'])
-        ),
-        usageTags: splitCSVTags(
-            getCSVValue(csv, ['用途タグ'])
-        ),
-        spec1: getCSVValue(
-            csv,
-            ['スペック1', 'スペック①']
-        ),
-        spec2: getCSVValue(
-            csv,
-            ['スペック2', 'スペック②']
-        ),
-        spec3: getCSVValue(
-            csv,
-            ['スペック3', 'スペック③']
-        ),
-        spec4: getCSVValue(
-            csv,
-            ['スペック4', 'スペック④']
-        ),
-        spec5: getCSVValue(
-            csv,
-            ['スペック5', 'スペック⑤']
-        ),
-        care: getCSVValue(
-            csv,
-            ['ケア方法']
-        ),
-        note1: getCSVValue(
-            csv,
-            ['備考①']
-        ),
-        note2: getCSVValue(
-            csv,
-            ['備考②']
-        ),
-        recommended: normalizeBoolean(
-            getCSVValue(csv, ['おすすめ'])
-        ),
-        isNew: normalizeBoolean(
-            getCSVValue(csv, ['新商品'])
-        ),
-        popular: normalizeBoolean(
-            getCSVValue(csv, ['人気商品'])
-        ),
-        published: normalizeBoolean(
-            getCSVValue(csv, ['公開'])
-        ),
-        stock: getCSVValue(
-            csv,
-            ['店舗在庫']
-        )
+
+        maker:
+            getCSVValue(
+                csv,
+                ['メーカー名']
+            ),
+
+        code:
+            getCSVValue(
+                csv,
+                ['品番']
+            ),
+
+        name:
+            getCSVValue(
+                csv,
+                ['商品名']
+            ),
+
+        price:
+            normalizePrice(
+                getCSVValue(
+                    csv,
+                    ['価格']
+                )
+            ),
+
+        brand:
+            getCSVValue(
+                csv,
+                ['ブランド']
+            ),
+
+        category:
+            getCSVValue(
+                csv,
+                ['カテゴリ']
+            ),
+
+        subCategory:
+            getCSVValue(
+                csv,
+                ['サブカテゴリ']
+            ),
+
+        series:
+            getCSVValue(
+                csv,
+                ['シリーズ']
+            ),
+
+        color:
+            getCSVValue(
+                csv,
+                ['色']
+            ),
+
+        colorGroup:
+            getCSVValue(
+                csv,
+                ['カラー系統']
+            ),
+
+        material:
+            getCSVValue(
+                csv,
+                ['素材']
+            ),
+
+        size:
+            getCSVValue(
+                csv,
+                ['サイズ']
+            ),
+
+        weight:
+            getCSVValue(
+                csv,
+                ['重量']
+            ),
+
+        title:
+            getCSVValue(
+                csv,
+                ['商品タイトル']
+            ),
+
+        image:
+            getCSVValue(
+                csv,
+                [
+                    '商品画像URL',
+                    '画像URL'
+                ]
+            ),
+
+        url:
+            getCSVValue(
+                csv,
+                [
+                    '商品URL',
+                    '商品ページURL'
+                ]
+            ),
+
+        tags:
+            splitCSVTags(
+                getCSVValue(
+                    csv,
+                    ['特徴タグ']
+                )
+            ),
+
+        usageTags:
+            splitCSVTags(
+                getCSVValue(
+                    csv,
+                    ['用途タグ']
+                )
+            ),
+
+        spec1:
+            getCSVValue(
+                csv,
+                [
+                    'スペック1',
+                    'スペック①'
+                ]
+            ),
+
+        spec2:
+            getCSVValue(
+                csv,
+                [
+                    'スペック2',
+                    'スペック②'
+                ]
+            ),
+
+        spec3:
+            getCSVValue(
+                csv,
+                [
+                    'スペック3',
+                    'スペック③'
+                ]
+            ),
+
+        spec4:
+            getCSVValue(
+                csv,
+                [
+                    'スペック4',
+                    'スペック④'
+                ]
+            ),
+
+        spec5:
+            getCSVValue(
+                csv,
+                [
+                    'スペック5',
+                    'スペック⑤'
+                ]
+            ),
+
+        care:
+            getCSVValue(
+                csv,
+                ['ケア方法']
+            ),
+
+        note1:
+            getCSVValue(
+                csv,
+                ['備考①']
+            ),
+
+        note2:
+            getCSVValue(
+                csv,
+                ['備考②']
+            ),
+
+        recommended:
+            normalizeBoolean(
+                getCSVValue(
+                    csv,
+                    ['おすすめ']
+                )
+            ),
+
+        isNew:
+            normalizeBoolean(
+                getCSVValue(
+                    csv,
+                    ['新商品']
+                )
+            ),
+
+        popular:
+            normalizeBoolean(
+                getCSVValue(
+                    csv,
+                    ['人気商品']
+                )
+            ),
+
+        published:
+            normalizeBoolean(
+                getCSVValue(
+                    csv,
+                    ['公開']
+                )
+            ),
+
+        stock:
+            getCSVValue(
+                csv,
+                ['店舗在庫']
+            )
+
     };
 
 }
 
+
 /* ==========================================================
-   既存商品をCSV内容で更新
+   既存商品をCSVで更新
 ========================================================== */
 
 function mergeCSVProduct(
@@ -1007,13 +1547,19 @@ function mergeCSVProduct(
     updated.image =
         getCSVValue(
             csv,
-            ['商品画像URL', '画像URL']
+            [
+                '商品画像URL',
+                '画像URL'
+            ]
         );
 
     updated.url =
         getCSVValue(
             csv,
-            ['商品URL', '商品ページURL']
+            [
+                '商品URL',
+                '商品ページURL'
+            ]
         );
 
     updated.tags =
@@ -1035,31 +1581,46 @@ function mergeCSVProduct(
     updated.spec1 =
         getCSVValue(
             csv,
-            ['スペック1', 'スペック①']
+            [
+                'スペック1',
+                'スペック①'
+            ]
         );
 
     updated.spec2 =
         getCSVValue(
             csv,
-            ['スペック2', 'スペック②']
+            [
+                'スペック2',
+                'スペック②'
+            ]
         );
 
     updated.spec3 =
         getCSVValue(
             csv,
-            ['スペック3', 'スペック③']
+            [
+                'スペック3',
+                'スペック③'
+            ]
         );
 
     updated.spec4 =
         getCSVValue(
             csv,
-            ['スペック4', 'スペック④']
+            [
+                'スペック4',
+                'スペック④'
+            ]
         );
 
     updated.spec5 =
         getCSVValue(
             csv,
-            ['スペック5', 'スペック⑤']
+            [
+                'スペック5',
+                'スペック⑤'
+            ]
         );
 
     updated.care =
@@ -1122,18 +1683,98 @@ function mergeCSVProduct(
     return updated;
 
 }
-    
+
+
 /* ==========================================================
-   比較結果表示
+   更新データ作成
 ========================================================== */
 
-function showComparisonResult(
+function createUpdatedProducts() {
+
+    if (
+        currentProductsForUpdate.length === 0 ||
+        csvProductsForUpdate.length === 0
+    ) {
+
+        throw new Error(
+            '更新用の商品データが準備されていません。'
+        );
+
+    }
+
+
+    const currentMap =
+        new Map();
+
+
+    currentProductsForUpdate.forEach(
+        product => {
+
+            const code =
+                String(
+                    product.code || ''
+                ).trim();
+
+
+            if (code) {
+
+                currentMap.set(
+                    code,
+                    product
+                );
+
+            }
+
+        }
+    );
+
+
+    return csvProductsForUpdate.map(
+        csvProduct => {
+
+            const code =
+                String(
+                    csvProduct['品番'] ||
+                    ''
+                ).trim();
+
+
+            const currentProduct =
+                currentMap.get(code);
+
+
+            if (!currentProduct) {
+
+                return convertCSVProductToJSON(
+                    csvProduct
+                );
+
+            }
+
+
+            return mergeCSVProduct(
+                currentProduct,
+                csvProduct
+            );
+
+        }
+    );
+
+}
+
+
+/* ==========================================================
+   比較
+========================================================== */
+
+function compareProducts(
     currentProducts,
     csvProducts
 ) {
 
     const currentMap =
         new Map();
+
 
     currentProducts.forEach(
         product => {
@@ -1143,11 +1784,14 @@ function showComparisonResult(
                     product.code
                 );
 
+
             if (key) {
+
                 currentMap.set(
                     key,
                     product
                 );
+
             }
 
         }
@@ -1157,6 +1801,7 @@ function showComparisonResult(
     const csvMap =
         new Map();
 
+
     csvProducts.forEach(
         product => {
 
@@ -1165,58 +1810,79 @@ function showComparisonResult(
                     product
                 );
 
+
             if (key) {
+
                 csvMap.set(
                     key,
                     product
                 );
+
             }
 
         }
     );
 
 
-let added = 0;
-let changed = 0;
-let deleted = 0;
+    let added = 0;
 
-let diagnosticResults = [];
+    let changed = 0;
+
+    let deleted = 0;
+
+
+    const changes = [];
 
 
     csvMap.forEach(
-        (csvProduct, key) => {
+        (
+            csvProduct,
+            key
+        ) => {
 
-            if (!currentMap.has(key)) {
+            if (
+                !currentMap.has(key)
+            ) {
 
                 added++;
 
-            } else {
+                return;
 
-                const currentProduct =
-                    currentMap.get(key);
+            }
 
-const comparison =
-    hasProductChanged(
-        currentProduct,
-        csvProduct
-    );
 
-if (comparison.changed) {
+            const currentProduct =
+                currentMap.get(key);
 
-    changed++;
 
-    if (diagnosticResults.length < 5) {
+            const comparison =
+                hasProductChanged(
+                    currentProduct,
+                    csvProduct
+                );
 
-        diagnosticResults.push({
-            code: key,
-            field: comparison.field,
-            current: comparison.current,
-            csv: comparison.csv
-        });
 
-    }
+            if (
+                comparison.changed
+            ) {
 
-}
+                changed++;
+
+
+                changes.push({
+
+                    code: key,
+
+                    field:
+                        comparison.field,
+
+                    current:
+                        comparison.current,
+
+                    csv:
+                        comparison.csv
+
+                });
 
             }
 
@@ -1225,125 +1891,466 @@ if (comparison.changed) {
 
 
     currentMap.forEach(
-        (product, key) => {
+        (
+            product,
+            key
+        ) => {
 
-            if (!csvMap.has(key)) {
+            if (
+                !csvMap.has(key)
+            ) {
+
                 deleted++;
+
             }
 
         }
     );
 
-    const generateJsonButton =
-    document.getElementById('generateJsonButton');
 
-if (generateJsonButton) {
-    generateJsonButton.style.display =
-        changed > 0 ? 'block' : 'none';
-}
+    return {
 
-uploadResult.innerHTML = `
+        added,
 
-    <div class="comparison-result">
+        changed,
 
-        <p>
-            CSVファイルを確認しました。
-        </p>
+        deleted,
 
-        <div class="comparison-summary">
+        changes
 
-            <div>
-                <span>現在の商品数</span>
-                <strong>
-                    ${currentProducts.length}件
-                </strong>
-            </div>
+    };
 
-            <div>
-                <span>CSVの商品数</span>
-                <strong>
-                    ${csvProducts.length}件
-                </strong>
-            </div>
-
-        </div>
-
-        <div class="comparison-diff">
-
-            <div>
-                <span>追加</span>
-                <strong>
-                    ${added}件
-                </strong>
-            </div>
-
-            <div>
-                <span>変更</span>
-                <strong>
-                    ${changed}件
-                </strong>
-            </div>
-
-            <div>
-                <span>削除候補</span>
-                <strong>
-                    ${deleted}件
-                </strong>
-            </div>
-
-        </div>
-
-<div class="comparison-diagnostic">
-
-    <p>
-        <strong>変更内容</strong>
-    </p>
-
-    ${diagnosticResults.length === 0
-        ? `
-            <p>
-                現在の商品データとCSVの内容に
-                変更はありません。
-            </p>
-        `
-        : diagnosticResults.map(item => `
-            <div class="change-detail">
-
-                <strong>
-                    品番：${item.code}
-                </strong>
-
-                <p>
-                    変更項目：${item.field}
-                </p>
-
-                <p>
-                    現在：
-                    ${item.current || '（空欄）'}
-                </p>
-
-                <p>
-                    更新後：
-                    ${item.csv || '（空欄）'}
-                </p>
-
-            </div>
-        `).join('')
-    }
-
-</div>
-        <p class="comparison-note">
-            ※この段階では商品データは変更されていません。
-        </p>
-
-    </div>
-
-`;
 }
 
 
 /* ==========================================================
-   CSV選択
+   比較結果表示
+========================================================== */
+
+function showComparisonResult(
+    currentProducts,
+    csvProducts
+) {
+
+    const comparison =
+        compareProducts(
+            currentProducts,
+            csvProducts
+        );
+
+
+    currentComparison =
+        comparison;
+
+
+    const validationErrors =
+        validateCSVProducts(
+            csvProducts
+        );
+
+
+    const dangerousDeletion =
+        comparison.deleted > 0;
+
+
+    const tooManyChanges =
+        comparison.deleted >
+            Math.max(
+                10,
+                Math.floor(
+                    currentProducts.length *
+                    0.05
+                )
+            );
+
+
+    const canGenerate =
+        validationErrors.length === 0 &&
+        !dangerousDeletion &&
+        !tooManyChanges;
+
+
+    generateJsonButton.disabled =
+        !canGenerate;
+
+
+    comparisonStep.style.display =
+        'block';
+
+
+    updateActionStep.style.display =
+        'block';
+
+
+    let html = '';
+
+
+    html += `
+
+        <div class="comparison-summary">
+
+            <div class="summary-card">
+
+                <span>
+                    現在の商品数
+                </span>
+
+                <strong>
+                    ${currentProducts.length}件
+                </strong>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span>
+                    CSVの商品数
+                </span>
+
+                <strong>
+                    ${csvProducts.length}件
+                </strong>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span>
+                    商品数の差
+                </span>
+
+                <strong>
+                    ${csvProducts.length - currentProducts.length}件
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="comparison-diff">
+
+            <div class="summary-card">
+
+                <span>
+                    追加
+                </span>
+
+                <strong>
+                    ${comparison.added}件
+                </strong>
+
+            </div>
+
+
+            <div
+                class="summary-card ${
+                    comparison.changed > 0
+                        ? 'warning'
+                        : ''
+                }">
+
+                <span>
+                    変更
+                </span>
+
+                <strong>
+                    ${comparison.changed}件
+                </strong>
+
+            </div>
+
+
+            <div
+                class="summary-card ${
+                    comparison.deleted > 0
+                        ? 'danger'
+                        : ''
+                }">
+
+                <span>
+                    削除候補
+                </span>
+
+                <strong>
+                    ${comparison.deleted}件
+                </strong>
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    /* ======================================================
+       CSVエラー
+    ======================================================= */
+
+    if (
+        validationErrors.length > 0
+    ) {
+
+        html += `
+
+            <div class="update-warning">
+
+                <strong>
+                    ⚠ CSVに問題があります
+                </strong>
+
+                <ul class="validation-list">
+
+                    ${validationErrors
+                        .slice(0, 10)
+                        .map(
+                            error =>
+                                `<li>${error}</li>`
+                        )
+                        .join('')
+                    }
+
+                </ul>
+
+                ${
+                    validationErrors.length > 10
+                        ? '<p>その他にも問題があります。</p>'
+                        : ''
+                }
+
+                <p>
+                    内容を修正したCSVをもう一度選択してください。
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* ======================================================
+       削除候補
+    ======================================================= */
+
+    if (
+        dangerousDeletion
+    ) {
+
+        html += `
+
+            <div class="update-warning">
+
+                <strong>
+                    ⚠ 削除候補があります
+                </strong>
+
+                <p>
+                    現在の商品データには存在しますが、
+                    今回のCSVには存在しない商品が
+                    ${comparison.deleted}件あります。
+                </p>
+
+                <p>
+                    安全のため、この状態では
+                    商品データを更新できません。
+                </p>
+
+                <p>
+                    CSVの内容を確認してください。
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* ======================================================
+       大量削除
+    ======================================================= */
+
+    if (
+        tooManyChanges &&
+        !dangerousDeletion
+    ) {
+
+        html += `
+
+            <div class="update-warning">
+
+                <strong>
+                    ⚠ 商品数の変化が大きすぎます
+                </strong>
+
+                <p>
+                    CSVの商品数が現在の商品数から
+                    大きく変化しています。
+                </p>
+
+                <p>
+                    CSVの内容を確認してください。
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* ======================================================
+       問題なし
+    ======================================================= */
+
+    if (
+        validationErrors.length === 0 &&
+        comparison.deleted === 0
+    ) {
+
+        html += `
+
+            <div class="update-info">
+
+                <strong>
+                    ✓ 安全チェックOK
+                </strong>
+
+                <p>
+                    品番の重複や削除候補はありません。
+                </p>
+
+                <p>
+                    内容を確認して問題がなければ、
+                    「商品データを更新」を押してください。
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+
+    /* ======================================================
+       変更内容
+    ======================================================= */
+
+    html += `
+
+        <div
+            class="comparison-diagnostic"
+            style="margin-top:25px;">
+
+            <p>
+                <strong>
+                    変更内容
+                </strong>
+            </p>
+
+    `;
+
+
+    if (
+        comparison.changes.length === 0
+    ) {
+
+        html += `
+
+            <p>
+                現在の商品データとCSVの内容に
+                変更はありません。
+            </p>
+
+        `;
+
+    } else {
+
+        const displayChanges =
+            comparison.changes.slice(
+                0,
+                20
+            );
+
+
+        displayChanges.forEach(
+            item => {
+
+                html += `
+
+                    <div class="change-detail">
+
+                        <div class="change-code">
+                            品番：${item.code}
+                        </div>
+
+                        <p>
+                            変更項目：
+                            <strong>
+                                ${item.field}
+                            </strong>
+                        </p>
+
+                        <p>
+                            現在：
+                            ${item.current || '（空欄）'}
+                        </p>
+
+                        <p>
+                            更新後：
+                            ${item.csv || '（空欄）'}
+                        </p>
+
+                    </div>
+
+                `;
+
+            }
+        );
+
+
+        if (
+            comparison.changes.length > 20
+        ) {
+
+            html += `
+
+                <p class="comparison-note">
+                    ※変更内容は最初の20件を表示しています。
+                    実際の更新対象は
+                    ${comparison.changes.length}件です。
+                </p>
+
+            `;
+
+        }
+
+    }
+
+
+    html += `
+
+        </div>
+
+
+        <p class="comparison-note">
+            ※この段階では商品データは変更されていません。
+        </p>
+
+    `;
+
+
+    uploadResult.innerHTML =
+        html;
+
+}
+
+
+/* ==========================================================
+   CSV選択ボタン
 ========================================================== */
 
 selectCsvButton.addEventListener(
@@ -1362,31 +2369,59 @@ selectCsvButton.addEventListener(
 
 csvFileInput.addEventListener(
     'change',
-    async (event) => {
+    async event => {
 
         const file =
             event.target.files &&
             event.target.files[0];
 
+
         if (!file) {
+
             return;
+
         }
 
 
-        uploadResult.textContent =
-            '現在の商品データを確認しています……';
+        selectedFileName.textContent =
+            `選択中：${file.name}`;
+
+
+        comparisonStep.style.display =
+            'block';
+
+
+        updateActionStep.style.display =
+            'none';
+
+
+        generateJsonButton.disabled =
+            true;
+
+
+        uploadResult.innerHTML = `
+
+            <div class="update-info">
+                現在の商品データを確認しています……
+            </div>
+
+        `;
 
 
         try {
 
             const response =
-                await fetch('products.json');
+                await fetch(
+                    'products.json'
+                );
 
 
             if (!response.ok) {
+
                 throw new Error(
                     'products.jsonの読み込みに失敗しました。'
                 );
+
             }
 
 
@@ -1394,8 +2429,13 @@ csvFileInput.addEventListener(
                 await response.json();
 
 
-            uploadResult.textContent =
-                'CSVファイルを読み込んでいます……';
+            uploadResult.innerHTML = `
+
+                <div class="update-info">
+                    CSVファイルを読み込んでいます……
+                </div>
+
+            `;
 
 
             const reader =
@@ -1403,13 +2443,14 @@ csvFileInput.addEventListener(
 
 
             reader.onload =
-                (loadEvent) => {
+                loadEvent => {
 
                     try {
 
                         const text =
                             loadEvent.target.result;
 
+                        csvTextForUpdate = text;
 
                         const csvProducts =
                             parseCSV(text);
@@ -1419,18 +2460,34 @@ csvFileInput.addEventListener(
                             csvProducts.length === 0
                         ) {
 
-                            uploadResult.textContent =
-                                'CSVに商品データがありません。';
+                            uploadResult.innerHTML = `
+
+                                <div class="update-warning">
+
+                                    <strong>
+                                        ⚠ CSVに商品データがありません
+                                    </strong>
+
+                                    <p>
+                                        正しいCSVファイルを選択してください。
+                                    </p>
+
+                                </div>
+
+                            `;
 
                             return;
 
                         }
 
-                      currentProductsForUpdate =
-                      currentProducts;
 
-                      csvProductsForUpdate =
-                      csvProducts;  
+                        currentProductsForUpdate =
+                            currentProducts;
+
+
+                        csvProductsForUpdate =
+                            csvProducts;
+
 
                         showComparisonResult(
                             currentProducts,
@@ -1439,8 +2496,21 @@ csvFileInput.addEventListener(
 
                     } catch (error) {
 
-                        uploadResult.textContent =
-                            'CSVの解析中にエラーが発生しました。';
+                        uploadResult.innerHTML = `
+
+                            <div class="update-warning">
+
+                                <strong>
+                                    ⚠ CSVの解析中にエラーが発生しました
+                                </strong>
+
+                                <p>
+                                    CSVファイルの内容を確認してください。
+                                </p>
+
+                            </div>
+
+                        `;
 
                         console.error(error);
 
@@ -1452,8 +2522,17 @@ csvFileInput.addEventListener(
             reader.onerror =
                 () => {
 
-                    uploadResult.textContent =
-                        'CSVファイルの読み込みに失敗しました。';
+                    uploadResult.innerHTML = `
+
+                        <div class="update-warning">
+
+                            <strong>
+                                ⚠ CSVファイルの読み込みに失敗しました
+                            </strong>
+
+                        </div>
+
+                    `;
 
                 };
 
@@ -1463,11 +2542,23 @@ csvFileInput.addEventListener(
                 'UTF-8'
             );
 
-
         } catch (error) {
 
-            uploadResult.textContent =
-                '現在の商品データを読み込めませんでした。';
+            uploadResult.innerHTML = `
+
+                <div class="update-warning">
+
+                    <strong>
+                        ⚠ 現在の商品データを読み込めませんでした
+                    </strong>
+
+                    <p>
+                        Product Finderのファイル構成を確認してください。
+                    </p>
+
+                </div>
+
+            `;
 
             console.error(error);
 
@@ -1479,83 +2570,142 @@ csvFileInput.addEventListener(
     }
 );
 
+
+async function uploadCSVToGitHub() {
+
+    if (!csvTextForUpdate) {
+
+        throw new Error(
+            'CSVデータが読み込まれていません。'
+        );
+
+    }
+
+
+    const response =
+        await fetch(
+            GOOGLE_APPS_SCRIPT_URL,
+            {
+                method: 'POST',
+
+                headers: {
+                    'Content-Type':
+                        'text/plain;charset=utf-8'
+                },
+
+                body:
+                    JSON.stringify({
+                        csv:
+                            csvTextForUpdate
+                    })
+            }
+        );
+
+
+    const result =
+        await response.json();
+
+
+    if (!result.success) {
+
+        throw new Error(
+            result.error ||
+            'CSVのアップロードに失敗しました。'
+        );
+
+    }
+
+
+    return result;
+
+}
+
+
 /* ==========================================================
-   更新用JSON作成
+   商品データ更新
 ========================================================== */
 
 generateJsonButton.addEventListener(
     'click',
-    () => {
+    async () => {
+
+        if (
+            !currentComparison
+        ) {
+
+            return;
+
+        }
+
+
+        if (
+            currentComparison.deleted > 0
+        ) {
+
+            alert(
+                '削除候補があるため、商品データは更新できません。'
+            );
+
+            return;
+
+        }
+
+
+        const confirmed =
+            window.confirm(
+                'この内容で商品データを更新しますか？\n\n' +
+                'CSVの内容をGitHubへ送信し、' +
+                '自動的に商品データを更新します。'
+            );
+
+
+        if (!confirmed) {
+
+            return;
+
+        }
+
 
         try {
 
-            uploadResult.textContent =
-                '更新用JSONを作成しています……';
+            uploadResult.innerHTML = `
+
+                <div class="update-info">
+
+                    商品データを更新しています……<br>
+                    しばらくお待ちください。
+
+                </div>
+
+            `;
 
 
-            const updatedProducts =
-                createUpdatedProducts();
-
-
-            const json =
-                JSON.stringify(
-                    updatedProducts,
-                    null,
-                    2
-                );
-
-
-            const blob =
-                new Blob(
-                    [json],
-                    {
-                        type:
-                            'application/json;charset=utf-8'
-                    }
-                );
-
-
-            const url =
-                URL.createObjectURL(blob);
-
-
-            const link =
-                document.createElement('a');
-
-
-            link.href = url;
-
-            link.download =
-                'products_updated.json';
-
-
-            document.body.appendChild(link);
-
-            link.click();
-
-            document.body.removeChild(link);
-
-
-            URL.revokeObjectURL(url);
+            await uploadCSVToGitHub();
 
 
             uploadResult.innerHTML = `
 
-                <div class="comparison-result">
+                <div class="update-success">
 
-                    <p>
-                        更新用JSONを作成しました。
-                    </p>
+                    <strong>
+                        ✓ 商品データを送信しました
+                    </strong>
 
                     <p>
                         商品数：
                         <strong>
-                            ${updatedProducts.length}件
+                            ${csvProductsForUpdate.length}件
                         </strong>
                     </p>
 
-                    <p class="comparison-note">
-                        ※現在の商品データはまだ変更されていません。
+                    <p>
+                        GitHub Actionsが自動的に
+                        商品データを更新します。
+                    </p>
+
+                    <p>
+                        数分後にProduct Finderへ
+                        反映されます。
                     </p>
 
                 </div>
@@ -1567,13 +2717,13 @@ generateJsonButton.addEventListener(
 
             uploadResult.innerHTML = `
 
-                <div class="comparison-result">
+                <div class="update-warning">
+
+                    <strong>
+                        ⚠ 商品データの更新に失敗しました
+                    </strong>
 
                     <p>
-                        更新用JSONの作成に失敗しました。
-                    </p>
-
-                    <p class="comparison-note">
                         ${error.message}
                     </p>
 

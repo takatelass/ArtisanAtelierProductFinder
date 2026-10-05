@@ -784,65 +784,7 @@ header h1 {
     background: #fff;
 }
 
-/* ==========================================================
-   PC：商品ステータス表示
-   1段目 → 在庫
-   2段目 → 新商品・人気商品・おすすめ
-========================================================== */
 
-.product-card-status {
-    display: grid;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
-    gap: 5px;
-    margin-bottom: 10px;
-}
-
-.product-card-status-left {
-    grid-column: 1;
-    grid-row: 1;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    min-height: 24px;
-}
-
-.product-card-status-center {
-    grid-column: 1;
-    grid-row: 2;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 5px;
-    min-height: 24px;
-}
-
-.product-card-status-right {
-    grid-column: 1;
-    grid-row: 2;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    min-height: 24px;
-}
-
-/* 2段目を1本の横並びにする */
-.product-card-status-center,
-.product-card-status-right {
-    grid-row: 2;
-}
-
-.product-card-status-center {
-    width: 100%;
-}
-
-.product-card-status-right {
-    position: absolute;
-    left: 14px;
-    bottom: auto;
-}
-
-/* スマホ・タブレット用レイアウトは既存CSSで上書き */
 
 /* ==========================================================
    商品情報
@@ -1353,193 +1295,40 @@ footer {
 }
 
 /* ==========================================================
-   PC：商品ステータスの最終レイアウト調整
-   1段目：在庫
-   2段目：新商品・人気商品・おすすめ
+   商品カード ステータス表示
 ========================================================== */
 
-@media (min-width: 768px) {
-
-    .product-card-status {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-template-rows: auto auto;
-        gap: 5px;
-        margin-bottom: 10px;
-    }
-
-    .product-card-status-left {
-        grid-column: 1;
-        grid-row: 1;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        min-height: 24px;
-    }
-
-    .product-card-status-center {
-        grid-column: 1;
-        grid-row: 2;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 5px;
-        min-height: 24px;
-        width: 100%;
-    }
-
-    .product-card-status-right {
-        grid-column: 1;
-        grid-row: 2;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        min-height: 24px;
-        position: static;
-    }
-
-    /* 2段目の3つを横一列にまとめる */
-    .product-card-status-center {
-        display: contents;
-    }
-
-.product-card-status-center {
-    display: contents;
-}
-
-.product-card-status-center .product-new-badge,
-.product-card-status-center .product-popular-badge,
-.product-card-status-right .product-badge {
-    grid-row: 2;
-    margin: 0;
-}
-
-.product-card-status-center .product-new-badge,
-.product-card-status-center .product-popular-badge {
-    margin-right: 5px;
-}
-
-.product-card-status-right {
-    justify-content: flex-start;
-}
-    
-}
-
-/* ==========================================================
-   PC：商品ステータスを完全に左詰め
-   1段目：在庫
-   2段目：新商品・人気商品・おすすめ
-========================================================== */
-
-@media (min-width: 901px) {
-
-    .product-card-status {
-        display: grid;
-        grid-template-columns: repeat(3, max-content);
-        grid-auto-rows: minmax(24px, auto);
-        column-gap: 5px;
-        row-gap: 5px;
-        justify-content: start;
-        align-items: center;
-        margin-bottom: 10px;
-    }
-
-    .product-card-status-left,
-    .product-card-status-center,
-    .product-card-status-right {
-        display: contents;
-    }
-
-    .product-card-status-left .product-stock-badge {
-        grid-column: 1;
-        grid-row: 1;
-    }
-
-    .product-card-status-center .product-new-badge {
-        grid-column: 1;
-        grid-row: 2;
-    }
-
-    .product-card-status-center .product-popular-badge {
-        grid-column: 2;
-        grid-row: 2;
-    }
-
-    .product-card-status-right .product-badge {
-        grid-column: 3;
-        grid-row: 2;
-    }
-}
-
-/* ==========================================================
-   PC：商品ステータスを1行に統一
-   在庫・新商品・人気商品・おすすめ
-========================================================== */
-
-@media (min-width: 768px) {
-
-    .product-card-status {
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        flex-wrap: nowrap;
-        gap: 5px;
-        min-height: 24px;
-        margin-bottom: 10px;
-    }
-
-    .product-card-status-left,
-    .product-card-status-center,
-    .product-card-status-right {
-        display: contents;
-    }
-
-    .product-card-status .product-stock-badge,
-    .product-card-status .product-new-badge,
-    .product-card-status .product-popular-badge,
-    .product-card-status .product-badge {
-        flex: 0 0 auto;
-        margin: 0;
-        position: static;
-    }
-}
-
-/* ==========================================================
-   PC：商品ステータス 最終版
-   1行：在庫・新商品・人気商品・おすすめ
-========================================================== */
+/* ----------------------------------------------------------
+   PC・タブレット
+   在庫 / 新商品 / 人気商品 / おすすめ を1列で表示
+---------------------------------------------------------- */
 
 @media (min-width: 768px) {
 
     .product-card-status {
         display: flex !important;
-        flex-direction: row !important;
-        flex-wrap: nowrap !important;
         align-items: center !important;
         justify-content: flex-start !important;
+        flex-wrap: nowrap !important;
         gap: 5px !important;
         width: 100% !important;
         min-height: 24px !important;
         margin-bottom: 10px !important;
-        position: static !important;
     }
 
     .product-card-status-left,
     .product-card-status-center,
     .product-card-status-right {
         display: flex !important;
-        flex-direction: row !important;
         align-items: center !important;
         justify-content: flex-start !important;
-        gap: 5px !important;
         width: auto !important;
         min-width: 0 !important;
         min-height: 24px !important;
         margin: 0 !important;
         padding: 0 !important;
+        gap: 5px !important;
         position: static !important;
-        grid-column: auto !important;
-        grid-row: auto !important;
     }
 
     .product-card-status .product-stock-badge,
@@ -1547,9 +1336,523 @@ footer {
     .product-card-status .product-popular-badge,
     .product-card-status .product-badge {
         display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
         flex: 0 0 auto !important;
         width: fit-content !important;
+        min-width: 0 !important;
+        min-height: 24px !important;
         margin: 0 !important;
+        padding: 4px 8px !important;
+        box-sizing: border-box !important;
+        border-radius: 999px !important;
+        white-space: nowrap !important;
         position: static !important;
     }
+
+}
+
+
+/* ----------------------------------------------------------
+   PC・タブレット
+   バッジカラー
+---------------------------------------------------------- */
+
+@media (min-width: 768px) {
+
+    .product-card-status .product-new-badge {
+        color: #4778a8 !important;
+        background: #eef5fb !important;
+        border: 1px solid #4778a8 !important;
+    }
+
+    .product-card-status .product-popular-badge {
+        color: #b84a4a !important;
+        background: #fdf0f0 !important;
+        border: 1px solid #b84a4a !important;
+    }
+
+    .product-card-status .product-badge {
+        color: #555 !important;
+        background: #f2f2f2 !important;
+        border: 1px solid #cfcfcf !important;
+    }
+
+}
+
+
+/* ----------------------------------------------------------
+   スマホ
+   左：在庫
+   中央：新商品 / 人気商品
+   右：おすすめ
+---------------------------------------------------------- */
+
+@media (max-width: 767px) {
+
+    .product-card-status {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr 1fr !important;
+        align-items: center !important;
+        width: 100% !important;
+        min-height: 24px !important;
+        margin-bottom: 6px !important;
+        gap: 4px !important;
+    }
+
+    .product-card-status-left,
+    .product-card-status-center,
+    .product-card-status-right {
+        display: flex !important;
+        align-items: center !important;
+        min-width: 0 !important;
+        width: auto !important;
+        height: 24px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        position: static !important;
+    }
+
+    /* 在庫 */
+    .product-card-status-left {
+        justify-content: flex-start !important;
+    }
+
+    /* 新商品・人気商品 */
+    .product-card-status-center {
+        justify-content: center !important;
+    }
+
+    /* おすすめ */
+    .product-card-status-right {
+        justify-content: flex-end !important;
+    }
+
+    .product-card-status
+    .product-new-badge,
+    .product-card-status
+    .product-popular-badge,
+    .product-card-status
+    .product-badge,
+    .product-card-status
+    .product-stock-badge {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: auto !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        min-height: 21px !important;
+        margin: 0 !important;
+        padding: 3px 5px !important;
+        box-sizing: border-box !important;
+        border-radius: 999px !important;
+        font-size: 9px !important;
+        font-weight: 600 !important;
+        line-height: 1.1 !important;
+        letter-spacing: 0.02em !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+
+    /* 新商品・人気商品が両方ある場合は新商品を優先 */
+    .product-card-status-center
+    .product-new-badge:not(.hidden)
+    ~ .product-popular-badge {
+        display: none !important;
+    }
+
+    /* 非表示指定は必ず非表示 */
+    .product-card-status .hidden {
+        display: none !important;
+    }
+
+    /* スマホではブランド・用途・特徴タグを非表示 */
+    .product-brand,
+    .product-usage-tags,
+    .product-feature-tags {
+        display: none !important;
+    }
+
+}
+
+@media (min-width: 768px) {
+
+    .product-card-status .product-new-badge {
+        color: #4778a8 !important;
+        background: #eef5fb !important;
+        border: 1px solid #4778a8 !important;
+    }
+
+    .product-card-status .product-popular-badge {
+        color: #b84a4a !important;
+        background: #fdf0f0 !important;
+        border: 1px solid #b84a4a !important;
+    }
+
+    .product-card-status .product-badge {
+        color: #555 !important;
+        background: #f2f2f2 !important;
+        border: 1px solid #cfcfcf !important;
+    }
+
+}
+
+/* ==========================================================
+   商品ステータス表示 最終調整
+========================================================== */
+
+.product-card-status {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    flex-wrap: wrap !important;
+    gap: 5px !important;
+    width: 100% !important;
+    min-height: 24px !important;
+    margin-bottom: 10px !important;
+}
+
+.product-card-status-left,
+.product-card-status-center,
+.product-card-status-right {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 5px !important;
+    width: auto !important;
+    min-width: 0 !important;
+    min-height: 24px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    position: static !important;
+}
+
+.product-card-status
+.product-stock-badge,
+.product-card-status
+.product-new-badge,
+.product-card-status
+.product-popular-badge,
+.product-card-status
+.product-badge {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: fit-content !important;
+    min-width: 0 !important;
+    min-height: 24px !important;
+
+    margin: 0 !important;
+    padding: 4px 8px !important;
+
+    border-radius: 999px !important;
+
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+
+    white-space: nowrap !important;
+}
+
+/* hidden は最優先 */
+.product-card-status
+.hidden {
+    display: none !important;
+}
+
+/* 新商品 */
+.product-card-status
+.product-new-badge:not(.hidden) {
+    color: #4778a8 !important;
+    background: #eef5fb !important;
+    border: 1px solid #4778a8 !important;
+}
+
+/* 人気商品 */
+.product-card-status
+.product-popular-badge:not(.hidden) {
+    color: #b84a4a !important;
+    background: #fdf0f0 !important;
+    border: 1px solid #b84a4a !important;
+}
+
+/* おすすめ */
+.product-card-status
+.product-badge:not(.hidden) {
+    color: #555 !important;
+    background: #f2f2f2 !important;
+    border: 1px solid #cfcfcf !important;
+}
+
+/* 在庫あり */
+.product-card-status
+.product-stock-badge.stock-available:not(.hidden) {
+    color: #3f7d55 !important;
+    border: 1px solid #3f7d55 !important;
+    background: #fff !important;
+}
+
+/* 在庫なし */
+.product-card-status
+.product-stock-badge.stock-out:not(.hidden) {
+    color: #b84a4a !important;
+    border: 1px solid #b84a4a !important;
+    background: #fff !important;
+}
+
+/* 取寄せ */
+.product-card-status
+.product-stock-badge.stock-order:not(.hidden) {
+    color: #c47a2c !important;
+    border: 1px solid #c47a2c !important;
+    background: #fff !important;
+}
+
+/* 廃番 */
+.product-card-status
+.product-stock-badge.stock-discontinued:not(.hidden) {
+    color: #777 !important;
+    border: 1px solid #999 !important;
+    background: #fff !important;
+}
+
+/* ==========================================================
+   商品データ更新ページ
+========================================================== */
+
+.update-page {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+}
+
+.update-panel {
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 18px;
+    padding: 40px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+}
+
+.update-panel h2 {
+    margin: 0 0 30px;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-align: center;
+}
+
+.update-file-area {
+    padding: 30px;
+    background: #fafafa;
+    border: 1px solid #eeeeee;
+    border-radius: 14px;
+    text-align: center;
+}
+
+.update-file-label {
+    margin: 0 0 20px;
+    font-size: 14px;
+    color: #555;
+    letter-spacing: 0.05em;
+}
+
+.update-file-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 220px;
+    min-height: 48px;
+    padding: 12px 24px;
+    border: 1px solid #222;
+    border-radius: 999px;
+    background: #222;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.update-file-button:hover {
+    background: #fff;
+    color: #222;
+    transform: translateY(-1px);
+}
+
+.update-file-button:active {
+    transform: translateY(0);
+}
+
+.upload-result {
+    margin-top: 30px;
+}
+
+.comparison-result {
+    padding: 28px;
+    border: 1px solid #e5e5e5;
+    border-radius: 14px;
+    background: #fff;
+}
+
+.comparison-result > p:first-child {
+    margin-top: 0;
+    font-weight: 600;
+    text-align: center;
+}
+
+.comparison-summary,
+.comparison-diff {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.comparison-diff {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.comparison-summary > div,
+.comparison-diff > div {
+    padding: 18px;
+    border: 1px solid #eeeeee;
+    border-radius: 10px;
+    background: #fafafa;
+    text-align: center;
+}
+
+.comparison-summary span,
+.comparison-diff span {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: #777;
+    letter-spacing: 0.05em;
+}
+
+.comparison-summary strong,
+.comparison-diff strong {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.comparison-diagnostic {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid #eeeeee;
+}
+
+.comparison-diagnostic > p:first-child {
+    margin-top: 0;
+}
+
+.change-detail {
+    margin-top: 12px;
+    padding: 16px;
+    border: 1px solid #eeeeee;
+    border-radius: 10px;
+    background: #fafafa;
+}
+
+.change-detail p {
+    margin: 6px 0 0;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.comparison-note {
+    margin-top: 24px;
+    color: #777;
+    font-size: 12px;
+    line-height: 1.7;
+    text-align: center;
+}
+
+.back-to-search {
+    display: block;
+    width: fit-content;
+    margin: 30px auto 0;
+    padding: 10px 24px;
+    border: 1px solid #d8d8d8;
+    border-radius: 999px;
+    color: #333;
+    font-size: 13px;
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.back-to-search:hover {
+    background: #f7f7f7;
+    border-color: #bbb;
+}
+
+
+/* ==========================================================
+   スマートフォン
+========================================================== */
+
+@media (max-width: 600px) {
+
+    .update-page {
+        padding: 25px 14px 40px;
+    }
+
+    .update-panel {
+        padding: 24px 16px;
+        border-radius: 14px;
+    }
+
+    .update-panel h2 {
+        font-size: 20px;
+        margin-bottom: 24px;
+    }
+
+    .update-file-area {
+        padding: 24px 16px;
+    }
+
+    .update-file-button {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .comparison-summary,
+    .comparison-diff {
+        grid-template-columns: 1fr;
+    }
+
+    .comparison-result {
+        padding: 20px 16px;
+    }
+
+}
+
+#generateJsonButton {
+    display: block;
+    margin: 24px auto 0;
+}
+
+#generateJsonButton:hover {
+    background: #fff;
+    color: #222;
+}
+
+.selected-file-name {
+    margin-top: 16px;
+    color: #555;
+    font-size: 13px;
+    line-height: 1.6;
+    letter-spacing: 0.03em;
+    word-break: break-all;
 }

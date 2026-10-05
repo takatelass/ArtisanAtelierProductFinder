@@ -27,16 +27,39 @@ body {
 ========================================================== */
 
 header {
+
     background: #fff;
+
     border-bottom: 1px solid #e5e5e5;
-    padding: 24px 0;
+
+    padding: 12px 0;
+
 }
 
-header h1 {
-    margin: 0;
-    font-size: 24px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
+.header-logo {
+
+    display: block;
+
+    width: 100%;
+
+    text-align: center;
+
+    line-height: 0;
+
+}
+
+.header-logo img {
+
+    display: block;
+
+    width: 100%;
+
+    max-width: 1134px;
+
+    height: auto;
+
+    margin: 0 auto;
+
 }
 
 /* ==========================================================
@@ -607,11 +630,43 @@ header h1 {
 }
 
 #resultCount {
+
     margin-right: auto;
+
     font-size: 18px;
+
     font-weight: 700;
+
     letter-spacing: 0.04em;
+
     color: #333;
+
+}
+
+.result-count-number {
+
+    display: inline-block;
+
+    font-size: 27px;
+
+    font-weight: 400;
+
+    color: #8f1d2c;
+
+    line-height: 1;
+
+    vertical-align: baseline;
+
+}
+
+.result-count-text {
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    color: #333;
+
 }
 
 #sortOrder {

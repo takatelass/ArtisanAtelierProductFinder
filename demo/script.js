@@ -63,6 +63,7 @@ const state = {
 const elements = {
     keyword: document.getElementById('keyword'),
     makerFilter: document.getElementById('makerFilter'),
+    headerHome: document.getElementById('headerHome'),
     categoryFilter: document.getElementById('categoryFilter'),
     seriesFilter: document.getElementById('seriesFilter'),
     minPrice: document.getElementById('minPrice'),
@@ -811,7 +812,8 @@ function createFilterOptions() {
         'for the Blue DENIM',
         'MASK＋',
         'Lezza Botanica',
-        'Artisanオリジナル'
+        'Artisanオリジナル',
+        'Artisanオリジナルカラー'
     ];
 
     const makers = [
@@ -1712,9 +1714,9 @@ function renderProducts() {
         '';
 
     if (elements.resultCount) {
-        elements.resultCount.textContent =
-            `${products.length}件の商品`;
-    }
+    elements.resultCount.innerHTML =
+        `<span class="result-count-number">${products.length}</span><span class="result-count-text">件の商品</span>`;
+}
 
     renderActiveFilters();
 
@@ -2157,6 +2159,26 @@ if (elements.resetFilters) {
             }
 
             renderProducts();
+        }
+    );
+}
+
+if (elements.headerHome) {
+
+    elements.headerHome.addEventListener(
+        'click',
+        (event) => {
+
+            event.preventDefault();
+
+            if (elements.resetFilters) {
+                elements.resetFilters.click();
+            }
+
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
         }
     );
 }

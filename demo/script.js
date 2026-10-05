@@ -1779,7 +1779,9 @@ function createDetailRow(
 
     const isTagField =
         label === '特徴タグ' ||
-        label === '用途タグ';
+        label === '用途タグ' ||
+        label === '色' ||
+        label === 'カラー系統';
 
     let values = [];
 
@@ -1803,7 +1805,20 @@ function createDetailRow(
                 : String(value).trim();
 
         if (text) {
-            values = [text];
+
+            if (isTagField) {
+
+                values = text
+                    .split('|')
+                    .map((item) =>
+                        item.trim()
+                    )
+                    .filter(Boolean);
+
+            } else {
+
+                values = [text];
+            }
         }
     }
 

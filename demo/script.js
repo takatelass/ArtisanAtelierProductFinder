@@ -1924,7 +1924,79 @@ const details = [
     ['特徴タグ', product.tags],
     ['用途タグ', product.usageTags]
 ];
-    
+ 
+/* SmartRegiカラー別在庫 */
+
+if (
+    Array.isArray(product.smartRegiStock) &&
+    product.smartRegiStock.length > 0
+) {
+
+    const stockTitle =
+        document.createElement('dt');
+
+    stockTitle.className =
+        'detail-label';
+
+    stockTitle.textContent =
+        'SmartRegi在庫';
+
+    const stockValue =
+        document.createElement('dd');
+
+    stockValue.className =
+        'detail-value smart-regi-stock';
+
+    product.smartRegiStock.forEach(
+        (stock) => {
+
+            const stockItem =
+                document.createElement('div');
+
+            stockItem.className =
+                'smart-regi-stock-item';
+
+            const color =
+                document.createElement('span');
+
+            color.className =
+                'smart-regi-stock-color';
+
+            color.textContent =
+                stock.color || EMPTY_VALUE;
+
+            const quantity =
+                document.createElement('span');
+
+            quantity.className =
+                'smart-regi-stock-quantity';
+
+            if (
+                stock.status === 'matched'
+            ) {
+
+                quantity.textContent =
+                    `${stock.quantity ?? 0}点`;
+
+            } else {
+
+                quantity.textContent =
+                    '⚠ 在庫情報未取得';
+            }
+
+            stockItem.appendChild(color);
+            stockItem.appendChild(quantity);
+
+            stockValue.appendChild(
+                stockItem
+            );
+        }
+    );
+
+    detailList.appendChild(stockTitle);
+    detailList.appendChild(stockValue);
+}
+
     details.forEach(
         ([label, value]) => {
 

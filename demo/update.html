@@ -56,6 +56,13 @@
             font-size: 13px;
             line-height: 1.7;
         }
+
+        .update-last-updated {
+            margin-top: 8px;
+            font-size: 13px;
+            color: #666;
+        }
+
     </style>
 
 </head>
@@ -77,6 +84,11 @@
         <h2>
             商品データ更新
         </h2>
+
+            <p class="update-last-updated">
+            商品データ最終更新：
+            <span id="productUpdatedAt">読み込み中……</span>
+        </p>
 
         <div class="update-file-area">
 
@@ -177,7 +189,66 @@
 
 <script>
 
+/* ==========================================================
+   商品データ最終更新日時
+========================================================== */
+
+async function loadProductUpdatedAt() {
+
+    const element =
+        document.getElementById(
+            'productUpdatedAt'
+        );
+
+    if (!element) {
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                'update-data/product-updated-at.json?t=' +
+                Date.now()
+            );
+
+        if (!response.ok) {
+            throw new Error(
+                '更新日時ファイルを読み込めませんでした。'
+            );
+        }
+
+        const data =
+            await response.json();
+
+        if (data.updatedAt) {
+
+            element.textContent =
+                data.updatedAt;
+
+        } else {
+
+            element.textContent =
+                '未記録';
+
+        }
+
+    } catch (error) {
+
+        element.textContent =
+            '取得できませんでした';
+
+        console.error(error);
+
+    }
+
+}
+
+loadProductUpdatedAt();
+
+
 const csvFileInput =
+
     document.getElementById('csvFileInput');
 
 const selectCsvButton =

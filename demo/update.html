@@ -63,6 +63,15 @@
             color: #666;
         }
 
+        .update-last-updated-group {
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .update-last-updated-group .update-last-updated {
+            margin: 6px 0;
+        }
+
     </style>
 
 </head>
@@ -71,9 +80,14 @@
 
 <header>
     <div class="container">
-        <h1>
-            Artisan Atelier Product Finder
-        </h1>
+        <a
+            href="index.html"
+            class="header-logo"
+            aria-label="Product Finderのトップへ戻る">
+            <img
+                src="header.png"
+                alt="Artisan Atelier Product Finder">
+        </a>
     </div>
 </header>
 
@@ -140,27 +154,36 @@
             スマレジ在庫更新
         </h2>
 
-        <p class="update-file-label">
-            スマレジから出力した在庫CSVを選択
+        <p class="update-last-updated">
+            スマレジ在庫最終更新：
+            <span id="smartRegiUpdatedAt">読み込み中……</span>
         </p>
 
-        <input
-            type="file"
-            id="smartRegiCsvInput"
-            accept=".csv,text/csv"
-            hidden>
+        <div class="update-file-area">
 
-        <button
-            type="button"
-            id="smartRegiSelectButton"
-            class="update-file-button">
-            スマレジCSVを選択
-        </button>
+            <p class="update-file-label">
+                スマレジから出力した在庫CSVを選択
+            </p>
 
-        <div
-            id="smartRegiFileName"
-            class="selected-file-name">
-            ファイルが選択されていません
+            <input
+                type="file"
+                id="smartRegiCsvInput"
+                accept=".csv,text/csv"
+                hidden>
+
+            <button
+                type="button"
+                id="smartRegiSelectButton"
+                class="update-file-button">
+                スマレジCSVを選択
+            </button>
+
+            <div
+                id="smartRegiFileName"
+                class="selected-file-name">
+                ファイルが選択されていません
+            </div>
+
         </div>
 
         <div
@@ -245,6 +268,55 @@ async function loadProductUpdatedAt() {
 }
 
 loadProductUpdatedAt();
+
+
+/* ==========================================================
+   スマレジ在庫最終更新日時
+========================================================== */
+
+async function loadSmartRegiUpdatedAt() {
+
+    const element =
+        document.getElementById(
+            'smartRegiUpdatedAt'
+        );
+
+    if (!element) {
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(
+                '../update-data/smartregi-updated-at.json?t=' +
+                Date.now()
+            );
+
+        if (!response.ok) {
+            throw new Error(
+                'スマレジ更新日時ファイルを読み込めませんでした。'
+            );
+        }
+
+        const data =
+            await response.json();
+
+        element.textContent =
+            data.updatedAt || '未記録';
+
+    } catch (error) {
+
+        element.textContent =
+            '未記録';
+
+        console.error(error);
+
+    }
+
+}
+
+loadSmartRegiUpdatedAt();
 
 
 const csvFileInput =

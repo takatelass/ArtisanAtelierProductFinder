@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: リポジトリを取得
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Pythonをセットアップ
         uses: actions/setup-python@v5
@@ -36,6 +38,40 @@ jobs:
           json_path = "demo/products.json"
           smartregi_path = "update-data/smartregi.json"
           timestamp_path = "update-data/product-updated-at.json"
+          smartregi_timestamp_path = "update-data/smartregi-updated-at.json"
+
+          # 今回のpushで変更された元データを確認
+          changed_paths = set()
+
+          try:
+              changed_output = os.popen(
+                  "git diff --name-only HEAD^ HEAD"
+              ).read()
+
+              changed_paths = {
+                  line.strip()
+                  for line in changed_output.splitlines()
+                  if line.strip()
+              }
+
+          except Exception:
+              changed_paths = set()
+
+          product_source_changed = (
+              csv_path in changed_paths
+          )
+
+          smartregi_source_changed = (
+              smartregi_path in changed_paths
+          )
+
+          print(
+              f"商品CSV変更: {product_source_changed}"
+          )
+
+          print(
+              f"スマレジJSON変更: {smartregi_source_changed}"
+          )
 
           def normalize(value):
               if value is None:
@@ -310,7 +346,30 @@ jobs:
                   encoding="utf-8"
               ) as f:
 
-                  smartregi_products = json.load(f)
+                  smartregi_data = json.load(f)
+
+              # 更新ページで作成したJSONは
+              # { updatedAt, products } 形式。
+              # 以前のJSONは配列形式なので両方に対応する。
+              if isinstance(smartregi_data, dict):
+
+                  smartregi_products = smartregi_data.get(
+                      "products",
+                      []
+                  )
+
+                  embedded_smartregi_updated_at = (
+                      normalize(
+                          smartregi_data.get(
+                              "updatedAt"
+                          )
+                      )
+                  )
+
+              else:
+
+                  smartregi_products = smartregi_data
+                  embedded_smartregi_updated_at = ""
 
               smartregi_map = {
                   normalize(
@@ -397,37 +456,82 @@ jobs:
           )
 
           # --------------------------------------------------
-          # 商品データ更新日時
+          # 更新日時を保存
           # --------------------------------------------------
 
           now_jst = datetime.now(
               ZoneInfo("Asia/Tokyo")
           )
 
-          updated_at = now_jst.strftime(
+          now_string = now_jst.strftime(
               "%Y-%m-%d %H:%M:%S"
           )
 
-          timestamp_data = {
-              "updatedAt": updated_at
-          }
+          # 商品CSVが更新されたときだけ商品データ更新日時を更新
+          if product_source_changed:
 
-          with open(
-              timestamp_path,
-              "w",
-              encoding="utf-8"
-          ) as f:
+              product_timestamp_data = {
+                  "updatedAt": now_string
+              }
 
-              json.dump(
-                  timestamp_data,
-                  f,
-                  ensure_ascii=False,
-                  indent=2
+              with open(
+                  timestamp_path,
+                  "w",
+                  encoding="utf-8"
+              ) as f:
+
+                  json.dump(
+                      product_timestamp_data,
+                      f,
+                      ensure_ascii=False,
+                      indent=2
+                  )
+
+              print(
+                  f"商品データ最終更新日時: {now_string}"
               )
 
-          print(
-              f"商品データ最終更新日時: {updated_at}"
-          )
+          else:
+
+              print(
+                  "商品CSVの変更はないため、商品データ更新日時は維持します。"
+              )
+
+          # スマレジJSONが更新されたときだけ
+          # スマレジ在庫更新日時を更新
+          if smartregi_source_changed:
+
+              smartregi_updated_at = (
+                  embedded_smartregi_updated_at
+                  or now_string
+              )
+
+              smartregi_timestamp_data = {
+                  "updatedAt": smartregi_updated_at
+              }
+
+              with open(
+                  smartregi_timestamp_path,
+                  "w",
+                  encoding="utf-8"
+              ) as f:
+
+                  json.dump(
+                      smartregi_timestamp_data,
+                      f,
+                      ensure_ascii=False,
+                      indent=2
+                  )
+
+              print(
+                  f"スマレジ在庫最終更新日時: {smartregi_updated_at}"
+              )
+
+          else:
+
+              print(
+                  "スマレジJSONの変更はないため、スマレジ在庫更新日時は維持します。"
+              )
 
           PY
 
@@ -438,6 +542,7 @@ jobs:
 
           git add demo/products.json
           git add update-data/product-updated-at.json
+          git add update-data/smartregi-updated-at.json
 
           if git diff --cached --quiet; then
             echo "変更はありません。"

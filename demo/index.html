@@ -125,6 +125,17 @@
         商品データを更新
     </a>
 
+    <div class="data-update-last-updated">
+        <p>
+            商品データ最終更新：
+            <span id="productUpdatedAt">読み込み中……</span>
+        </p>
+        <p>
+            スマレジ在庫最終更新：
+            <span id="smartRegiUpdatedAt">読み込み中……</span>
+        </p>
+    </div>
+
 </section>
 
 <section class="result-info">
@@ -235,6 +246,76 @@
 </footer>
 
 <script src="script.js"></script>
+
+<script>
+
+/* ==========================================================
+   更新日時表示
+========================================================== */
+
+async function loadDataUpdatedAt() {
+
+    const productElement =
+        document.getElementById('productUpdatedAt');
+
+    const smartRegiElement =
+        document.getElementById('smartRegiUpdatedAt');
+
+    const loadTimestamp = async (
+        element,
+        path
+    ) => {
+
+        if (!element) {
+            return;
+        }
+
+        try {
+
+            const response =
+                await fetch(
+                    path + '?t=' + Date.now()
+                );
+
+            if (!response.ok) {
+                throw new Error(
+                    '更新日時ファイルを読み込めませんでした。'
+                );
+            }
+
+            const data =
+                await response.json();
+
+            element.textContent =
+                data.updatedAt || '未記録';
+
+        } catch (error) {
+
+            element.textContent =
+                '取得できませんでした';
+
+            console.error(error);
+
+        }
+
+    };
+
+    await Promise.all([
+        loadTimestamp(
+            productElement,
+            '../update-data/product-updated-at.json'
+        ),
+        loadTimestamp(
+            smartRegiElement,
+            '../update-data/smartregi-updated-at.json'
+        )
+    ]);
+
+}
+
+loadDataUpdatedAt();
+
+</script>
 
 </body>
 

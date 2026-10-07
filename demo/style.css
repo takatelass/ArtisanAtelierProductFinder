@@ -1340,6 +1340,17 @@ footer {
     border-color: #2F4D66;
 }
 
+.data-update-last-updated {
+    margin-top: 10px;
+    font-size: 12px;
+    line-height: 1.8;
+    color: #777;
+}
+
+.data-update-last-updated p {
+    margin: 0;
+}
+
 /* タブレット・スマホでは非表示 */
 @media (max-width: 767px) {
 

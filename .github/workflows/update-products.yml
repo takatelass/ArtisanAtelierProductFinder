@@ -35,22 +35,13 @@ jobs:
           json_path = "demo/products.json"
           timestamp_path = "update-data/product-updated-at.json"
 
-          # -----------------------------
-          # CSVを読み込む
-          # -----------------------------
           with open(csv_path, "r", encoding="utf-8-sig", newline="") as f:
               reader = csv.DictReader(f)
               rows = list(reader)
 
-          # -----------------------------
-          # 既存の商品データを読み込む
-          # -----------------------------
           with open(json_path, "r", encoding="utf-8") as f:
               current_products = json.load(f)
 
-          # -----------------------------
-          # CSV → 商品JSON
-          # -----------------------------
           def normalize(value):
               if value is None:
                   return ""
@@ -58,7 +49,6 @@ jobs:
 
           def to_bool(value):
               value = normalize(value).lower()
-
               return value in [
                   "true",
                   "1",
@@ -71,12 +61,15 @@ jobs:
 
           def to_int(value):
               value = normalize(value)
-
               if value == "":
                   return 0
 
               try:
-                  return int(float(value.replace(",", "")))
+                  return int(
+                      float(
+                          value.replace(",", "")
+                      )
+                  )
               except:
                   return 0
 
@@ -94,7 +87,7 @@ jobs:
 
           def create_product(row):
               return {
-                  "maker": normalize(row.get("メーカー")),
+                  "maker": normalize(row.get("メーカー名")),
                   "code": normalize(row.get("品番")),
                   "name": normalize(row.get("商品名")),
                   "price": to_int(row.get("価格")),
@@ -102,29 +95,73 @@ jobs:
                   "category": normalize(row.get("カテゴリ")),
                   "subCategory": normalize(row.get("サブカテゴリ")),
                   "series": normalize(row.get("シリーズ")),
-                  "color": normalize(row.get("カラー")),
+
+                  # 今回の修正ポイント
+                  "color": normalize(row.get("色")),
                   "colorGroup": normalize(row.get("カラー系統")),
+
                   "material": normalize(row.get("素材")),
                   "size": normalize(row.get("サイズ")),
                   "weight": normalize(row.get("重量")),
-                  "title": normalize(row.get("タイトル")),
-                  "image": normalize(row.get("画像URL")),
+
+                  "title": normalize(row.get("商品タイトル")),
+                  "image": normalize(row.get("商品画像URL")),
                   "url": normalize(row.get("商品URL")),
-                  "tags": split_tags(row.get("特徴タグ")),
-                  "usageTags": split_tags(row.get("用途タグ")),
-                  "spec1": normalize(row.get("スペック1")),
-                  "spec2": normalize(row.get("スペック2")),
-                  "spec3": normalize(row.get("スペック3")),
-                  "spec4": normalize(row.get("スペック4")),
-                  "spec5": normalize(row.get("スペック5")),
-                  "care": normalize(row.get("お手入れ")),
-                  "note1": normalize(row.get("備考1")),
-                  "note2": normalize(row.get("備考2")),
-                  "recommended": to_bool(row.get("おすすめ")),
-                  "isNew": to_bool(row.get("新着")),
-                  "popular": to_bool(row.get("人気")),
-                  "published": to_bool(row.get("公開")),
-                  "stock": normalize(row.get("店舗在庫"))
+
+                  "tags": split_tags(
+                      row.get("特徴タグ")
+                  ),
+
+                  "usageTags": split_tags(
+                      row.get("用途タグ")
+                  ),
+
+                  "spec1": normalize(
+                      row.get("スペック①")
+                  ),
+                  "spec2": normalize(
+                      row.get("スペック②")
+                  ),
+                  "spec3": normalize(
+                      row.get("スペック③")
+                  ),
+                  "spec4": normalize(
+                      row.get("スペック④")
+                  ),
+                  "spec5": normalize(
+                      row.get("スペック⑤")
+                  ),
+
+                  "care": normalize(
+                      row.get("ケア方法")
+                  ),
+
+                  "note1": normalize(
+                      row.get("備考①")
+                  ),
+                  "note2": normalize(
+                      row.get("備考②")
+                  ),
+
+                  "recommended": to_bool(
+                      row.get("おすすめ")
+                  ),
+
+                  "isNew": to_bool(
+                      row.get("新商品")
+                  ),
+
+                  "popular": to_bool(
+                      row.get("人気")
+                  ),
+
+                  "published": to_bool(
+                      row.get("公開")
+                  ),
+
+                  "stock": normalize(
+                      row.get("店舗在庫")
+                  )
               }
 
           new_products = [
@@ -132,60 +169,97 @@ jobs:
               for row in rows
           ]
 
-          # -----------------------------
-          # 商品数チェック
-          # -----------------------------
           current_count = len(current_products)
           new_count = len(new_products)
 
-          print(f"現在の商品数: {current_count}")
-          print(f"CSVの商品数: {new_count}")
+          print(
+              f"現在の商品数: {current_count}"
+          )
 
-          # -----------------------------
-          # 品番単位で比較
-          # -----------------------------
+          print(
+              f"CSVの商品数: {new_count}"
+          )
+
           current_map = {
-              normalize(product.get("code")): product
+              normalize(
+                  product.get("code")
+              ): product
               for product in current_products
           }
 
           new_map = {
-              normalize(product.get("code")): product
+              normalize(
+                  product.get("code")
+              ): product
               for product in new_products
           }
 
-          current_codes = set(current_map.keys())
-          new_codes = set(new_map.keys())
+          current_codes = set(
+              current_map.keys()
+          )
 
-          added_codes = new_codes - current_codes
-          deleted_codes = current_codes - new_codes
+          new_codes = set(
+              new_map.keys()
+          )
+
+          added_codes = (
+              new_codes -
+              current_codes
+          )
+
+          deleted_codes = (
+              current_codes -
+              new_codes
+          )
 
           changed_codes = set()
 
-          for code in current_codes & new_codes:
-              if current_map[code] != new_map[code]:
+          for code in (
+              current_codes &
+              new_codes
+          ):
+              if (
+                  current_map[code] !=
+                  new_map[code]
+              ):
                   changed_codes.add(code)
 
-          print(f"追加: {len(added_codes)}件")
-          print(f"変更: {len(changed_codes)}件")
-          print(f"削除候補: {len(deleted_codes)}件")
+          print(
+              f"追加: {len(added_codes)}件"
+          )
 
-          # -----------------------------
-          # 商品削除がある場合は停止
-          # -----------------------------
+          print(
+              f"変更: {len(changed_codes)}件"
+          )
+
+          print(
+              f"削除候補: {len(deleted_codes)}件"
+          )
+
           if deleted_codes:
-              print("削除候補の商品があります。")
-              print("安全のため更新を中止します。")
+              print(
+                  "削除候補の商品があります。"
+              )
 
-              for code in sorted(deleted_codes):
-                  print(f"削除候補: {code}")
+              print(
+                  "安全のため更新を中止します。"
+              )
+
+              for code in sorted(
+                  deleted_codes
+              ):
+                  print(
+                      f"削除候補: {code}"
+                  )
 
               raise SystemExit(1)
 
-          # -----------------------------
-          # 商品JSONを書き込み
-          # -----------------------------
-          with open(json_path, "w", encoding="utf-8") as f:
+          with open(
+              json_path,
+              "w",
+              encoding="utf-8"
+          ) as f:
+
               json.dump(
                   new_products,
                   f,
@@ -193,11 +267,10 @@ jobs:
                   indent=2
               )
 
-          print("商品データを更新しました。")
+          print(
+              "商品データを更新しました。"
+          )
 
-          # -----------------------------
-          # 日本時間で最終更新日時を記録
-          # -----------------------------
           now_jst = datetime.now(
               ZoneInfo("Asia/Tokyo")
           )
@@ -211,7 +284,9 @@ jobs:
           }
 
           os.makedirs(
-              os.path.dirname(timestamp_path),
+              os.path.dirname(
+                  timestamp_path
+              ),
               exist_ok=True
           )
 
@@ -220,6 +295,7 @@ jobs:
               "w",
               encoding="utf-8"
           ) as f:
+
               json.dump(
                   timestamp_data,
                   f,

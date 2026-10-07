@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'update-data/latest.csv'
+      - 'update-data/smartregi.json'
   workflow_dispatch:
 
 permissions:
@@ -33,14 +34,8 @@ jobs:
 
           csv_path = "update-data/latest.csv"
           json_path = "demo/products.json"
+          smartregi_path = "update-data/smartregi.json"
           timestamp_path = "update-data/product-updated-at.json"
-
-          with open(csv_path, "r", encoding="utf-8-sig", newline="") as f:
-              reader = csv.DictReader(f)
-              rows = list(reader)
-
-          with open(json_path, "r", encoding="utf-8") as f:
-              current_products = json.load(f)
 
           def normalize(value):
               if value is None:
@@ -49,6 +44,7 @@ jobs:
 
           def to_bool(value):
               value = normalize(value).lower()
+
               return value in [
                   "true",
                   "1",
@@ -61,6 +57,7 @@ jobs:
 
           def to_int(value):
               value = normalize(value)
+
               if value == "":
                   return 0
 
@@ -96,7 +93,6 @@ jobs:
                   "subCategory": normalize(row.get("サブカテゴリ")),
                   "series": normalize(row.get("シリーズ")),
 
-                  # 今回の修正ポイント
                   "color": normalize(row.get("色")),
                   "colorGroup": normalize(row.get("カラー系統")),
 
@@ -119,15 +115,19 @@ jobs:
                   "spec1": normalize(
                       row.get("スペック①")
                   ),
+
                   "spec2": normalize(
                       row.get("スペック②")
                   ),
+
                   "spec3": normalize(
                       row.get("スペック③")
                   ),
+
                   "spec4": normalize(
                       row.get("スペック④")
                   ),
+
                   "spec5": normalize(
                       row.get("スペック⑤")
                   ),
@@ -139,6 +139,7 @@ jobs:
                   "note1": normalize(
                       row.get("備考①")
                   ),
+
                   "note2": normalize(
                       row.get("備考②")
                   ),
@@ -164,95 +165,219 @@ jobs:
                   )
               }
 
-          new_products = [
-              create_product(row)
-              for row in rows
-          ]
+          # --------------------------------------------------
+          # 現在の商品データを読み込み
+          # --------------------------------------------------
 
-          current_count = len(current_products)
-          new_count = len(new_products)
+          with open(
+              json_path,
+              "r",
+              encoding="utf-8"
+          ) as f:
+              current_products = json.load(f)
 
           print(
-              f"現在の商品数: {current_count}"
+              f"現在の商品数: {len(current_products)}"
           )
 
-          print(
-              f"CSVの商品数: {new_count}"
-          )
+          # --------------------------------------------------
+          # 商品CSVが存在する場合は商品データを更新
+          # --------------------------------------------------
 
-          current_map = {
-              normalize(
-                  product.get("code")
-              ): product
-              for product in current_products
-          }
+          if os.path.exists(csv_path):
 
-          new_map = {
-              normalize(
-                  product.get("code")
-              ): product
-              for product in new_products
-          }
+              with open(
+                  csv_path,
+                  "r",
+                  encoding="utf-8-sig",
+                  newline=""
+              ) as f:
 
-          current_codes = set(
-              current_map.keys()
-          )
+                  reader = csv.DictReader(f)
+                  rows = list(reader)
 
-          new_codes = set(
-              new_map.keys()
-          )
+              new_products = [
+                  create_product(row)
+                  for row in rows
+              ]
 
-          added_codes = (
-              new_codes -
-              current_codes
-          )
+              current_map = {
+                  normalize(
+                      product.get("code")
+                  ): product
+                  for product in current_products
+              }
 
-          deleted_codes = (
-              current_codes -
-              new_codes
-          )
+              new_map = {
+                  normalize(
+                      product.get("code")
+                  ): product
+                  for product in new_products
+              }
 
-          changed_codes = set()
+              current_codes = set(
+                  current_map.keys()
+              )
 
-          for code in (
-              current_codes &
-              new_codes
-          ):
-              if (
-                  current_map[code] !=
-                  new_map[code]
+              new_codes = set(
+                  new_map.keys()
+              )
+
+              added_codes = (
+                  new_codes -
+                  current_codes
+              )
+
+              deleted_codes = (
+                  current_codes -
+                  new_codes
+              )
+
+              changed_codes = set()
+
+              for code in (
+                  current_codes &
+                  new_codes
               ):
-                  changed_codes.add(code)
 
-          print(
-              f"追加: {len(added_codes)}件"
-          )
+                  if (
+                      current_map[code] !=
+                      new_map[code]
+                  ):
+                      changed_codes.add(code)
 
-          print(
-              f"変更: {len(changed_codes)}件"
-          )
-
-          print(
-              f"削除候補: {len(deleted_codes)}件"
-          )
-
-          if deleted_codes:
               print(
-                  "削除候補の商品があります。"
+                  f"CSVの商品数: {len(new_products)}"
               )
 
               print(
-                  "安全のため更新を中止します。"
+                  f"追加: {len(added_codes)}件"
               )
 
-              for code in sorted(
-                  deleted_codes
-              ):
+              print(
+                  f"変更: {len(changed_codes)}件"
+              )
+
+              print(
+                  f"削除候補: {len(deleted_codes)}件"
+              )
+
+              if deleted_codes:
+
                   print(
-                      f"削除候補: {code}"
+                      "削除候補の商品があります。"
                   )
 
-              raise SystemExit(1)
+                  print(
+                      "安全のため更新を中止します。"
+                  )
+
+                  for code in sorted(
+                      deleted_codes
+                  ):
+
+                      print(
+                          f"削除候補: {code}"
+                      )
+
+                  raise SystemExit(1)
+
+              current_products = new_products
+
+              print(
+                  "商品CSVから商品データを更新しました。"
+              )
+
+          else:
+
+              print(
+                  "商品CSVはありません。"
+              )
+
+              print(
+                  "現在の商品データをそのまま使用します。"
+              )
+
+          # --------------------------------------------------
+          # スマレジ在庫データを読み込み
+          # --------------------------------------------------
+
+          if os.path.exists(smartregi_path):
+
+              with open(
+                  smartregi_path,
+                  "r",
+                  encoding="utf-8"
+              ) as f:
+
+                  smartregi_products = json.load(f)
+
+              smartregi_map = {
+                  normalize(
+                      product.get("code")
+                  ): product
+                  for product in smartregi_products
+              }
+
+              matched_products = 0
+              unmatched_products = 0
+
+              for product in current_products:
+
+                  code = normalize(
+                      product.get("code")
+                  )
+
+                  smartregi_product = (
+                      smartregi_map.get(code)
+                  )
+
+                  if smartregi_product:
+
+                      smartregi_stock = (
+                          smartregi_product.get(
+                              "smartRegiStock",
+                              []
+                          )
+                      )
+
+                      product["smartRegiStock"] = (
+                          smartregi_stock
+                      )
+
+                      matched_products += 1
+
+                  else:
+
+                      product["smartRegiStock"] = []
+
+                      unmatched_products += 1
+
+              print(
+                  f"スマレジ商品コード一致: {matched_products}件"
+              )
+
+              print(
+                  f"スマレジ商品コード不一致: {unmatched_products}件"
+              )
+
+              print(
+                  "スマレジ在庫データを商品データへ反映しました。"
+              )
+
+          else:
+
+              print(
+                  "smartregi.jsonがありません。"
+              )
+
+              print(
+                  "スマレジ在庫データの反映は行いません。"
+              )
+
+          # --------------------------------------------------
+          # products.jsonを書き込み
+          # --------------------------------------------------
 
           with open(
               json_path,
@@ -261,15 +386,19 @@ jobs:
           ) as f:
 
               json.dump(
-                  new_products,
+                  current_products,
                   f,
                   ensure_ascii=False,
                   indent=2
               )
 
           print(
-              "商品データを更新しました。"
+              "demo/products.jsonを保存しました。"
           )
+
+          # --------------------------------------------------
+          # 商品データ更新日時
+          # --------------------------------------------------
 
           now_jst = datetime.now(
               ZoneInfo("Asia/Tokyo")
@@ -282,13 +411,6 @@ jobs:
           timestamp_data = {
               "updatedAt": updated_at
           }
-
-          os.makedirs(
-              os.path.dirname(
-                  timestamp_path
-              ),
-              exist_ok=True
-          )
 
           with open(
               timestamp_path,
@@ -320,6 +442,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "変更はありません。"
           else
-            git commit -m "商品データを自動更新"
+            git commit -m "商品データとスマレジ在庫を自動更新"
             git push
           fi

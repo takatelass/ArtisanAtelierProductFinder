@@ -318,24 +318,29 @@ function renderFeatureTags(products) {
 
     const row1Order = [
         'Artisan限定',
-        '牛革',
+        'レザー',
+        '合成皮革',
         'ナイロン',
         '帆布',
         'デニム',
-        '合成皮革',
-        '漁網ナイロン'
+        '漁網'
     ];
 
     const row2Order = [
+        'A5収納',
         'A4収納',
+        'B5収納',
         'B4収納',
+        '軽量',
+        'コンパクト',
+        '撥水'
+    ];
+
+    const row3Order = [
         'ボトル収納',
         'タブレット収納',
         '13-14インチPC収納',
-        '15-16インチPC収納',
-        '軽量',
-        'コンパクト',
-        '大容量'
+        '15-16インチPC収納'
     ];
 
     const row1Tags =
@@ -348,8 +353,16 @@ function renderFeatureTags(products) {
             tag => tagCounts[tag] !== undefined
         );
 
-    const fixedTags =
-        [...row1Order, ...row2Order];
+    const row3Tags =
+        row3Order.filter(
+            tag => tagCounts[tag] !== undefined
+        );
+
+    const fixedTags = [
+        ...row1Order,
+        ...row2Order,
+        ...row3Order
+    ];
 
     const otherTags =
         Object.keys(tagCounts)
@@ -380,6 +393,7 @@ function renderFeatureTags(products) {
             document.createElement('button');
 
         button.type = 'button';
+
         button.className =
             'condition-tag feature-condition-tag';
 
@@ -389,8 +403,11 @@ function renderFeatureTags(products) {
             button.classList.add('active');
         }
 
+        const displayName =
+            displayNames[tag] || tag;
+
         button.textContent =
-            `${tag} (${tagCounts[tag]})`;
+            `${displayName} (${tagCounts[tag]})`;
 
         button.addEventListener(
             'click',
@@ -402,45 +419,31 @@ function renderFeatureTags(products) {
         return button;
     };
 
-    row1Tags.forEach(tag => {
-        container.appendChild(
-            createTagButton(tag)
-        );
-    });
+    const createRow = (tags) => {
+        const row =
+            document.createElement('div');
 
-    const row2 =
-        document.createElement('div');
+        row.className =
+            'condition-tag-row';
 
-    row2.className =
-        'condition-tag-row';
+        tags.forEach(tag => {
+            row.appendChild(
+                createTagButton(tag)
+            );
+        });
 
-    row2Tags.forEach(tag => {
-        row2.appendChild(
-            createTagButton(tag)
-        );
-    });
+        container.appendChild(row);
+    };
 
-    container.appendChild(row2);
+    createRow(row1Tags);
+    createRow(row2Tags);
+    createRow(row3Tags);
 
     if (otherTags.length > 0) {
 
         if (state.featureTagsExpanded) {
 
-            const otherRow =
-                document.createElement('div');
-
-            otherRow.className =
-                'condition-tag-row';
-
-            otherTags.forEach(tag => {
-                otherRow.appendChild(
-                    createTagButton(tag)
-                );
-            });
-
-            container.appendChild(
-                otherRow
-            );
+            createRow(otherTags);
 
             const closeButton =
                 createMoreButton(
@@ -517,7 +520,7 @@ function renderConditionTags(products) {
         'メンズ',
         'レディース',
         'ビジネス',
-        '普段使い',
+        'カジュアル',
         'ギフト'
     ];
 
@@ -557,6 +560,7 @@ function renderConditionTags(products) {
             document.createElement('button');
 
         button.type = 'button';
+
         button.className =
             'condition-tag usage-condition-tag';
 
@@ -566,8 +570,11 @@ function renderConditionTags(products) {
             button.classList.add('active');
         }
 
+        const displayName =
+            displayNames[tag] || tag;
+
         button.textContent =
-            `${tag} (${tagCounts[tag]})`;
+            `${displayName} (${tagCounts[tag]})`;
 
         button.addEventListener(
             'click',

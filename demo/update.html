@@ -136,7 +136,7 @@
             id="generateJsonButton"
             class="update-file-button"
             style="display:none;">
-            更新用JSONを作成
+            商品データを更新
                 </button>
 
         <div
@@ -211,6 +211,9 @@
 </main>
 
 <script>
+
+    const GAS_URL =
+    'https://script.google.com/macros/s/AKfycbwg8gZqT-WHUfYu7JFp0p1-k_ibQsDtYb2qmSYP_kF2Uv5wnoN37769lF-sF9zLNroP-Q/exec';
 
 /* ==========================================================
    商品データ最終更新日時
@@ -334,6 +337,7 @@ const selectedFileName =
 
 let currentProductsForUpdate = [];
 let csvProductsForUpdate = [];
+let csvTextForUpdate = '';
 
 
 /* ==========================================================
@@ -1651,8 +1655,7 @@ if (selectedFileName) {
 
                         const text =
                             loadEvent.target.result;
-
-
+                            csvTextForUpdate = text;
                         const csvProducts =
                             parseCSV(text);
 
@@ -1727,66 +1730,64 @@ if (selectedFileName) {
 
 generateJsonButton.addEventListener(
     'click',
-    () => {
+    async () => {
+
+        if (!csvTextForUpdate) {
+
+            uploadResult.innerHTML = `
+                <div class="comparison-result">
+                    <p>
+                        更新するCSVデータがありません。
+                    </p>
+                </div>
+            `;
+
+            return;
+        }
 
         try {
-
-            uploadResult.textContent =
-                '更新用JSONを作成しています……';
-
 
             const updatedProducts =
                 createUpdatedProducts();
 
+            uploadResult.innerHTML = `
+                <div class="comparison-result">
+                    <p>
+                        商品データを更新しています……
+                    </p>
+                    <p class="comparison-note">
+                        しばらくお待ちください。
+                    </p>
+                </div>
+            `;
 
-            const json =
-                JSON.stringify(
-                    updatedProducts,
-                    null,
-                    2
-                );
+            generateJsonButton.disabled = true;
 
+            await fetch(
+                GAS_URL,
+                {
+                    method: 'POST',
 
-            const blob =
-                new Blob(
-                    [json],
-                    {
-                        type:
-                            'application/json;charset=utf-8'
-                    }
-                );
+                    mode: 'no-cors',
 
+                    headers: {
+                        'Content-Type':
+                            'text/plain;charset=utf-8'
+                    },
 
-            const url =
-                URL.createObjectURL(blob);
-
-
-            const link =
-                document.createElement('a');
-
-
-            link.href = url;
-
-            link.download =
-                'products_updated.json';
-
-
-            document.body.appendChild(link);
-
-            link.click();
-
-            document.body.removeChild(link);
-
-
-            URL.revokeObjectURL(url);
-
+                    body:
+                        JSON.stringify({
+                            csv:
+                                csvTextForUpdate
+                        })
+                }
+            );
 
             uploadResult.innerHTML = `
-
                 <div class="comparison-result">
 
                     <p>
-                        更新用JSONを作成しました。
+                        商品データの更新を受け付けました。
                     </p>
 
                     <p>
@@ -1797,13 +1798,12 @@ generateJsonButton.addEventListener(
                     </p>
 
                     <p class="comparison-note">
-                        ※現在の商品データはまだ変更されていません。
+                        商品データは自動的に更新されます。
+                        反映まで数分かかる場合があります。
                     </p>
 
                 </div>
-
             `;
-
 
         } catch (error) {
 
@@ -1812,7 +1812,7 @@ generateJsonButton.addEventListener(
                 <div class="comparison-result">
 
                     <p>
-                        更新用JSONの作成に失敗しました。
+                        商品データの更新に失敗しました。
                     </p>
 
                     <p class="comparison-note">
@@ -1824,6 +1824,8 @@ generateJsonButton.addEventListener(
             `;
 
             console.error(error);
+
+            generateJsonButton.disabled = false;
 
         }
 

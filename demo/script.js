@@ -343,21 +343,6 @@ function renderFeatureTags(products) {
         '15-16インチPC収納'
     ];
 
-    const row1Tags =
-        row1Order.filter(
-            tag => tagCounts[tag] !== undefined
-        );
-
-    const row2Tags =
-        row2Order.filter(
-            tag => tagCounts[tag] !== undefined
-        );
-
-    const row3Tags =
-        row3Order.filter(
-            tag => tagCounts[tag] !== undefined
-        );
-
     const fixedTags = [
         ...row1Order,
         ...row2Order,
@@ -403,11 +388,8 @@ function renderFeatureTags(products) {
             button.classList.add('active');
         }
 
-        const displayName =
-            displayNames[tag] || tag;
-
         button.textContent =
-            `${displayName} (${tagCounts[tag]})`;
+            `${tag} (${tagCounts[tag] || 0})`;
 
         button.addEventListener(
             'click',
@@ -435,9 +417,9 @@ function renderFeatureTags(products) {
         container.appendChild(row);
     };
 
-    createRow(row1Tags);
-    createRow(row2Tags);
-    createRow(row3Tags);
+    createRow(row1Order);
+    createRow(row2Order);
+    createRow(row3Order);
 
     if (otherTags.length > 0) {
 
@@ -524,12 +506,6 @@ function renderConditionTags(products) {
         'ギフト'
     ];
 
-    const mainTags =
-        mainOrder.filter(
-            tag =>
-                tagCounts[tag] !== undefined
-        );
-
     const otherTags =
         Object.keys(tagCounts)
             .filter(
@@ -570,11 +546,8 @@ function renderConditionTags(products) {
             button.classList.add('active');
         }
 
-        const displayName =
-            displayNames[tag] || tag;
-
         button.textContent =
-            `${displayName} (${tagCounts[tag]})`;
+            `${tag} (${tagCounts[tag] || 0})`;
 
         button.addEventListener(
             'click',
@@ -592,7 +565,7 @@ function renderConditionTags(products) {
     mainRow.className =
         'condition-tag-row';
 
-    mainTags.forEach(tag => {
+    mainOrder.forEach(tag => {
         mainRow.appendChild(
             createTagButton(tag)
         );
@@ -616,9 +589,7 @@ function renderConditionTags(products) {
                 );
             });
 
-            container.appendChild(
-                otherRow
-            );
+            container.appendChild(otherRow);
 
             const closeButton =
                 createMoreButton(
@@ -641,9 +612,7 @@ function renderConditionTags(products) {
                 closeButton
             );
 
-            container.appendChild(
-                buttonRow
-            );
+            container.appendChild(buttonRow);
 
         } else {
 
@@ -668,9 +637,7 @@ function renderConditionTags(products) {
                 moreButton
             );
 
-            container.appendChild(
-                buttonRow
-            );
+            container.appendChild(buttonRow);
         }
     }
 }

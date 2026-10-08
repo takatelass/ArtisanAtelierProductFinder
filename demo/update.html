@@ -197,7 +197,7 @@
             id="smartRegiGenerateButton"
             class="update-file-button"
             style="display:none;">
-            在庫更新用JSONを作成
+            スマレジ在庫を更新
         </button>
 
     </section>
@@ -2415,64 +2415,87 @@ if (smartRegiGenerateButton) {
 
     smartRegiGenerateButton.addEventListener(
         'click',
-        () => {
+        async () => {
 
-       const smartRegiUpdatedAt =
-       new Date().toLocaleString(
-        'ja-JP',
-        {
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false
-        }
-    ).replace(/\//g, '-');
+            const smartRegiUpdatedAt =
+                new Date().toLocaleString(
+                    'ja-JP',
+                    {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit',
+                        hour12: false
+                    }
+                ).replace(/\//g, '-');
 
-            if (
-                smartRegiMatchData.length === 0
-            ) {
+
+            if (smartRegiMatchData.length === 0) {
+
                 return;
+
             }
+
 
             try {
 
-                const json =
-                  JSON.stringify(
-                   {
-                    updatedAt: smartRegiUpdatedAt,
-                    products: smartRegiMatchData
-                   },
-                     null,
-                     2
-                   );
+                smartRegiGenerateButton.disabled = true;
 
-                    const blob =
-                    new Blob(
-                        [json],
+                smartRegiGenerateButton.textContent =
+                    'スマレジ在庫を更新しています……';
+
+
+                const smartRegiData = {
+
+                    updatedAt:
+                        smartRegiUpdatedAt,
+
+                    products:
+                        smartRegiMatchData
+
+                };
+
+
+                const response =
+                    await fetch(
+                        GAS_URL,
                         {
-                            type:
-                                'application/json;charset=utf-8'
+                            method: 'POST',
+
+                            mode: 'no-cors',
+
+                            headers: {
+                                'Content-Type':
+                                    'text/plain;charset=utf-8'
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    type:
+                                        'smartregi',
+
+                                    smartregi:
+                                        smartRegiData
+
+                                })
+
                         }
                     );
 
-                const url =
-                    URL.createObjectURL(blob);
 
                 smartRegiResult.innerHTML = `
 
                     <div class="comparison-result">
 
                         <p>
-                            <strong>
-                                更新用JSONを作成しました。
-                            </strong>
+                            スマレジ在庫の更新を受け付けました。
                         </p>
 
                         <p>
-                            商品数：
+                            対象商品：
                             <strong>
                                 ${smartRegiMatchData.length}件
                             </strong>
@@ -2481,66 +2504,45 @@ if (smartRegiGenerateButton) {
                         <p>
                             スマレジ在庫最終更新：
                             <strong>
-                            ${smartRegiUpdatedAt}
+                                ${smartRegiUpdatedAt}
                             </strong>
                         </p>
 
                         <p class="smartregi-note">
-                            ※現在の商品データはまだ変更されていません。
+                            スマレジ在庫は自動的に更新されます。
+                            反映まで数分かかる場合があります。
                         </p>
-
-                        <button
-                            type="button"
-                            id="downloadSmartRegiJsonButton"
-                            class="update-file-button">
-                            在庫更新用JSONをダウンロード
-                        </button>
 
                     </div>
 
                 `;
 
-                const downloadButton =
-                    document.getElementById(
-                        'downloadSmartRegiJsonButton'
-                    );
 
-                downloadButton.addEventListener(
-                    'click',
-                    () => {
-
-                        const link =
-                            document.createElement('a');
-
-                        link.href = url;
-                        link.download =
-                            'products_smartregi_updated.json';
-
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-
-                        downloadButton.textContent =
-                            'JSONをダウンロードしました';
-
-                        downloadButton.disabled = true;
-
-                        URL.revokeObjectURL(url);
-
-                    }
-                );
+                smartRegiGenerateButton.textContent =
+                    'スマレジ在庫を更新しました';
 
             } catch (error) {
 
                 smartRegiResult.innerHTML += `
 
                     <p class="smartregi-note">
-                        更新用JSONの作成に失敗しました。
+
+                        スマレジ在庫の更新に失敗しました。
+
+                        <br>
+
+                        ${error.message}
+
                     </p>
 
                 `;
 
                 console.error(error);
+
+                smartRegiGenerateButton.disabled = false;
+
+                smartRegiGenerateButton.textContent =
+                    'スマレジ在庫を更新';
 
             }
 

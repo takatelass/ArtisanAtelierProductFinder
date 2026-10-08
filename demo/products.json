@@ -4066,7 +4066,7 @@
       },
       {
         "color": "ブラック",
-        "quantity": 2,
+        "quantity": 1,
         "status": "matched"
       }
     ]
@@ -4343,7 +4343,7 @@
     "smartRegiStock": [
       {
         "color": "ネイビー",
-        "quantity": 5,
+        "quantity": 4,
         "status": "matched"
       }
     ]
@@ -8024,7 +8024,7 @@
     "smartRegiStock": [
       {
         "color": "カーキ",
-        "quantity": 3,
+        "quantity": 2,
         "status": "matched"
       },
       {
@@ -8662,7 +8662,7 @@
     "smartRegiStock": [
       {
         "color": "カーキ",
-        "quantity": 1,
+        "quantity": 0,
         "status": "matched"
       },
       {
@@ -9870,7 +9870,7 @@
       },
       {
         "color": "ブラック",
-        "quantity": 1,
+        "quantity": 0,
         "status": "matched"
       }
     ]
@@ -11771,17 +11771,17 @@
     "smartRegiStock": [
       {
         "color": "キャメル",
-        "quantity": 2,
+        "quantity": 1,
         "status": "matched"
       },
       {
         "color": "ネイビー",
-        "quantity": 1,
+        "quantity": 0,
         "status": "matched"
       },
       {
         "color": "ブルー",
-        "quantity": 1,
+        "quantity": 0,
         "status": "matched"
       }
     ]
@@ -12392,7 +12392,7 @@
     "smartRegiStock": [
       {
         "color": "キナリ×赤茶",
-        "quantity": 1,
+        "quantity": 0,
         "status": "matched"
       },
       {
@@ -14902,7 +14902,7 @@
     "smartRegiStock": [
       {
         "color": "カーキ",
-        "quantity": 2,
+        "quantity": 1,
         "status": "matched"
       },
       {
@@ -15180,7 +15180,7 @@
     "smartRegiStock": [
       {
         "color": "ブラック×イエロー",
-        "quantity": 2,
+        "quantity": 1,
         "status": "matched"
       }
     ]
@@ -16388,7 +16388,7 @@
       },
       {
         "color": "TAUPE",
-        "quantity": 1,
+        "quantity": 0,
         "status": "matched"
       },
       {
@@ -16696,7 +16696,7 @@
     "smartRegiStock": [
       {
         "color": "BLACK",
-        "quantity": 2,
+        "quantity": 1,
         "status": "matched"
       },
       {
@@ -20872,7 +20872,7 @@
     "smartRegiStock": [
       {
         "color": "グリーン",
-        "quantity": 0,
+        "quantity": 2,
         "status": "matched"
       },
       {
@@ -20882,7 +20882,7 @@
       },
       {
         "color": "ブラック",
-        "quantity": 0,
+        "quantity": 1,
         "status": "matched"
       }
     ]
@@ -21064,7 +21064,7 @@
     "smartRegiStock": [
       {
         "color": "ブラック",
-        "quantity": 0,
+        "quantity": 2,
         "status": "matched"
       }
     ]
@@ -21174,7 +21174,7 @@
       },
       {
         "color": "グレー",
-        "quantity": 0,
+        "quantity": 1,
         "status": "matched"
       },
       {
@@ -21313,7 +21313,7 @@
       },
       {
         "color": "ブラック",
-        "quantity": 0,
+        "quantity": 1,
         "status": "matched"
       }
     ]
@@ -21765,7 +21765,7 @@
       },
       {
         "color": "キャメル",
-        "quantity": 2,
+        "quantity": 3,
         "status": "matched"
       },
       {
@@ -22180,7 +22180,7 @@
       },
       {
         "color": "グレージュ",
-        "quantity": 1,
+        "quantity": 2,
         "status": "matched"
       },
       {
@@ -27616,7 +27616,7 @@
     "smartRegiStock": [
       {
         "color": "ブラック",
-        "quantity": 0,
+        "quantity": 1,
         "status": "matched"
       }
     ]
@@ -29553,7 +29553,7 @@
       },
       {
         "color": "パープル",
-        "quantity": 3,
+        "quantity": 2,
         "status": "matched"
       },
       {
@@ -33022,7 +33022,7 @@
     "smartRegiStock": [
       {
         "color": "キャメル",
-        "quantity": 2,
+        "quantity": 1,
         "status": "matched"
       },
       {

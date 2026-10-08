@@ -679,20 +679,23 @@ header {
 }
 
 #resetFilters {
-    padding: 10px 14px;
-    border: 1px solid #3F617D;
+    padding: 9px 16px;
+    border: 1px solid #A94442;
     border-radius: 5px;
-    background: #3F617D;
+    background: #A94442;
     color: #fff;
+    font-size: 13px;
+    line-height: 1.4;
     cursor: pointer;
     transition:
         background-color 0.15s ease,
         border-color 0.15s ease;
 }
 
+
 #resetFilters:hover {
-    background: #2F4D66;
-    border-color: #2F4D66;
+    background: #873634;
+    border-color: #873634;
 }
 
 /* ==========================================================
@@ -1323,7 +1326,7 @@ footer {
     display: inline-block;
     padding: 9px 16px;
     border: 1px solid #3F617D;
-    border-radius: 999px;
+    border-radius: 5px;
     background: #3F617D;
     color: #fff;
     font-size: 13px;
@@ -1921,4 +1924,25 @@ footer {
     line-height: 1.6;
     letter-spacing: 0.03em;
     word-break: break-all;
+}
+
+/* バージョン表記 */
+.header-container {
+    position: relative;
+}
+
+.version-label {
+    position: absolute;
+    top: 8px;
+    right: 0;
+    font-size: 11px;
+    color: #666;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+}
+
+/* スマレジ在庫更新ボタンを中央揃え */
+#smartRegiGenerateButton {
+    display: block;
+    margin: 24px auto 0;
 }

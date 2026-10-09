@@ -67,12 +67,14 @@ header {
 ========================================================== */
 
 .search-panel {
-    margin-top: 24px;
-    padding: 24px;
-    background: #fff;
-    border: 1px solid #e5e5e5;
-    border-radius: 8px;
+margin-top: 12px;
+padding: 24px;
+background: #fff;
+border: 1px solid #e5e5e5;
+border-radius: 8px;
 }
+
+
 
 .search-box {
     margin-bottom: 14px;
@@ -1932,17 +1934,30 @@ footer {
 }
 
 .version-label {
-    position: absolute;
-    top: 8px;
-    right: 0;
-    font-size: 11px;
-    color: #666;
-    letter-spacing: 0.3px;
-    white-space: nowrap;
+display: block;
+font-size: 11px;
+line-height: 1.4;
+color: #666;
+letter-spacing: 0.3px;
+white-space: nowrap;
 }
+
+
 
 /* スマレジ在庫更新ボタンを中央揃え */
 #smartRegiGenerateButton {
     display: block;
     margin: 24px auto 0;
+}
+
+/* バージョン表記：ヘッダー下のグレー帯 */
+.version-bar {
+    background: #f7f7f7;
+    padding: 10px 0;
+}
+
+.version-bar .container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
 }

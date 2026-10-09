@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-08 23:53:48",
+  "updatedAt": "2026-10-09 18:02:07",
   "products": [
     {
       "maker": "株式会社足立",
@@ -331,7 +331,7 @@
       "smartRegiStock": [
         {
           "color": "オーシャンブルー",
-          "quantity": 0,
+          "quantity": 1,
           "status": "matched"
         },
         {
@@ -1156,18 +1156,18 @@
       "smartRegiStock": [
         {
           "color": "ネイビー×イエロー",
-          "quantity": null,
-          "status": "unavailable"
+          "quantity": 10,
+          "status": "matched"
         },
         {
           "color": "ネイビー×キャメル",
-          "quantity": null,
-          "status": "unavailable"
+          "quantity": 14,
+          "status": "matched"
         },
         {
           "color": "ネイビー×ブラウン",
-          "quantity": null,
-          "status": "unavailable"
+          "quantity": 13,
+          "status": "matched"
         },
         {
           "color": "ネイビー×ブラック",
@@ -1327,7 +1327,7 @@
       "smartRegiStock": [
         {
           "color": "ネイビー",
-          "quantity": 0,
+          "quantity": 1,
           "status": "matched"
         }
       ]
@@ -1556,7 +1556,7 @@
       "smartRegiStock": [
         {
           "color": "オーシャンブラック",
-          "quantity": 2,
+          "quantity": 1,
           "status": "matched"
         },
         {
@@ -4058,7 +4058,7 @@
       "smartRegiStock": [
         {
           "color": "ダークブラウン",
-          "quantity": 3,
+          "quantity": 4,
           "status": "matched"
         },
         {
@@ -4068,7 +4068,7 @@
         },
         {
           "color": "ブラック",
-          "quantity": 1,
+          "quantity": 3,
           "status": "matched"
         }
       ]
@@ -4293,7 +4293,7 @@
       "smartRegiStock": [
         {
           "color": "ネイビー",
-          "quantity": 3,
+          "quantity": 4,
           "status": "matched"
         }
       ]
@@ -4345,7 +4345,7 @@
       "smartRegiStock": [
         {
           "color": "ネイビー",
-          "quantity": 4,
+          "quantity": 5,
           "status": "matched"
         }
       ]
@@ -5337,7 +5337,7 @@
         },
         {
           "color": "ノクターン",
-          "quantity": 3,
+          "quantity": 2,
           "status": "matched"
         }
       ]
@@ -6119,7 +6119,7 @@
         },
         {
           "color": "ブラック",
-          "quantity": 2,
+          "quantity": 3,
           "status": "matched"
         }
       ]
@@ -8026,7 +8026,7 @@
       "smartRegiStock": [
         {
           "color": "カーキ",
-          "quantity": 2,
+          "quantity": 3,
           "status": "matched"
         },
         {
@@ -8041,7 +8041,7 @@
         },
         {
           "color": "ネイビー",
-          "quantity": 1,
+          "quantity": 3,
           "status": "matched"
         }
       ]
@@ -8163,7 +8163,7 @@
         },
         {
           "color": "グレー",
-          "quantity": 2,
+          "quantity": 1,
           "status": "matched"
         },
         {
@@ -8537,7 +8537,7 @@
         },
         {
           "color": "ミックスグレー",
-          "quantity": 1,
+          "quantity": 2,
           "status": "matched"
         },
         {
@@ -8679,7 +8679,7 @@
         },
         {
           "color": "ネイビー",
-          "quantity": 1,
+          "quantity": 2,
           "status": "matched"
         },
         {
@@ -8801,7 +8801,7 @@
         },
         {
           "color": "サンドベージュ",
-          "quantity": 1,
+          "quantity": 2,
           "status": "matched"
         },
         {
@@ -8865,7 +8865,7 @@
         },
         {
           "color": "ミックスグレー",
-          "quantity": 0,
+          "quantity": 1,
           "status": "matched"
         },
         {
@@ -10038,7 +10038,7 @@
         },
         {
           "color": "ゴールド",
-          "quantity": 0,
+          "quantity": 1,
           "status": "matched"
         },
         {
@@ -14653,7 +14653,7 @@
         },
         {
           "color": "ラベンダー",
-          "quantity": 4,
+          "quantity": 3,
           "status": "matched"
         }
       ]
@@ -16294,13 +16294,13 @@
         },
         {
           "color": "BALSAMICO",
-          "quantity": null,
-          "status": "unavailable"
+          "quantity": 6,
+          "status": "matched"
         },
         {
           "color": "GREEN",
-          "quantity": null,
-          "status": "unavailable"
+          "quantity": 0,
+          "status": "matched"
         }
       ]
     },
@@ -16506,18 +16506,18 @@
         },
         {
           "color": "BALSAMICO",
-          "quantity": null,
-          "status": "unavailable"
+          "quantity": 4,
+          "status": "matched"
         },
         {
           "color": "GREEN／MINT",
-          "quantity": null,
-          "status": "unavailable"
+          "quantity": 0,
+          "status": "matched"
         },
         {
           "color": "MINT",
-          "quantity": null,
-          "status": "unavailable"
+          "quantity": 5,
+          "status": "matched"
         }
       ]
     },
@@ -20874,7 +20874,7 @@
       "smartRegiStock": [
         {
           "color": "グリーン",
-          "quantity": 2,
+          "quantity": 1,
           "status": "matched"
         },
         {
@@ -27618,7 +27618,7 @@
       "smartRegiStock": [
         {
           "color": "ブラック",
-          "quantity": 1,
+          "quantity": 0,
           "status": "matched"
         }
       ]
@@ -29814,7 +29814,7 @@
         },
         {
           "color": "レッド",
-          "quantity": 2,
+          "quantity": 1,
           "status": "matched"
         }
       ]
@@ -30253,7 +30253,7 @@
       "smartRegiStock": [
         {
           "color": "火山灰",
-          "quantity": 1,
+          "quantity": 0,
           "status": "matched"
         },
         {
@@ -33970,7 +33970,7 @@
       "smartRegiStock": [
         {
           "color": "---",
-          "quantity": 3,
+          "quantity": 2,
           "status": "matched"
         }
       ]

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-10 13:18:47",
+  "updatedAt": "2026-10-10 15:38:14",
   "products": [
     {
       "maker": "株式会社足立",
@@ -8855,7 +8855,7 @@
       "smartRegiStock": [
         {
           "color": "オールドローズ",
-          "quantity": 1,
+          "quantity": 0,
           "status": "matched"
         },
         {
@@ -13456,7 +13456,7 @@
         },
         {
           "color": "ネイビー",
-          "quantity": 2,
+          "quantity": 1,
           "status": "matched"
         },
         {
@@ -19948,7 +19948,7 @@
       "smartRegiStock": [
         {
           "color": "アソート",
-          "quantity": 14,
+          "quantity": 13,
           "status": "matched"
         }
       ]
@@ -21638,7 +21638,7 @@
         },
         {
           "color": "グリーン",
-          "quantity": 14,
+          "quantity": 13,
           "status": "matched"
         },
         {
@@ -23052,7 +23052,7 @@
         },
         {
           "color": "ブラック",
-          "quantity": 2,
+          "quantity": 1,
           "status": "matched"
         }
       ]
@@ -24532,7 +24532,7 @@
         },
         {
           "color": "オーク",
-          "quantity": 2,
+          "quantity": 1,
           "status": "matched"
         },
         {
@@ -28215,7 +28215,7 @@
       "smartRegiStock": [
         {
           "color": "トープ",
-          "quantity": 2,
+          "quantity": 1,
           "status": "matched"
         },
         {
@@ -29575,7 +29575,7 @@
         },
         {
           "color": "ブルー（シュリンク）",
-          "quantity": 1,
+          "quantity": 2,
           "status": "matched"
         },
         {
@@ -29814,7 +29814,7 @@
         },
         {
           "color": "レッド",
-          "quantity": 1,
+          "quantity": 2,
           "status": "matched"
         }
       ]
@@ -30436,7 +30436,7 @@
         },
         {
           "color": "ブラウン",
-          "quantity": 1,
+          "quantity": 2,
           "status": "matched"
         },
         {

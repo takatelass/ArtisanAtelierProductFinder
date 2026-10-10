@@ -1,0 +1,24 @@
+﻿{
+  "id": "/ArtisanAtelierProductFinder/demo/",
+  "name": "Artisan Atelier Product Finder",
+  "short_name": "Product Finder",
+  "description": "豊岡鞄 Artisan Atelier 店舗スタッフ向け商品検索システム",
+  "lang": "ja",
+  "start_url": "/ArtisanAtelierProductFinder/demo/",
+  "scope": "/ArtisanAtelierProductFinder/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/ArtisanAtelierProductFinder/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/ArtisanAtelierProductFinder/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

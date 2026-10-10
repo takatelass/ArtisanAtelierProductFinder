@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ja">
 
 <head>
@@ -1771,24 +1771,26 @@ generateJsonButton.addEventListener(
             generateJsonButton.disabled = true;
 
             await fetch(
-                GAS_URL,
-                {
-                    method: 'POST',
+    GAS_URL,
+    {
+        method: 'POST',
 
-                    mode: 'no-cors',
+        mode: 'no-cors',
 
-                    headers: {
-                        'Content-Type':
-                            'text/plain;charset=utf-8'
-                    },
+        headers: {
+            'Content-Type':
+                'text/plain;charset=utf-8'
+        },
 
-                    body:
-                        JSON.stringify({
-                            csv:
-                                csvTextForUpdate
-                        })
-                }
-            );
+        body:
+            JSON.stringify({
+                type: 'product',
+
+                csv:
+                    csvTextForUpdate
+            })
+    }
+);
 
             uploadResult.innerHTML = `
                 <div class="comparison-result">

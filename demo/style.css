@@ -1961,3 +1961,28 @@ white-space: nowrap;
     justify-content: flex-end;
     align-items: center;
 }
+
+/* ==========================================================
+   スマホ用：商品データ・スマレジ在庫の最終更新日時
+========================================================== */
+
+.mobile-data-updated-at {
+    display: none;
+}
+
+@media (max-width: 767px) {
+
+    .mobile-data-updated-at {
+        display: block;
+        margin: 1em 0;
+        text-align: center;
+        font-size: inherit;
+        line-height: 1.5;
+        color: #777;
+    }
+
+    .mobile-data-updated-at p {
+        margin: 0;
+    }
+
+}

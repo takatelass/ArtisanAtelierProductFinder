@@ -180,16 +180,24 @@ jobs:
                       row.get("備考②")
                   ),
 
-                  "recommended": to_bool(
-                      row.get("おすすめ")
+                  "recommended": normalize(
+                      row.get("売れ筋") or row.get("おすすめ")
                   ),
 
-                  "isNew": to_bool(
+                  "isNew": normalize(
                       row.get("新商品")
                   ),
 
-                  "popular": to_bool(
-                      row.get("人気")
+                  "popular": normalize(
+                      row.get("人気商品") or row.get("人気")
+                  ),
+
+                  "maleRecommended": normalize(
+                      row.get("男性おすすめ")
+                  ),
+
+                  "femaleRecommended": normalize(
+                      row.get("女性おすすめ")
                   ),
 
                   "published": to_bool(

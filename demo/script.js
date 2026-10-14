@@ -1047,74 +1047,112 @@ function getFilteredProducts() {
             }
         );
 
+    const getNumericRank = (value) => {
+        if (value == null || typeof value === 'boolean') return null;
+
+        const text = String(value).trim();
+
+        if (!text || text === "-" || /^(true|false)$/i.test(text)) {
+            return null;
+        }
+
+        const number = Number(text);
+
+        return Number.isFinite(number) ? number : null;
+    };
+
+    const getDateRank = (value) => {
+        if (value == null || typeof value === 'boolean') {
+            return null;
+        }
+
+        const text = String(value).trim();
+
+        if (!text || text === "-" || /^(true|false)$/i.test(text)) {
+            return null;
+        }
+
+        const match = text.match(/^(\d{4})[\/.-](\d{1,2})[\/.-](\d{1,2})$/);
+
+        if (match) {
+            const year = Number(match[1]);
+            const month = Number(match[2]);
+            const day = Number(match[3]);
+            const date = new Date(year, month - 1, day);
+
+            if (
+                date.getFullYear() === year &&
+                date.getMonth() === month - 1 &&
+                date.getDate() === day
+            ) {
+                return date.getTime();
+            }
+
+            return null;
+        }
+
+        return null;
+    };
+    const sortByRank = (field) => {
+        filteredProducts = filteredProducts
+            .map((product, index) => ({
+                product,
+                index,
+                rank: getNumericRank(product[field])
+            }))
+            .filter((item) => item.rank !== null)
+            .sort((a, b) => a.rank - b.rank || a.index - b.index)
+            .map((item) => item.product);
+    };
+
     switch (sortOrder) {
+        case 'recommended':
+            sortByRank('recommended');
+            break;
+        case 'maleRecommended':
+            sortByRank('maleRecommended');
+            break;
 
-    case 'maleRecommended':
-        filteredProducts =
-            filteredProducts.filter(
-                (product) =>
-                    Boolean(
-                        product.maleRecommended
-                    )
+        case 'femaleRecommended':
+            sortByRank('femaleRecommended');
+            break;
+
+        case 'new':
+            filteredProducts = filteredProducts
+                .map((product, index) => ({
+                    product,
+                    index,
+                    date: getDateRank(product.isNew)
+                }))
+                .filter((item) => item.date !== null)
+                .sort((a, b) => b.date - a.date || a.index - b.index)
+                .map((item) => item.product);
+            break;
+
+        case 'popular':
+            sortByRank('popular');
+            break;
+
+        case 'priceAsc':
+            filteredProducts.sort(
+                (a, b) =>
+                    Number(a.price || 0) -
+                    Number(b.price || 0)
             );
-        break;
+            break;
 
-    case 'femaleRecommended':
-        filteredProducts =
-            filteredProducts.filter(
-                (product) =>
-                    Boolean(
-                        product.femaleRecommended
-                    )
+        case 'priceDesc':
+            filteredProducts.sort(
+                (a, b) =>
+                    Number(b.price || 0) -
+                    Number(a.price || 0)
             );
-        break;
+            break;
 
-    case 'new':
-        filteredProducts.sort(
-            (a, b) =>
-                Number(
-                    Boolean(b.isNew)
-                ) -
-                Number(
-                    Boolean(a.isNew)
-                )
-        );
-        break;
-
-    case 'popular':
-        filteredProducts.sort(
-            (a, b) =>
-                Number(
-                    Boolean(b.popular)
-                ) -
-                Number(
-                    Boolean(a.popular)
-                )
-        );
-        break;
-
-    case 'priceAsc':
-        filteredProducts.sort(
-            (a, b) =>
-                Number(a.price || 0) -
-                Number(b.price || 0)
-        );
-        break;
-
-    case 'priceDesc':
-        filteredProducts.sort(
-            (a, b) =>
-                Number(b.price || 0) -
-                Number(a.price || 0)
-        );
-        break;
-
-case 'default':
-default:
-    // CSV登録順を維持
-    break;
-}
-
+        case 'default':
+        default:
+            break;
+    }
     return filteredProducts;
 }
 
@@ -1351,15 +1389,24 @@ function createProductCard(product) {
             '.product-badge'
         );
 
+function hasDisplayValue(value) {
+    if (value == null || typeof value === 'boolean') return false;
+
+    const text = String(value).trim();
+    const normalized = text.toLowerCase();
+
+    return text !== '' &&
+        text !== '-' &&
+        normalized !== 'true' &&
+        normalized !== 'false';
+}
     if (badge) {
         badge.textContent =
-            product.recommended
-                ? 'おすすめ'
-                : '';
+            hasDisplayValue(product.recommended) ? '売れ筋ランキング' : '';
 
         badge.classList.toggle(
             'hidden',
-            !product.recommended
+            !hasDisplayValue(product.recommended)
         );
     }
 
@@ -1370,13 +1417,11 @@ function createProductCard(product) {
 
     if (newBadge) {
         newBadge.textContent =
-            product.isNew
-                ? '新商品'
-                : '';
+            hasDisplayValue(product.isNew) ? '新商品' : '';
 
         newBadge.classList.toggle(
             'hidden',
-            !product.isNew
+            !hasDisplayValue(product.isNew)
         );
     }
 
@@ -1387,13 +1432,11 @@ function createProductCard(product) {
 
     if (popularBadge) {
         popularBadge.textContent =
-            product.popular
-                ? '人気商品'
-                : '';
+            hasDisplayValue(product.popular) ? '人気商品' : '';
 
         popularBadge.classList.toggle(
             'hidden',
-            !product.popular
+            !hasDisplayValue(product.popular)
         );
     }
 

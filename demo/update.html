@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 
 <head>
@@ -889,8 +889,8 @@ function hasProductChanged(
         },
 
         {
-            label: 'おすすめ',
-            csv: ['おすすめ'],
+            label: '売れ筋ランキング',
+            csv: ['売れ筋', 'おすすめ'],
             json: 'recommended'
         },
 
@@ -905,6 +905,18 @@ function hasProductChanged(
             csv: ['人気商品'],
             json: 'popular'
         },
+        {
+            label: '男性おすすめ',
+            csv: ['男性おすすめ'],
+            json: 'maleRecommended'
+        },
+
+        {
+            label: '女性おすすめ',
+            csv: ['女性おすすめ'],
+            json: 'femaleRecommended'
+        },
+
 
         {
             label: '公開',
@@ -1132,15 +1144,11 @@ function convertCSVProductToJSON(csv) {
             csv,
             ['備考②']
         ),
-        recommended: normalizeBoolean(
-            getCSVValue(csv, ['おすすめ'])
-        ),
-        isNew: normalizeBoolean(
-            getCSVValue(csv, ['新商品'])
-        ),
-        popular: normalizeBoolean(
-            getCSVValue(csv, ['人気商品'])
-        ),
+        recommended: getCSVValue(csv, ['売れ筋', 'おすすめ']),
+        isNew: getCSVValue(csv, ['新商品']),
+        popular: getCSVValue(csv, ['人気商品']),
+        maleRecommended: getCSVValue(csv, ['男性おすすめ']),
+        femaleRecommended: getCSVValue(csv, ['女性おすすめ']),
         published: normalizeBoolean(
             getCSVValue(csv, ['公開'])
         ),
@@ -1329,28 +1337,19 @@ function mergeCSVProduct(
         );
 
     updated.recommended =
-        normalizeBoolean(
-            getCSVValue(
-                csv,
-                ['おすすめ']
-            )
-        );
+        getCSVValue(csv, ['売れ筋', 'おすすめ']);
 
     updated.isNew =
-        normalizeBoolean(
-            getCSVValue(
-                csv,
-                ['新商品']
-            )
-        );
+        getCSVValue(csv, ['新商品']);
 
     updated.popular =
-        normalizeBoolean(
-            getCSVValue(
-                csv,
-                ['人気商品']
-            )
-        );
+        getCSVValue(csv, ['人気商品']);
+
+    updated.maleRecommended =
+        getCSVValue(csv, ['男性おすすめ']);
+
+    updated.femaleRecommended =
+        getCSVValue(csv, ['女性おすすめ']);
 
     updated.published =
         normalizeBoolean(

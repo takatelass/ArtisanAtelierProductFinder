@@ -1402,7 +1402,9 @@ function hasDisplayValue(value) {
 }
     if (badge) {
         badge.textContent =
-            hasDisplayValue(product.recommended) ? '今期トレンド' : '';
+            hasDisplayValue(product.recommended)
+                ? `トレンド${String(product.recommended).trim()}位`
+                : '';
 
         badge.classList.toggle(
             'hidden',

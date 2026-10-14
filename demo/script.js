@@ -1402,7 +1402,7 @@ function hasDisplayValue(value) {
 }
     if (badge) {
         badge.textContent =
-            hasDisplayValue(product.recommended) ? '売れ筋ランキング' : '';
+            hasDisplayValue(product.recommended) ? '今期トレンド' : '';
 
         badge.classList.toggle(
             'hidden',

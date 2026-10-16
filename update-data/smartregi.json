@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-16 16:01:22",
+  "updatedAt": "2026-10-16 16:05:16",
   "products": [
     {
       "maker": "株式会社足立",
@@ -104,7 +104,7 @@
       "maleRecommended": "",
       "femaleRecommended": "",
       "published": true,
-      "stock": "取寄せ",
+      "stock": "在庫あり",
       "smartRegiStock": [
         {
           "color": "オーシャンブルー",
@@ -161,7 +161,7 @@
       "maleRecommended": "",
       "femaleRecommended": "",
       "published": true,
-      "stock": "在庫なし",
+      "stock": "在庫あり",
       "smartRegiStock": [
         {
           "color": "オーシャンブルー",
@@ -221,7 +221,7 @@
       "maleRecommended": "",
       "femaleRecommended": "",
       "published": true,
-      "stock": "廃番",
+      "stock": "在庫あり",
       "smartRegiStock": [
         {
           "color": "オーシャンブルー",
@@ -1155,7 +1155,7 @@
       "category": "鞄：ミニショルダー・ポーチ",
       "subCategory": "",
       "series": "Artisanオリジナル|井原デニム",
-      "color": "ネイビー×イエロー|ネイビー×キャメル|ネイビー×ブラウン|ネイビー×ブラック",
+      "color": "ネイビー×イエロー|ネイビー×キャメル|ネイビー×ブラウン|ネイビー",
       "colorGroup": "NAVY|BLACK|BROWN|YELLOW",
       "material": "コンビネーション",
       "size": "W200×H125×D20mm",
@@ -1210,7 +1210,7 @@
           "status": "matched"
         },
         {
-          "color": "ネイビー×ブラック",
+          "color": "ネイビー",
           "quantity": null,
           "status": "unavailable"
         }
@@ -10769,8 +10769,9 @@
         "コンパクト"
       ],
       "usageTags": [
+        "ユニセックス",
         "メンズ",
-        "ビジネス",
+        "レディース",
         "カジュアル",
         "旅行",
         "街歩き"
@@ -12489,6 +12490,69 @@
     },
     {
       "maker": "株式会社タイムバックス",
+      "code": "TN014XM",
+      "name": "カルド クロスミニショルダー",
+      "price": 14850,
+      "brand": "THYMEBUCKS",
+      "category": "鞄：ミニショルダー・ポーチ",
+      "subCategory": "",
+      "series": "",
+      "color": "キナリ|グレー|ライトグレー",
+      "colorGroup": "GRAY|WHITE|BEIGE",
+      "material": "帆布・織物",
+      "size": "W190×H135×D20mm",
+      "weight": "約190g",
+      "title": "ふんわり軽やかに持ち歩く。",
+      "image": "https://artisan.itembox.cloud/product/015/000000001571/000000001571-08.jpg?size=l&w=ODAw&t=20260920085720",
+      "url": "https://shop.artisan-atelier.net/c/bag/toyooka_kaban/TN014XM",
+      "tags": [
+        "ツイード",
+        "軽量",
+        "コンパクト"
+      ],
+      "usageTags": [
+        "ユニセックス",
+        "メンズ",
+        "レディース",
+        "カジュアル",
+        "旅行",
+        "街歩き"
+      ],
+      "spec1": "-",
+      "spec2": "-",
+      "spec3": "-",
+      "spec4": "-",
+      "spec5": "-",
+      "care": "-",
+      "note1": "-",
+      "note2": "-",
+      "recommended": "",
+      "isNew": "2026/10/01",
+      "popular": "",
+      "maleRecommended": "1",
+      "femaleRecommended": "1",
+      "published": true,
+      "stock": "在庫あり",
+      "smartRegiStock": [
+        {
+          "color": "キナリ",
+          "quantity": null,
+          "status": "unavailable"
+        },
+        {
+          "color": "グレー",
+          "quantity": 3,
+          "status": "matched"
+        },
+        {
+          "color": "ライトグレー",
+          "quantity": 2,
+          "status": "matched"
+        }
+      ]
+    },
+    {
+      "maker": "株式会社タイムバックス",
       "code": "TN015FS",
       "name": "カルド フラットWショルダー",
       "price": 22000,
@@ -13038,7 +13102,7 @@
       "subCategory": "",
       "series": "井原デニム",
       "color": "デニム",
-      "colorGroup": "BLUE",
+      "colorGroup": "BLUE|NAVY",
       "material": "帆布・織物",
       "size": "W300×H380×D140mm",
       "weight": "約800g",
@@ -13094,7 +13158,7 @@
       "subCategory": "",
       "series": "井原デニム",
       "color": "デニム",
-      "colorGroup": "BLUE",
+      "colorGroup": "BLUE|NAVY",
       "material": "帆布・織物",
       "size": "W360×H215×D20mm",
       "weight": "約590g",
@@ -13150,7 +13214,7 @@
       "subCategory": "",
       "series": "井原デニム",
       "color": "デニム",
-      "colorGroup": "BLUE",
+      "colorGroup": "BLUE|NAVY",
       "material": "帆布・織物",
       "size": "W300×H380×D140mm",
       "weight": "約820g",
@@ -13206,7 +13270,7 @@
       "subCategory": "",
       "series": "井原デニム",
       "color": "デニム",
-      "colorGroup": "BLUE",
+      "colorGroup": "BLUE|NAVY",
       "material": "帆布・織物",
       "size": "W360×H215×D20mm",
       "weight": "約590g",
@@ -13262,7 +13326,7 @@
       "subCategory": "",
       "series": "井原デニム",
       "color": "デニム",
-      "colorGroup": "BLUE",
+      "colorGroup": "BLUE|NAVY",
       "material": "帆布・織物",
       "size": "W210×H300×D130mm",
       "weight": "約650g",
@@ -13314,7 +13378,7 @@
       "subCategory": "",
       "series": "井原デニム",
       "color": "デニム",
-      "colorGroup": "BLUE",
+      "colorGroup": "BLUE|NAVY",
       "material": "帆布・織物",
       "size": "W210×H300×D130mm",
       "weight": "約650g",
@@ -13351,6 +13415,59 @@
       "smartRegiStock": [
         {
           "color": "デニム",
+          "quantity": 2,
+          "status": "matched"
+        }
+      ]
+    },
+    {
+      "maker": "株式会社タイムバックス",
+      "code": "TN046BS",
+      "name": "井原デニム ブックショルダー",
+      "price": 24750,
+      "brand": "THYMEBUCKS",
+      "category": "鞄：ミニショルダー・ポーチ",
+      "subCategory": "",
+      "series": "井原デニム",
+      "color": "インディゴ",
+      "colorGroup": "BLUE|NAVY",
+      "material": "帆布・織物",
+      "size": "",
+      "weight": "",
+      "title": "",
+      "image": "",
+      "url": "",
+      "tags": [
+        "井原デニム",
+        "デニム",
+        "コンパクト"
+      ],
+      "usageTags": [
+        "ユニセックス",
+        "メンズ",
+        "レディース",
+        "カジュアル",
+        "旅行",
+        "街歩き"
+      ],
+      "spec1": "-",
+      "spec2": "-",
+      "spec3": "-",
+      "spec4": "-",
+      "spec5": "-",
+      "care": "-",
+      "note1": "-",
+      "note2": "-",
+      "recommended": "",
+      "isNew": "2026/10/01",
+      "popular": "",
+      "maleRecommended": "1",
+      "femaleRecommended": "1",
+      "published": true,
+      "stock": "在庫あり",
+      "smartRegiStock": [
+        {
+          "color": "インディゴ",
           "quantity": 2,
           "status": "matched"
         }
@@ -13428,7 +13545,7 @@
       "subCategory": "",
       "series": "",
       "color": "アカ|ネイビー|マスタード|白",
-      "colorGroup": "YELLOW|RED|NAVY|WHITE",
+      "colorGroup": "YELLOW|RED|NAVY|WHITE|ORANGE|BROWN|GREEN",
       "material": "天然皮革・本革",
       "size": "W180×H320×D85mm",
       "weight": "約530g",
@@ -13498,7 +13615,7 @@
       "color": "アカ|ネイビー|マスタード|白",
       "colorGroup": "YELLOW|RED|NAVY|WHITE",
       "material": "天然皮革・本革",
-      "size": "",
+      "size": "-",
       "weight": "",
       "title": "",
       "image": "https://shop.artisan-atelier.net/images/whats_toyookakaban.png",
@@ -13615,6 +13732,73 @@
         {
           "color": "白",
           "quantity": 1,
+          "status": "matched"
+        }
+      ]
+    },
+    {
+      "maker": "株式会社タイムバックス",
+      "code": "TN054BS",
+      "name": "ブルーム ブックショルダー",
+      "price": 26400,
+      "brand": "THYMEBUCKS",
+      "category": "鞄：ミニショルダー・ポーチ",
+      "subCategory": "",
+      "series": "",
+      "color": "アカ|オレンジ|カーキ|ネイビー",
+      "colorGroup": "RED|NAVY|ORANGE|BROWN|GREEN",
+      "material": "天然皮革・本革",
+      "size": "",
+      "weight": "",
+      "title": "",
+      "image": "",
+      "url": "",
+      "tags": [
+        "レザー",
+        "コンパクト"
+      ],
+      "usageTags": [
+        "ユニセックス",
+        "メンズ",
+        "レディース",
+        "カジュアル",
+        "旅行",
+        "街歩き"
+      ],
+      "spec1": "-",
+      "spec2": "-",
+      "spec3": "-",
+      "spec4": "-",
+      "spec5": "-",
+      "care": "-",
+      "note1": "-",
+      "note2": "-",
+      "recommended": "",
+      "isNew": "2026/10/01",
+      "popular": "",
+      "maleRecommended": "1",
+      "femaleRecommended": "1",
+      "published": true,
+      "stock": "在庫あり",
+      "smartRegiStock": [
+        {
+          "color": "アカ",
+          "quantity": 2,
+          "status": "matched"
+        },
+        {
+          "color": "オレンジ",
+          "quantity": 2,
+          "status": "matched"
+        },
+        {
+          "color": "カーキ",
+          "quantity": 2,
+          "status": "matched"
+        },
+        {
+          "color": "ネイビー",
+          "quantity": 2,
           "status": "matched"
         }
       ]
@@ -19258,7 +19442,8 @@
         "ナイロン",
         "漁網ナイロン",
         "軽量",
-        "A5収納"
+        "A5収納",
+        "コラボ"
       ],
       "usageTags": [
         "レディース",
@@ -20528,7 +20713,7 @@
     {
       "maker": "株式会社モリタ",
       "code": "MK019",
-      "name": "",
+      "name": "ストラップネームホルダー",
       "price": 4950,
       "brand": "TOTTE",
       "category": "小物：豊岡小物",
@@ -22058,8 +22243,8 @@
     {
       "maker": "ARTPHERE",
       "code": "FW08-103",
-      "name": "Cavallo Ⅲ ダレスポーチ",
-      "price": 44000,
+      "name": "Cavallo Ⅲ ダレスミニショルダー",
+      "price": 47300,
       "brand": "ARTPHERE",
       "category": "鞄：ダレス",
       "subCategory": "",
@@ -22354,7 +22539,8 @@
       "url": "https://shop.artisan-atelier.net/c/bag/toyooka_kaban/NU63-103-1",
       "tags": [
         "レザー",
-        "Artisan限定"
+        "Artisan限定",
+        "コンパクト"
       ],
       "usageTags": [
         "レディース",
@@ -26249,8 +26435,8 @@
       "category": "鞄：リュック・デイパック",
       "subCategory": "",
       "series": "",
-      "color": "ホワイト",
-      "colorGroup": "WHITE",
+      "color": "ブラック|ホワイト",
+      "colorGroup": "WHITE|BLACK",
       "material": "天然皮革・本革",
       "size": "W275×H410×D170mm",
       "weight": "約1030g",
@@ -26289,6 +26475,11 @@
       "stock": "在庫あり",
       "smartRegiStock": [
         {
+          "color": "ブラック",
+          "quantity": 0,
+          "status": "matched"
+        },
+        {
           "color": "ホワイト",
           "quantity": 2,
           "status": "matched"
@@ -26304,8 +26495,8 @@
       "category": "鞄：トート",
       "subCategory": "",
       "series": "",
-      "color": "ホワイト",
-      "colorGroup": "WHITE",
+      "color": "ブラック|ホワイト",
+      "colorGroup": "WHITE|BLACK",
       "material": "天然皮革・本革",
       "size": "W540×H310×D160mm",
       "weight": "約1105g",
@@ -26345,6 +26536,11 @@
       "stock": "在庫あり",
       "smartRegiStock": [
         {
+          "color": "ブラック",
+          "quantity": 0,
+          "status": "matched"
+        },
+        {
           "color": "ホワイト",
           "quantity": 0,
           "status": "matched"
@@ -26360,8 +26556,8 @@
       "category": "鞄：ミニショルダー・ポーチ",
       "subCategory": "",
       "series": "",
-      "color": "ホワイト",
-      "colorGroup": "WHITE",
+      "color": "ブラック|ホワイト",
+      "colorGroup": "WHITE|BLACK",
       "material": "天然皮革・本革",
       "size": "W225×H135×D85mm",
       "weight": "約250g",
@@ -26393,6 +26589,11 @@
       "published": true,
       "stock": "在庫あり",
       "smartRegiStock": [
+        {
+          "color": "ブラック",
+          "quantity": 0,
+          "status": "matched"
+        },
         {
           "color": "ホワイト",
           "quantity": 0,
@@ -26524,8 +26725,8 @@
       "category": "鞄：リュック・デイパック",
       "subCategory": "",
       "series": "",
-      "color": "ホワイト",
-      "colorGroup": "WHITE",
+      "color": "ブラック|ホワイト",
+      "colorGroup": "WHITE|BLACK",
       "material": "天然皮革・本革",
       "size": "W235×H350×D130mm",
       "weight": "約750g",
@@ -26560,6 +26761,11 @@
       "published": true,
       "stock": "在庫あり",
       "smartRegiStock": [
+        {
+          "color": "ブラック",
+          "quantity": 1,
+          "status": "matched"
+        },
         {
           "color": "ホワイト",
           "quantity": 1,
@@ -26632,8 +26838,8 @@
       "category": "鞄：クラッチ・セカンド",
       "subCategory": "",
       "series": "",
-      "color": "ホワイト",
-      "colorGroup": "WHITE",
+      "color": "ブラック|ホワイト",
+      "colorGroup": "WHITE|BLACK",
       "material": "天然皮革・本革",
       "size": "W325×H245×D20mm",
       "weight": "約420g",
@@ -26668,6 +26874,11 @@
       "stock": "在庫あり",
       "smartRegiStock": [
         {
+          "color": "ブラック",
+          "quantity": 0,
+          "status": "matched"
+        },
+        {
           "color": "ホワイト",
           "quantity": 0,
           "status": "matched"
@@ -26683,8 +26894,8 @@
       "category": "鞄：ボディ・ウエスト",
       "subCategory": "",
       "series": "",
-      "color": "ホワイト",
-      "colorGroup": "WHITE",
+      "color": "ブラック|ホワイト",
+      "colorGroup": "WHITE|BLACK",
       "material": "天然皮革・本革",
       "size": "W140×H285×D55mm",
       "weight": "約480g",
@@ -26717,6 +26928,11 @@
       "published": true,
       "stock": "在庫あり",
       "smartRegiStock": [
+        {
+          "color": "ブラック",
+          "quantity": 0,
+          "status": "matched"
+        },
         {
           "color": "ホワイト",
           "quantity": 1,
@@ -26838,8 +27054,8 @@
       "category": "鞄：ミニショルダー・ポーチ",
       "subCategory": "",
       "series": "",
-      "color": "ホワイト",
-      "colorGroup": "WHITE",
+      "color": "ブラック|ホワイト",
+      "colorGroup": "WHITE|BLACK",
       "material": "天然皮革・本革",
       "size": "W250×H190×D15mm",
       "weight": "約360g",
@@ -26872,6 +27088,11 @@
       "stock": "在庫あり",
       "smartRegiStock": [
         {
+          "color": "ブラック",
+          "quantity": 0,
+          "status": "matched"
+        },
+        {
           "color": "ホワイト",
           "quantity": 1,
           "status": "matched"
@@ -26887,8 +27108,8 @@
       "category": "鞄：トート",
       "subCategory": "",
       "series": "",
-      "color": "ホワイト",
-      "colorGroup": "WHITE",
+      "color": "ブラック|ホワイト",
+      "colorGroup": "WHITE|BLACK",
       "material": "天然皮革・本革",
       "size": "W255×H355×D145mm",
       "weight": "約720g",
@@ -26926,6 +27147,11 @@
       "stock": "在庫あり",
       "smartRegiStock": [
         {
+          "color": "ブラック",
+          "quantity": 0,
+          "status": "matched"
+        },
+        {
           "color": "ホワイト",
           "quantity": 0,
           "status": "matched"
@@ -26941,8 +27167,8 @@
       "category": "鞄：トート",
       "subCategory": "",
       "series": "",
-      "color": "ホワイト",
-      "colorGroup": "WHITE",
+      "color": "ブラック|ホワイト",
+      "colorGroup": "WHITE|BLACK",
       "material": "天然皮革・本革",
       "size": "W220×H220×D160mm",
       "weight": "約490g",
@@ -26975,6 +27201,11 @@
       "published": true,
       "stock": "在庫あり",
       "smartRegiStock": [
+        {
+          "color": "ブラック",
+          "quantity": 0,
+          "status": "matched"
+        },
         {
           "color": "ホワイト",
           "quantity": 0,
@@ -27348,8 +27579,8 @@
       "category": "鞄：ミニショルダー・ポーチ",
       "subCategory": "",
       "series": "",
-      "color": "ホワイト",
-      "colorGroup": "WHITE",
+      "color": "ブラック|ホワイト",
+      "colorGroup": "WHITE|BLACK",
       "material": "天然皮革・本革",
       "size": "W190×H140×D95mm",
       "weight": "約480g",
@@ -27383,6 +27614,11 @@
       "stock": "在庫あり",
       "smartRegiStock": [
         {
+          "color": "ブラック",
+          "quantity": 0,
+          "status": "matched"
+        },
+        {
           "color": "ホワイト",
           "quantity": 2,
           "status": "matched"
@@ -27398,8 +27634,8 @@
       "category": "鞄：ミニショルダー・ポーチ",
       "subCategory": "",
       "series": "",
-      "color": "ホワイト",
-      "colorGroup": "WHITE",
+      "color": "ブラック|ホワイト",
+      "colorGroup": "WHITE|BLACK",
       "material": "天然皮革・本革",
       "size": "W150×H190×D90mm",
       "weight": "約430g",
@@ -27432,6 +27668,11 @@
       "published": true,
       "stock": "在庫あり",
       "smartRegiStock": [
+        {
+          "color": "ブラック",
+          "quantity": 0,
+          "status": "matched"
+        },
         {
           "color": "ホワイト",
           "quantity": 1,
@@ -31809,6 +32050,138 @@
       ]
     },
     {
+      "maker": "株式会社羽倉",
+      "code": "BAB1",
+      "name": "玄武 BAブリーフ",
+      "price": 88000,
+      "brand": "",
+      "category": "鞄：ビジネス・フォーマル",
+      "subCategory": "",
+      "series": "",
+      "color": "インクグレー|トーチレッド|ホライゾンブルー",
+      "colorGroup": "GRAY",
+      "material": "天然皮革・本革",
+      "size": "",
+      "weight": "",
+      "title": "",
+      "image": "",
+      "url": "",
+      "tags": [
+        "レザー",
+        "ボトル収納",
+        "タブレット収納",
+        "13-14インチPC収納",
+        "15-16インチPC収納",
+        "A4収納",
+        "B4収納"
+      ],
+      "usageTags": [
+        "ユニセックス",
+        "メンズ",
+        "レディース",
+        "カジュアル",
+        "ビジネス"
+      ],
+      "spec1": "-",
+      "spec2": "-",
+      "spec3": "-",
+      "spec4": "-",
+      "spec5": "-",
+      "care": "-",
+      "note1": "-",
+      "note2": "-",
+      "recommended": "",
+      "isNew": "",
+      "popular": "",
+      "maleRecommended": "",
+      "femaleRecommended": "",
+      "published": true,
+      "stock": "取寄せ",
+      "smartRegiStock": [
+        {
+          "color": "インクグレー",
+          "quantity": 0,
+          "status": "matched"
+        },
+        {
+          "color": "トーチレッド",
+          "quantity": 0,
+          "status": "matched"
+        },
+        {
+          "color": "ホライゾンブルー",
+          "quantity": 0,
+          "status": "matched"
+        }
+      ]
+    },
+    {
+      "maker": "株式会社羽倉",
+      "code": "BAR2",
+      "name": "玄武 BAバックパック",
+      "price": 88000,
+      "brand": "",
+      "category": "鞄：リュック・デイパック",
+      "subCategory": "",
+      "series": "",
+      "color": "インクグレー|トーチレッド|ホライゾンブルー",
+      "colorGroup": "GRAY",
+      "material": "天然皮革・本革",
+      "size": "",
+      "weight": "",
+      "title": "",
+      "image": "",
+      "url": "",
+      "tags": [
+        "レザー",
+        "ボトル収納",
+        "タブレット収納",
+        "13-14インチPC収納",
+        "15-16インチPC収納",
+        "A4収納",
+        "B4収納"
+      ],
+      "usageTags": [
+        "ユニセックス",
+        "メンズ",
+        "レディース",
+        "カジュアル",
+        "ビジネス"
+      ],
+      "spec1": "-",
+      "spec2": "-",
+      "spec3": "-",
+      "spec4": "-",
+      "spec5": "-",
+      "care": "-",
+      "note1": "-",
+      "note2": "-",
+      "recommended": "",
+      "isNew": "",
+      "popular": "",
+      "maleRecommended": "",
+      "femaleRecommended": "",
+      "published": true,
+      "stock": "取寄せ",
+      "smartRegiStock": [
+        {
+          "color": "インクグレー",
+          "quantity": 0,
+          "status": "matched"
+        },
+        {
+          "color": "トーチレッド",
+          "quantity": 0,
+          "status": "matched"
+        },
+        {
+          "color": "ホライゾンブルー",
+          "quantity": 0,
+          "status": "matched"
+        }
+      ]
+    },
+    {
       "maker": "衣川産業株式会社",
       "code": "52195",
       "name": "Stitch-on ワンショルダー",
@@ -34458,6 +34831,183 @@
         {
           "color": "ブラック",
           "quantity": 0,
+          "status": "matched"
+        }
+      ]
+    },
+    {
+      "maker": "ラ・ヴェッタ株式会社",
+      "code": "AL31",
+      "name": "forma Tria -三つ折りコンパクト財布 -",
+      "price": 33000,
+      "brand": "",
+      "category": "財布：コンパクト財布",
+      "subCategory": "",
+      "series": "",
+      "color": "イエローキャメル|グリーン|グレー",
+      "colorGroup": "YELLOW|BROWN|GREEN|GRAY",
+      "material": "天然皮革・本革",
+      "size": "W100×H85×D28㎜",
+      "weight": "約75g",
+      "title": "",
+      "image": "",
+      "url": "",
+      "tags": [
+        "レザー"
+      ],
+      "usageTags": [
+        "ユニセックス",
+        "メンズ",
+        "レディース",
+        "ギフト"
+      ],
+      "spec1": "-",
+      "spec2": "-",
+      "spec3": "-",
+      "spec4": "-",
+      "spec5": "-",
+      "care": "-",
+      "note1": "-",
+      "note2": "-",
+      "recommended": "",
+      "isNew": "",
+      "popular": "",
+      "maleRecommended": "1",
+      "femaleRecommended": "1",
+      "published": true,
+      "stock": "在庫あり",
+      "smartRegiStock": [
+        {
+          "color": "イエローキャメル",
+          "quantity": 20,
+          "status": "matched"
+        },
+        {
+          "color": "グリーン",
+          "quantity": 30,
+          "status": "matched"
+        },
+        {
+          "color": "グレー",
+          "quantity": 20,
+          "status": "matched"
+        }
+      ]
+    },
+    {
+      "maker": "ラ・ヴェッタ株式会社",
+      "code": "AL41",
+      "name": "forma Quad -四角コインケース -",
+      "price": 9900,
+      "brand": "",
+      "category": "小物：コインケース",
+      "subCategory": "",
+      "series": "",
+      "color": "イエローキャメル|グリーン|グレー",
+      "colorGroup": "YELLOW|BROWN|GREEN|GRAY",
+      "material": "天然皮革・本革",
+      "size": "W80×H72×D18㎜",
+      "weight": "約30g",
+      "title": "",
+      "image": "",
+      "url": "",
+      "tags": [
+        "レザー"
+      ],
+      "usageTags": [
+        "ユニセックス",
+        "メンズ",
+        "レディース",
+        "ギフト"
+      ],
+      "spec1": "-",
+      "spec2": "-",
+      "spec3": "-",
+      "spec4": "-",
+      "spec5": "-",
+      "care": "-",
+      "note1": "-",
+      "note2": "-",
+      "recommended": "",
+      "isNew": "",
+      "popular": "",
+      "maleRecommended": "1",
+      "femaleRecommended": "1",
+      "published": true,
+      "stock": "在庫あり",
+      "smartRegiStock": [
+        {
+          "color": "イエローキャメル",
+          "quantity": 20,
+          "status": "matched"
+        },
+        {
+          "color": "グリーン",
+          "quantity": 30,
+          "status": "matched"
+        },
+        {
+          "color": "グレー",
+          "quantity": 20,
+          "status": "matched"
+        }
+      ]
+    },
+    {
+      "maker": "ラ・ヴェッタ株式会社",
+      "code": "AL61",
+      "name": "forma Hexa -六角コインケース -",
+      "price": 9900,
+      "brand": "",
+      "category": "小物：コインケース",
+      "subCategory": "",
+      "series": "",
+      "color": "イエローキャメル|グリーン|グレー",
+      "colorGroup": "YELLOW|BROWN|GREEN|GRAY",
+      "material": "天然皮革・本革",
+      "size": "W100×H80×D25㎜",
+      "weight": "約40g",
+      "title": "",
+      "image": "",
+      "url": "",
+      "tags": [
+        "レザー"
+      ],
+      "usageTags": [
+        "ユニセックス",
+        "メンズ",
+        "レディース",
+        "ギフト"
+      ],
+      "spec1": "-",
+      "spec2": "-",
+      "spec3": "-",
+      "spec4": "-",
+      "spec5": "-",
+      "care": "-",
+      "note1": "-",
+      "note2": "-",
+      "recommended": "",
+      "isNew": "",
+      "popular": "",
+      "maleRecommended": "1",
+      "femaleRecommended": "1",
+      "published": true,
+      "stock": "在庫あり",
+      "smartRegiStock": [
+        {
+          "color": "イエローキャメル",
+          "quantity": 20,
+          "status": "matched"
+        },
+        {
+          "color": "グリーン",
+          "quantity": 30,
+          "status": "matched"
+        },
+        {
+          "color": "グレー",
+          "quantity": 20,
           "status": "matched"
         }
       ]

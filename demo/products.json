@@ -1208,7 +1208,7 @@
         "status": "matched"
       },
       {
-        "color": "ネイビー×ブラック",
+        "color": "ネイビー",
         "quantity": null,
         "status": "unavailable"
       }
@@ -12531,7 +12531,23 @@
     "femaleRecommended": "1",
     "published": true,
     "stock": "在庫あり",
-    "smartRegiStock": []
+    "smartRegiStock": [
+      {
+        "color": "キナリ",
+        "quantity": null,
+        "status": "unavailable"
+      },
+      {
+        "color": "グレー",
+        "quantity": 3,
+        "status": "matched"
+      },
+      {
+        "color": "ライトグレー",
+        "quantity": 2,
+        "status": "matched"
+      }
+    ]
   },
   {
     "maker": "株式会社タイムバックス",
@@ -13447,7 +13463,13 @@
     "femaleRecommended": "1",
     "published": true,
     "stock": "在庫あり",
-    "smartRegiStock": []
+    "smartRegiStock": [
+      {
+        "color": "インディゴ",
+        "quantity": 2,
+        "status": "matched"
+      }
+    ]
   },
   {
     "maker": "株式会社タイムバックス",
@@ -13756,7 +13778,28 @@
     "femaleRecommended": "1",
     "published": true,
     "stock": "在庫あり",
-    "smartRegiStock": []
+    "smartRegiStock": [
+      {
+        "color": "アカ",
+        "quantity": 2,
+        "status": "matched"
+      },
+      {
+        "color": "オレンジ",
+        "quantity": 2,
+        "status": "matched"
+      },
+      {
+        "color": "カーキ",
+        "quantity": 2,
+        "status": "matched"
+      },
+      {
+        "color": "ネイビー",
+        "quantity": 2,
+        "status": "matched"
+      }
+    ]
   },
   {
     "maker": "株式会社タイムバックス",
@@ -26430,6 +26473,11 @@
     "stock": "在庫あり",
     "smartRegiStock": [
       {
+        "color": "ブラック",
+        "quantity": 0,
+        "status": "matched"
+      },
+      {
         "color": "ホワイト",
         "quantity": 2,
         "status": "matched"
@@ -26486,6 +26534,11 @@
     "stock": "在庫あり",
     "smartRegiStock": [
       {
+        "color": "ブラック",
+        "quantity": 0,
+        "status": "matched"
+      },
+      {
         "color": "ホワイト",
         "quantity": 0,
         "status": "matched"
@@ -26534,6 +26587,11 @@
     "published": true,
     "stock": "在庫あり",
     "smartRegiStock": [
+      {
+        "color": "ブラック",
+        "quantity": 0,
+        "status": "matched"
+      },
       {
         "color": "ホワイト",
         "quantity": 0,
@@ -26702,6 +26760,11 @@
     "stock": "在庫あり",
     "smartRegiStock": [
       {
+        "color": "ブラック",
+        "quantity": 1,
+        "status": "matched"
+      },
+      {
         "color": "ホワイト",
         "quantity": 1,
         "status": "matched"
@@ -26809,6 +26872,11 @@
     "stock": "在庫あり",
     "smartRegiStock": [
       {
+        "color": "ブラック",
+        "quantity": 0,
+        "status": "matched"
+      },
+      {
         "color": "ホワイト",
         "quantity": 0,
         "status": "matched"
@@ -26858,6 +26926,11 @@
     "published": true,
     "stock": "在庫あり",
     "smartRegiStock": [
+      {
+        "color": "ブラック",
+        "quantity": 0,
+        "status": "matched"
+      },
       {
         "color": "ホワイト",
         "quantity": 1,
@@ -27013,6 +27086,11 @@
     "stock": "在庫あり",
     "smartRegiStock": [
       {
+        "color": "ブラック",
+        "quantity": 0,
+        "status": "matched"
+      },
+      {
         "color": "ホワイト",
         "quantity": 1,
         "status": "matched"
@@ -27067,6 +27145,11 @@
     "stock": "在庫あり",
     "smartRegiStock": [
       {
+        "color": "ブラック",
+        "quantity": 0,
+        "status": "matched"
+      },
+      {
         "color": "ホワイト",
         "quantity": 0,
         "status": "matched"
@@ -27116,6 +27199,11 @@
     "published": true,
     "stock": "在庫あり",
     "smartRegiStock": [
+      {
+        "color": "ブラック",
+        "quantity": 0,
+        "status": "matched"
+      },
       {
         "color": "ホワイト",
         "quantity": 0,
@@ -27524,6 +27612,11 @@
     "stock": "在庫あり",
     "smartRegiStock": [
       {
+        "color": "ブラック",
+        "quantity": 0,
+        "status": "matched"
+      },
+      {
         "color": "ホワイト",
         "quantity": 2,
         "status": "matched"
@@ -27573,6 +27666,11 @@
     "published": true,
     "stock": "在庫あり",
     "smartRegiStock": [
+      {
+        "color": "ブラック",
+        "quantity": 0,
+        "status": "matched"
+      },
       {
         "color": "ホワイト",
         "quantity": 1,
@@ -31997,7 +32095,23 @@
     "femaleRecommended": "",
     "published": true,
     "stock": "取寄せ",
-    "smartRegiStock": []
+    "smartRegiStock": [
+      {
+        "color": "インクグレー",
+        "quantity": 0,
+        "status": "matched"
+      },
+      {
+        "color": "トーチレッド",
+        "quantity": 0,
+        "status": "matched"
+      },
+      {
+        "color": "ホライゾンブルー",
+        "quantity": 0,
+        "status": "matched"
+      }
+    ]
   },
   {
     "maker": "株式会社羽倉",
@@ -32047,7 +32161,23 @@
     "femaleRecommended": "",
     "published": true,
     "stock": "取寄せ",
-    "smartRegiStock": []
+    "smartRegiStock": [
+      {
+        "color": "インクグレー",
+        "quantity": 0,
+        "status": "matched"
+      },
+      {
+        "color": "トーチレッド",
+        "quantity": 0,
+        "status": "matched"
+      },
+      {
+        "color": "ホライゾンブルー",
+        "quantity": 0,
+        "status": "matched"
+      }
+    ]
   },
   {
     "maker": "衣川産業株式会社",
@@ -34744,7 +34874,23 @@
     "femaleRecommended": "1",
     "published": true,
     "stock": "在庫あり",
-    "smartRegiStock": []
+    "smartRegiStock": [
+      {
+        "color": "イエローキャメル",
+        "quantity": 20,
+        "status": "matched"
+      },
+      {
+        "color": "グリーン",
+        "quantity": 30,
+        "status": "matched"
+      },
+      {
+        "color": "グレー",
+        "quantity": 20,
+        "status": "matched"
+      }
+    ]
   },
   {
     "maker": "ラ・ヴェッタ株式会社",
@@ -34787,7 +34933,23 @@
     "femaleRecommended": "1",
     "published": true,
     "stock": "在庫あり",
-    "smartRegiStock": []
+    "smartRegiStock": [
+      {
+        "color": "イエローキャメル",
+        "quantity": 20,
+        "status": "matched"
+      },
+      {
+        "color": "グリーン",
+        "quantity": 30,
+        "status": "matched"
+      },
+      {
+        "color": "グレー",
+        "quantity": 20,
+        "status": "matched"
+      }
+    ]
   },
   {
     "maker": "ラ・ヴェッタ株式会社",
@@ -34830,7 +34992,23 @@
     "femaleRecommended": "1",
     "published": true,
     "stock": "在庫あり",
-    "smartRegiStock": []
+    "smartRegiStock": [
+      {
+        "color": "イエローキャメル",
+        "quantity": 20,
+        "status": "matched"
+      },
+      {
+        "color": "グリーン",
+        "quantity": 30,
+        "status": "matched"
+      },
+      {
+        "color": "グレー",
+        "quantity": 20,
+        "status": "matched"
+      }
+    ]
   },
   {
     "maker": "ラ・ヴェッタ株式会社",

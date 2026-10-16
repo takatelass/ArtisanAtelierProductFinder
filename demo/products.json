@@ -1209,8 +1209,8 @@
       },
       {
         "color": "ネイビー",
-        "quantity": null,
-        "status": "unavailable"
+        "quantity": 4,
+        "status": "matched"
       }
     ]
   },

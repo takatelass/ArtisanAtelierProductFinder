@@ -1422,8 +1422,8 @@
     "popular": "",
     "maleRecommended": "",
     "femaleRecommended": "",
-    "published": true,
-    "stock": "在庫あり",
+    "published": false,
+    "stock": "廃番",
     "smartRegiStock": [
       {
         "color": "ネイビー",
@@ -3700,7 +3700,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "取寄せ",
     "smartRegiStock": [
       {
         "color": "ネイビー",
@@ -4833,7 +4833,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "取寄せ",
     "smartRegiStock": [
       {
         "color": "グレージュ",
@@ -4897,7 +4897,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "取寄せ",
     "smartRegiStock": [
       {
         "color": "グレージュ",
@@ -5334,7 +5334,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "取寄せ",
     "smartRegiStock": [
       {
         "color": "勝色",
@@ -6860,7 +6860,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "取寄せ",
     "smartRegiStock": [
       {
         "color": "勝色",
@@ -6909,7 +6909,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "取寄せ",
     "smartRegiStock": [
       {
         "color": "勝色",
@@ -6958,7 +6958,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "取寄せ",
     "smartRegiStock": [
       {
         "color": "勝色",
@@ -7007,7 +7007,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "取寄せ",
     "smartRegiStock": [
       {
         "color": "勝色",
@@ -12934,7 +12934,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "在庫なし",
     "smartRegiStock": [
       {
         "color": "カーキ×ダークネイビー",
@@ -13005,7 +13005,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "在庫なし",
     "smartRegiStock": [
       {
         "color": "カーキ×ダークネイビー",
@@ -13076,7 +13076,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "在庫なし",
     "smartRegiStock": [
       {
         "color": "グレー×ホワイトシルバー",
@@ -20801,7 +20801,7 @@
     "popular": "",
     "maleRecommended": "",
     "femaleRecommended": "",
-    "published": true,
+    "published": false,
     "stock": "廃番",
     "smartRegiStock": [
       {
@@ -20859,7 +20859,7 @@
     "popular": "",
     "maleRecommended": "",
     "femaleRecommended": "",
-    "published": true,
+    "published": false,
     "stock": "廃番",
     "smartRegiStock": [
       {
@@ -20915,7 +20915,7 @@
     "popular": "",
     "maleRecommended": "",
     "femaleRecommended": "",
-    "published": true,
+    "published": false,
     "stock": "廃番",
     "smartRegiStock": [
       {
@@ -20974,7 +20974,7 @@
     "popular": "",
     "maleRecommended": "",
     "femaleRecommended": "",
-    "published": true,
+    "published": false,
     "stock": "廃番",
     "smartRegiStock": [
       {
@@ -21033,7 +21033,7 @@
     "popular": "",
     "maleRecommended": "",
     "femaleRecommended": "",
-    "published": true,
+    "published": false,
     "stock": "廃番",
     "smartRegiStock": [
       {
@@ -21089,7 +21089,7 @@
     "popular": "",
     "maleRecommended": "",
     "femaleRecommended": "",
-    "published": true,
+    "published": false,
     "stock": "廃番",
     "smartRegiStock": [
       {
@@ -21148,8 +21148,8 @@
     "popular": "",
     "maleRecommended": "",
     "femaleRecommended": "",
-    "published": true,
-    "stock": "在庫あり",
+    "published": false,
+    "stock": "廃番",
     "smartRegiStock": [
       {
         "color": "ネイビー",
@@ -21648,7 +21648,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "取寄せ",
     "smartRegiStock": [
       {
         "color": "グリーン",
@@ -22156,7 +22156,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "取寄せ",
+    "stock": "在庫あり",
     "smartRegiStock": [
       {
         "color": "トープ",
@@ -22416,7 +22416,7 @@
     "popular": "",
     "maleRecommended": "",
     "femaleRecommended": "",
-    "published": true,
+    "published": false,
     "stock": "廃番",
     "smartRegiStock": [
       {
@@ -28398,7 +28398,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "取寄せ",
     "smartRegiStock": [
       {
         "color": "ネイビー",
@@ -28463,7 +28463,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "取寄せ",
     "smartRegiStock": [
       {
         "color": "ネイビー",
@@ -28589,7 +28589,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "取寄せ",
     "smartRegiStock": [
       {
         "color": "キャメル",
@@ -28653,7 +28653,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "取寄せ",
     "smartRegiStock": [
       {
         "color": "イエロー",
@@ -28725,7 +28725,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "取寄せ",
     "smartRegiStock": [
       {
         "color": "ブラック",
@@ -28772,7 +28772,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "取寄せ",
     "smartRegiStock": [
       {
         "color": "ブラック",
@@ -28826,7 +28826,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "取寄せ",
     "smartRegiStock": [
       {
         "color": "ディープブルー",
@@ -29518,7 +29518,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "取寄せ",
     "smartRegiStock": [
       {
         "color": "ジーンブルー",
@@ -29589,7 +29589,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "取寄せ",
     "smartRegiStock": [
       {
         "color": "ジーンブルー",
@@ -29657,7 +29657,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "取寄せ",
     "smartRegiStock": [
       {
         "color": "オレンジ",
@@ -29725,7 +29725,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "取寄せ",
     "smartRegiStock": [
       {
         "color": "抹茶グリーン",
@@ -29778,7 +29778,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "取寄せ",
     "smartRegiStock": [
       {
         "color": "ワインレッド",
@@ -30467,7 +30467,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "取寄せ",
     "smartRegiStock": [
       {
         "color": "アイボリー",
@@ -30531,7 +30531,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "在庫あり",
+    "stock": "取寄せ",
     "smartRegiStock": [
       {
         "color": "オーシャンブルー",
@@ -32094,7 +32094,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "取寄せ",
+    "stock": "在庫あり",
     "smartRegiStock": [
       {
         "color": "インクグレー",
@@ -32160,7 +32160,7 @@
     "maleRecommended": "",
     "femaleRecommended": "",
     "published": true,
-    "stock": "取寄せ",
+    "stock": "在庫あり",
     "smartRegiStock": [
       {
         "color": "インクグレー",
